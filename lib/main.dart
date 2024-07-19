@@ -24,12 +24,9 @@ class _MyAppState extends State<MyApp> {
       title: 'amortization_calculator_app',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          primary: Color(0xFF94364a),
-          seedColor: Color(0xFF94364a),
-          secondary: Colors.white,
+          seedColor: Colors.white70,
+          primary: Colors.blueGrey,
         ),
-
-
 
         useMaterial3: true,
       ),
