@@ -5,7 +5,7 @@ import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-enum EndingBeginningEnum { Beginning, Ending }
+enum AdvanceArrearsEnum { advance, arrears }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool? _checkBox = false;
   String? _valueChoose = "4";
   final List<String> _listItem = ["4", "6", "12", "24"];
-  EndingBeginningEnum? _endingBeginningEnum;
+  AdvanceArrearsEnum? _advanceArrearsEnum;
 
   final _assetCostController = TextEditingController();
   final _amountFinancedController = TextEditingController();
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _numberOfRentalsController.addListener(() => setState(() {}));
     _gracePeriodController.addListener(() => setState(() {}));
     _residualAmountController.addListener(() => setState(() {}));
-    _endingBeginningEnum = EndingBeginningEnum.Beginning;
+    _advanceArrearsEnum = AdvanceArrearsEnum.advance;
   }
 
   @override
@@ -70,10 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Image.asset(
-        //   'lib/assets/incolease.png',
-        //   height: 40.0,
-        // ),
         scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -141,12 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 10),
                 TextFormWidget(
-                  labelText: "Asset Cost *",
+                  labelText: "Asset Cost",
                   hintText: "EGP",
                   controller: _assetCostController,
                   focusNode: _assetCostFocusNode,
                   nextFocusNode: _amountFinancedFocusNode,
                   icon: Icons.attach_money,
+                  validator:  (value) {
+                    //no validator need
+                    return null;
+                  },
                 ),
                 TextFormWidget(
                   labelText: "Amount Financed *",
@@ -155,6 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _amountFinancedFocusNode,
                   nextFocusNode: _numberOfRentalsFocusNode,
                   icon: Icons.account_balance_wallet,
+                  validator: (value) {
+                    if (value == null || value.isEmpty||value==0) {
+                      return 'Please enter Amount Financed';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormWidget(
                   labelText: "Number Of Rentals *",
@@ -163,6 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _numberOfRentalsFocusNode,
                   nextFocusNode: _gracePeriodFocusNode,
                   icon: Icons.format_list_numbered,
+                  validator: (value) {
+                    if (value == null || value.isEmpty||value==0) {
+                      return 'Please enter Number Of Rentals';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormWidget(
                   labelText: "Grace Period *",
@@ -171,6 +183,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _gracePeriodFocusNode,
                   nextFocusNode: _residualAmountFocusNode,
                   icon: Icons.timer,
+                  validator:(value) {
+                    if (value == null || value.isEmpty||value==0) {
+                      return 'Please enter Grace Period';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormWidget(
                   labelText: "Residual Amount *",
@@ -179,6 +197,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _residualAmountFocusNode,
                   nextFocusNode: _submitFocusNode,
                   icon: Icons.account_balance,
+                  validator:(value) {
+                    if (value == null || value.isEmpty||value==0) {
+                      return 'Please enter Residual Amount';
+                    }
+                    return null;
+                  },
                 ),
                 DropdownWidget(
                   value: _valueChoose,
@@ -206,17 +230,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: _buildRadioTile(
-                        value: EndingBeginningEnum.Beginning,
-                        groupValue: _endingBeginningEnum,
-                        title: EndingBeginningEnum.Beginning.name,
+                        value: AdvanceArrearsEnum.advance,
+                        groupValue: _advanceArrearsEnum,
+                        title: AdvanceArrearsEnum.advance.name,
                       ),
                     ),
                     SizedBox(width: 10),
                     Expanded(
                       child: _buildRadioTile(
-                        value: EndingBeginningEnum.Ending,
-                        groupValue: _endingBeginningEnum,
-                        title: EndingBeginningEnum.Ending.name,
+                        value: AdvanceArrearsEnum.arrears,
+                        groupValue: _advanceArrearsEnum,
+                        title: AdvanceArrearsEnum.arrears.name,
                       ),
                     ),
                   ],
@@ -227,6 +251,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(Icons.calculate, color: Colors.white),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        if (_assetCostController.text.isEmpty) {
+                          _assetCostController.text = _amountFinancedController.text;
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -254,11 +281,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildRadioTile({
-    required EndingBeginningEnum value,
-    required EndingBeginningEnum? groupValue,
+    required AdvanceArrearsEnum value,
+    required AdvanceArrearsEnum? groupValue,
     required String title,
   }) {
-    return RadioListTile<EndingBeginningEnum>(
+    return RadioListTile<AdvanceArrearsEnum>(
       contentPadding: EdgeInsets.all(0.0),
       value: value,
       tileColor: Color(0xFFe05170),
@@ -272,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupValue: groupValue,
       onChanged: (val) {
         setState(() {
-          _endingBeginningEnum = val;
+          _advanceArrearsEnum = val;
         });
       },
     );
