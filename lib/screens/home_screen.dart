@@ -26,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _assetCostController = TextEditingController();
   final _amountFinancedController = TextEditingController();
   final _numberOfRentalsController = TextEditingController();
-  final _gracePeriodController = TextEditingController();
-  final _residualAmountController = TextEditingController();
+  final _gracePeriodController = TextEditingController(text: '0');
+  final _residualAmountController = TextEditingController(text: '0');
 
   final _marginInterestRateFocusNode = FocusNode();
   final _assetCostFocusNode = FocusNode();
