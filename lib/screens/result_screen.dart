@@ -78,10 +78,10 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Image.asset(
-        //   'lib/assets/amortization_calculator_app.png',
-        //   height: 40.0,
-        // ),
+        title: Image.asset(
+          'lib/assets/logo-transparent-png.png',
+          height: 60.0,
+        ),
         scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         elevation: 0.5,

@@ -77,6 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0.5,
         shadowColor: Colors.black,
         centerTitle: true,
+        title: Image.asset(
+          'lib/assets/logo-transparent-png.png',
+          height: 60.0,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -288,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                     },
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF94364a),
                     ),
