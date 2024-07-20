@@ -8,6 +8,7 @@ class TextFormWidget extends StatelessWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final IconData icon;
+  final String? Function(String?) validator;
 
   const TextFormWidget({
     super.key,
@@ -17,6 +18,7 @@ class TextFormWidget extends StatelessWidget {
     required this.focusNode,
     required this.nextFocusNode,
     required this.icon,
+    required this.validator,
   });
 
   @override
@@ -36,12 +38,7 @@ class TextFormWidget extends StatelessWidget {
           border: OutlineInputBorder(),
           labelText: labelText,
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty||value==0) {
-            return 'Please enter $labelText';
-          }
-          return null;
-        },
+        validator:validator,
         onFieldSubmitted: (_) {
           FocusScope.of(context).requestFocus(nextFocusNode);
         },
