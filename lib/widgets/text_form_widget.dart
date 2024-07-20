@@ -9,6 +9,7 @@ class TextFormWidget extends StatelessWidget {
   final FocusNode nextFocusNode;
   final IconData icon;
   final String? Function(String?) validator;
+  final bool isDouble;
 
   const TextFormWidget({
     super.key,
@@ -19,6 +20,7 @@ class TextFormWidget extends StatelessWidget {
     required this.nextFocusNode,
     required this.icon,
     required this.validator,
+    required this.isDouble,
   });
 
   @override
@@ -29,7 +31,9 @@ class TextFormWidget extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         keyboardType: TextInputType.number,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        inputFormatters: isDouble
+            ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))]
+            : [FilteringTextInputFormatter.digitsOnly],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
@@ -38,7 +42,7 @@ class TextFormWidget extends StatelessWidget {
           border: OutlineInputBorder(),
           labelText: labelText,
         ),
-        validator:validator,
+        validator: validator,
         onFieldSubmitted: (_) {
           FocusScope.of(context).requestFocus(nextFocusNode);
         },
