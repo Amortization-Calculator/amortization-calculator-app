@@ -22,13 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _valueChoose = "4";
   final List<String> _listItem = ["4", "6", "12", "24"];
   AdvanceArrearsEnum? _advanceArrearsEnum;
-
+  final _marginInterestRateController = TextEditingController();
   final _assetCostController = TextEditingController();
   final _amountFinancedController = TextEditingController();
   final _numberOfRentalsController = TextEditingController();
   final _gracePeriodController = TextEditingController();
   final _residualAmountController = TextEditingController();
 
+  final _marginInterestRateFocusNode = FocusNode();
   final _assetCostFocusNode = FocusNode();
   final _amountFinancedFocusNode = FocusNode();
   final _numberOfRentalsFocusNode = FocusNode();
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _assetCostController.addListener(() => setState(() {}));
     _amountFinancedController.addListener(() => setState(() {}));
     _numberOfRentalsController.addListener(() => setState(() {}));
+    _marginInterestRateController.addListener(() => setState(() {}));
     _gracePeriodController.addListener(() => setState(() {}));
     _residualAmountController.addListener(() => setState(() {}));
     _advanceArrearsEnum = AdvanceArrearsEnum.advance;
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _numberOfRentalsController.dispose();
     _gracePeriodController.dispose();
     _residualAmountController.dispose();
-
+    _marginInterestRateFocusNode.dispose();
     _assetCostFocusNode.dispose();
     _amountFinancedFocusNode.dispose();
     _numberOfRentalsFocusNode.dispose();
@@ -88,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: TextSpan(
                     text: 'Welcome ',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: (22),
                       color: Color(0xFF970032),
                       fontWeight: FontWeight.bold,
                     ),
@@ -143,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _assetCostFocusNode,
                   nextFocusNode: _amountFinancedFocusNode,
                   icon: Icons.attach_money,
-                  validator:  (value) {
+                  isDouble: false,
+                  validator: (value) {
                     //no validator need
                     return null;
                   },
@@ -155,8 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _amountFinancedFocusNode,
                   nextFocusNode: _numberOfRentalsFocusNode,
                   icon: Icons.account_balance_wallet,
+                  isDouble: false,
                   validator: (value) {
-                    if (value == null || value.isEmpty||value==0) {
+                    if (value == null || value.isEmpty || value == 0) {
                       return 'Please enter Amount Financed';
                     }
                     return null;
@@ -167,15 +171,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   hintText: "12",
                   controller: _numberOfRentalsController,
                   focusNode: _numberOfRentalsFocusNode,
-                  nextFocusNode: _gracePeriodFocusNode,
+                  nextFocusNode: _marginInterestRateFocusNode,
                   icon: Icons.format_list_numbered,
+                  isDouble: false,
                   validator: (value) {
-                    if (value == null || value.isEmpty||value==0) {
+                    if (value == null || value.isEmpty || value == 0) {
                       return 'Please enter Number Of Rentals';
                     }
                     return null;
                   },
                 ),
+
+                TextFormWidget(
+                  labelText: "margin interest rate *",
+                  hintText: "0.5",
+                  controller: _marginInterestRateController,
+                  focusNode: _marginInterestRateFocusNode,
+                  nextFocusNode: _gracePeriodFocusNode,
+                  icon: Icons.percent,
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value == 0) {
+                      return 'Please entermargin interest rate';
+                    }
+                    return null;
+                  },
+                  isDouble: true,
+                ),
+
                 TextFormWidget(
                   labelText: "Grace Period *",
                   hintText: "No G.P",
@@ -183,8 +205,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _gracePeriodFocusNode,
                   nextFocusNode: _residualAmountFocusNode,
                   icon: Icons.timer,
-                  validator:(value) {
-                    if (value == null || value.isEmpty||value==0) {
+                  isDouble: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value == 0) {
                       return 'Please enter Grace Period';
                     }
                     return null;
@@ -197,8 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _residualAmountFocusNode,
                   nextFocusNode: _submitFocusNode,
                   icon: Icons.account_balance,
-                  validator:(value) {
-                    if (value == null || value.isEmpty||value==0) {
+                  isDouble: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value == 0) {
                       return 'Please enter Residual Amount';
                     }
                     return null;
@@ -224,6 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       _checkBox = val;
                     });
                   },
+                  activeColor: Color(0xFF94364a),
+                  checkColor: Colors.white,
                 ),
                 SizedBox(height: 10),
                 Row(
@@ -252,7 +278,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         if (_assetCostController.text.isEmpty) {
-                          _assetCostController.text = _amountFinancedController.text;
+                          _assetCostController.text =
+                              _amountFinancedController.text;
                         }
                         Navigator.push(
                           context,
