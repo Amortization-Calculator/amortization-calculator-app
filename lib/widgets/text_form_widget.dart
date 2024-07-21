@@ -10,6 +10,7 @@ class TextFormWidget extends StatelessWidget {
   final IconData icon;
   final String? Function(String?) validator;
   final bool isDouble;
+  final bool isNumeric; // Add this line
 
   const TextFormWidget({
     super.key,
@@ -21,6 +22,7 @@ class TextFormWidget extends StatelessWidget {
     required this.icon,
     required this.validator,
     required this.isDouble,
+    required this.isNumeric, // Add this line
   });
 
   @override
@@ -30,10 +32,12 @@ class TextFormWidget extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         focusNode: focusNode,
-        keyboardType: TextInputType.number,
-        inputFormatters: isDouble
+        keyboardType: isNumeric ? TextInputType.number : TextInputType.text, // Modify this line
+        inputFormatters: isNumeric
+            ? (isDouble
             ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))]
-            : [FilteringTextInputFormatter.digitsOnly],
+            : [FilteringTextInputFormatter.digitsOnly])
+            : [],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),

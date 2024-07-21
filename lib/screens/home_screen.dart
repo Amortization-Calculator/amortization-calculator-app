@@ -148,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _assetCostFocusNode,
                   nextFocusNode: _amountFinancedFocusNode,
                   icon: Icons.attach_money,
+                  isNumeric: true,
                   isDouble: false,
                   validator: (value) {
                     //no validator need
@@ -161,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _amountFinancedFocusNode,
                   nextFocusNode: _numberOfRentalsFocusNode,
                   icon: Icons.account_balance_wallet,
+                  isNumeric: true,
                   isDouble: false,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {
@@ -176,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _numberOfRentalsFocusNode,
                   nextFocusNode: _marginInterestRateFocusNode,
                   icon: Icons.format_list_numbered,
+                  isNumeric: true,
                   isDouble: false,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {
@@ -192,9 +195,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _marginInterestRateFocusNode,
                   nextFocusNode: _gracePeriodFocusNode,
                   icon: Icons.percent,
+                  isNumeric: true,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {
-                      return 'Please entermargin interest rate';
+                      return 'Please enter margin interest rate';
                     }
                     return null;
                   },
@@ -208,6 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _gracePeriodFocusNode,
                   nextFocusNode: _residualAmountFocusNode,
                   icon: Icons.timer,
+                  isNumeric: true,
                   isDouble: false,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {
@@ -223,6 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   focusNode: _residualAmountFocusNode,
                   nextFocusNode: _submitFocusNode,
                   icon: Icons.account_balance,
+                  isNumeric: true,
                   isDouble: false,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {

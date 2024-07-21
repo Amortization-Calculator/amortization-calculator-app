@@ -1,4 +1,5 @@
 import 'package:amortization_calculator_app/controller/DependencyInjection.dart';
+import 'package:amortization_calculator_app/screens/auth/login_screen.dart';
 import 'package:amortization_calculator_app/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,7 +60,8 @@ class _MyAppState extends State<MyApp> {
       },
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/', page:()=> const LoginScreen()),
+        GetPage(name: '/HomeScreen', page: () => const HomeScreen()),
         GetPage(name: '/NoInternetScreen', page: () => const NoInternetScreen()),
         GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
       ],
