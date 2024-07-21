@@ -4,7 +4,6 @@ import 'package:amortization_calculator_app/screens/result_screen.dart';
 import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 enum AdvanceArrearsEnum { advance, arrears }
 

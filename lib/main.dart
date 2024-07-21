@@ -60,8 +60,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const HomeScreen()),
-        GetPage(name: '/noInternet', page: () => const NoInternetScreen()),
-        GetPage(name: '/result', page: () => const ResultScreen()),
+        GetPage(name: '/NoInternetScreen', page: () => const NoInternetScreen()),
+        GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
       ],
       debugShowCheckedModeBanner: false,
     );
