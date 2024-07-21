@@ -12,6 +12,7 @@ class NetworkController extends GetxController {
   void onInit() {
     super.onInit();
     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    tryConnect();
   }
 
   void _updateConnectionStatus(ConnectivityResult result) {
@@ -31,7 +32,7 @@ class NetworkController extends GetxController {
   Future<ConnectivityResult> checkConnectivity() async {
     return await _connectivity.checkConnectivity();
   }
-  Future<void> retryConnection() async {
+  Future<void> tryConnect() async {
 
     ConnectivityResult result = await _connectivity.checkConnectivity();
 

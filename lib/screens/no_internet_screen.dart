@@ -40,7 +40,7 @@ class NoInternetScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 ConnectivityResult result = await networkController.checkConnectivity();
-                networkController.retryConnection();
+                networkController.tryConnect();
               },
               child: Text('Retry'),
             ),
