@@ -16,11 +16,8 @@ class _ResultScreenState extends State<ResultScreen> {
   var _openResult = 'Unknown';
   File? _fileToShare;
 
-
-
   Future<void> openFile() async {
     if (_fileToShare != null) {
-      // If the file is already created, try opening it
       final result = await OpenFile.open(_fileToShare!.path);
       setState(() {
         _openResult = "type=${result.type}  message=${result.message}";
@@ -82,68 +79,113 @@ class _ResultScreenState extends State<ResultScreen> {
           'lib/assets/logo-transparent-png.png',
           height: 60.0,
         ),
-        scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         elevation: 0.5,
-        shadowColor: Colors.black,
+        shadowColor: Colors.black.withOpacity(0.1),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '2000 EGP',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF94364a),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            SizedBox(height: 30.0), // Adjust this value to move the section up
+            Container(
+              padding: const EdgeInsets.all(24.0),
+              width: double.infinity,
+              constraints: BoxConstraints(maxWidth: 600),
+              decoration: BoxDecoration(
+                color: Colors.green[50],
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Rental Value Per Month',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    '2000 EGP',
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton.icon(
-                onPressed: openFile,
-                icon: Image.asset(
-                  'lib/assets/excel.png',
-                  height: 24.0,
-                  width: 24.0,
+            Spacer(),
+            ElevatedButton(
+              onPressed: openFile,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                minimumSize: Size(double.infinity, 50.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                label: Text('Open Excel Sheet'),
-              ),
-              SizedBox(width: 20.0),
-              ElevatedButton.icon(
-                /* try {
-      getFile();
-      final result = await OpenFile.open(_fileToShare!.path);
-      setState(() {
-        _openResult = "type=${result.type}  message=${result.message}";
-      });
 
-      if (result.type == ResultType.noAppToOpen) {
-        _showNoAppDialog();
-      }
-    } catch (e) {
-      setState(() {
-        _openResult = "Error: $e";
-      });
-    }
-                * */
-                onPressed: () async {
-                  final ByteData data = await rootBundle.load('lib/assets/test.xlsx');
-                  final Directory tempDir = await getTemporaryDirectory();
-                  final File tempFile = File('${tempDir.path}/test.xlsx');
-                  await tempFile.writeAsBytes(data.buffer.asUint8List());
-                  _fileToShare = tempFile;
-                  Share.shareXFiles([XFile(_fileToShare!.path)]);
-                },
-                icon: Icon(Icons.share),
-                label: Text('Share'),
               ),
-            ],
-          ),
-        ],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/assets/excel.png',
+                    height: 24.0,
+                    width: 24.0,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text('Open Excel Sheet'),
+                ],
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () async {
+                final ByteData data = await rootBundle.load('lib/assets/test.xlsx');
+                final Directory tempDir = await getTemporaryDirectory();
+                final File tempFile = File('${tempDir.path}/test.xlsx');
+                await tempFile.writeAsBytes(data.buffer.asUint8List());
+                _fileToShare = tempFile;
+                Share.shareXFiles([XFile(_fileToShare!.path)]);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal[700],
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                minimumSize: Size(double.infinity, 50.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.share, size: 24.0,color: Colors.white,),
+                  SizedBox(width: 10.0),
+                  Text('Share it',style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18
+                  ),),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.0),
+          ],
+        ),
       ),
     );
   }
