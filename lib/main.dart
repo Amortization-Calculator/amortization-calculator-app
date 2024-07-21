@@ -1,7 +1,13 @@
+import 'package:amortization_calculator_app/controller/DependencyInjection.dart';
+import 'package:amortization_calculator_app/screens/result_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:amortization_calculator_app/screens/home_screen.dart';
+import 'package:get/get.dart';
+import 'screens/home_screen.dart';
+import 'screens/no_internet_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Dependencyinjection.init();
   runApp(const MyApp());
 }
 
@@ -20,8 +26,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'amortization_calculator_app',
+    return GetMaterialApp(
+      title: 'Amortization Calculator App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white70,
@@ -51,7 +57,12 @@ class _MyAppState extends State<MyApp> {
           child: child!,
         );
       },
-      home: const HomeScreen(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/noInternet', page: () => const NoInternetScreen()),
+        GetPage(name: '/result', page: () => const ResultScreen()),
+      ],
       debugShowCheckedModeBanner: false,
     );
   }

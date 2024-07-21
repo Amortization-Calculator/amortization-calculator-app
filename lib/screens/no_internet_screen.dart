@@ -1,10 +1,15 @@
+import 'package:amortization_calculator_app/controller/network_controller.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final NetworkController networkController = Get.find<NetworkController>();
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -30,6 +35,14 @@ class NoInternetScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
               ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                ConnectivityResult result = await networkController.checkConnectivity();
+                networkController.retryConnection();
+              },
+              child: Text('Retry'),
             ),
           ],
         ),
