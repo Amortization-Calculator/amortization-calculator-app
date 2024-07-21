@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:amortization_calculator_app/screens/result_screen.dart';
 import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
@@ -8,7 +7,7 @@ import 'package:get/get.dart';
 enum AdvanceArrearsEnum { advance, arrears }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

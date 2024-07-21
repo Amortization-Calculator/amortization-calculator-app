@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../widgets/build_rich_text_widget.dart';
+
 class ResultScreen extends StatefulWidget {
   const ResultScreen({Key? key}) : super(key: key);
 
@@ -18,6 +20,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Future<void> openFile() async {
     if (_fileToShare != null) {
+      // If the file is already created, try opening it
       final result = await OpenFile.open(_fileToShare!.path);
       setState(() {
         _openResult = "type=${result.type}  message=${result.message}";
@@ -49,6 +52,7 @@ class _ResultScreenState extends State<ResultScreen> {
       });
     }
   }
+
 
   void _showNoAppDialog() {
     showDialog(
@@ -88,13 +92,28 @@ class _ResultScreenState extends State<ResultScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
+            SizedBox(height: 10.0), // Adjust this value to move the section up
+            RichTextWidget(
+              firstText: 'Calculation ',
+              secondFontSize: 20,
+              firstFontSize: 20,
+              secondText: "Result",
+            ),
+            Divider(
+              height: 20,
+              thickness: 2,
+              indent: 150,
+              endIndent: 150,
+              color: Color(0xFF94364a),
+            ),
+
             SizedBox(height: 30.0), // Adjust this value to move the section up
             Container(
               padding: const EdgeInsets.all(24.0),
               width: double.infinity,
               constraints: BoxConstraints(maxWidth: 600),
               decoration: BoxDecoration(
-                color: Colors.green[50],
+                color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(12.0),
                 boxShadow: [
                   BoxShadow(
@@ -114,7 +133,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey[700],
+                      color: Colors.grey[800],
                     ),
                   ),
                   SizedBox(height: 8.0),
@@ -123,7 +142,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     style: TextStyle(
                       fontSize: 32.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[800],
+                      color: Colors.grey[900],
                     ),
                   ),
                 ],
@@ -133,12 +152,12 @@ class _ResultScreenState extends State<ResultScreen> {
             ElevatedButton(
               onPressed: openFile,
               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white60,
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                 minimumSize: Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -149,14 +168,22 @@ class _ResultScreenState extends State<ResultScreen> {
                     width: 24.0,
                   ),
                   SizedBox(width: 10.0),
-                  Text('Open Excel Sheet'),
+                  Text(
+                    'Open Excel Sheet',
+                    style: TextStyle(
+                      // backgroundColor: Colors.black,
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
-                final ByteData data = await rootBundle.load('lib/assets/test.xlsx');
+                final ByteData data =
+                await rootBundle.load('lib/assets/test.xlsx');
                 final Directory tempDir = await getTemporaryDirectory();
                 final File tempFile = File('${tempDir.path}/test.xlsx');
                 await tempFile.writeAsBytes(data.buffer.asUint8List());
@@ -164,7 +191,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 Share.shareXFiles([XFile(_fileToShare!.path)]);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal[700],
+                backgroundColor: Colors.red[700],
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                 minimumSize: Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
@@ -174,12 +201,12 @@ class _ResultScreenState extends State<ResultScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.share, size: 24.0,color: Colors.white,),
+                  Icon(Icons.share, size: 24.0, color: Colors.white),
                   SizedBox(width: 10.0),
-                  Text('Share it',style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18
-                  ),),
+                  Text(
+                    'Share it',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
                 ],
               ),
             ),
