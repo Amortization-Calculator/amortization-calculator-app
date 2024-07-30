@@ -113,8 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Icon(
                               _obscurePassText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                               color: Colors.black,
                             ),
                           ),

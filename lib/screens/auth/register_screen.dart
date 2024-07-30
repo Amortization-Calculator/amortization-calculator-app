@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../controller/register_controller.dart';
 import '../../widgets/text_form_widget.dart';
 
 enum IndividualCompanyEnum { Individual, Company }
+
+enum GenderEnum { Male, Female }
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,22 +16,26 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  IndividualCompanyEnum? _individualCompanyEnum =
+      IndividualCompanyEnum.Individual;
+  GenderEnum? _genderEnum = GenderEnum.Male;
+
+  final RegisterController _registerController = Get.put(RegisterController());
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  IndividualCompanyEnum? _individualCompanyEnum=IndividualCompanyEnum.Individual;
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _confirmPasswordTextController =
+      TextEditingController();
 
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode phoneFocusNode = FocusNode();
-
   final FocusNode _passwordFocusNode = FocusNode();
-  final TextEditingController _passwordTextController = TextEditingController();
-  final TextEditingController _confirmPasswordTextController = TextEditingController();
+
   bool _obscurePassText = true;
   bool _obscureConfirmPassText = true;
-
-  IndividualCompanyEnum _selectedType = IndividualCompanyEnum.Individual;
 
   @override
   void dispose() {
@@ -139,7 +147,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 10),
                     Text(
                       'Account Type',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
                     Row(
@@ -161,7 +170,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Gender',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildRadioTileGender(
+                            value: GenderEnum.Male,
+                            groupValue: _genderEnum,
+                            title: 'Male',
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: _buildRadioTileGender(
+                            value: GenderEnum.Female,
+                            groupValue: _genderEnum,
+                            title: 'Female',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
                     TextFormField(
                       focusNode: _passwordFocusNode,
                       obscureText: _obscurePassText,
@@ -169,8 +204,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       controller: _passwordTextController,
                       validator: (value) {
-                        if (value == null || value.length < 7) {
-                          return 'Please enter a valid password';
+                        if (value == null || value.length < 6) {
+                          return 'the password must be at least 6 ';
                         }
                         return null;
                       },
@@ -184,8 +219,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                           child: Icon(
                             _obscurePassText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             color: Colors.black,
                           ),
                         ),
@@ -196,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 20),
                     TextFormField(
                       obscureText: _obscureConfirmPassText,
                       textInputAction: TextInputAction.done,
@@ -216,13 +251,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _obscureConfirmPassText = !_obscureConfirmPassText;
+                              _obscureConfirmPassText =
+                                  !_obscureConfirmPassText;
                             });
                           },
                           child: Icon(
                             _obscureConfirmPassText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             color: Colors.black,
                           ),
                         ),
@@ -237,25 +273,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Implement your registration logic here
-                            print('Register button pressed');
-                          }
+                            print('presed');
+                            _register();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF94364a), // Button color
-                          minimumSize: Size(double.infinity, 50), // Make button full-width
+                          minimumSize: Size(
+                              double.infinity, 50), // Make button full-width
                         ),
-                        // style: ElevatedButton.styleFrom(
-                        //   // backgroundColor: Color(0xFF94364a),
-                        //   // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        //   // shape: RoundedRectangleBorder(
-                        //   //   borderRadius: BorderRadius.circular(5),
-                        //   // ),
-                        // ),
                         child: Text(
                           'Register',
-                          style: TextStyle(fontSize: 16,color: Colors.white),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ),
@@ -267,6 +295,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      _registerController.registerUser(
+        firstName: 'omdaar',
+        lastName: 'kenafadwi', // Add the respective controllers for these fields
+        userName: nameController.text,
+        email: emailController.text,
+        password: _passwordTextController.text,
+        phoneNumber: phoneController.text,
+        gender: _genderEnum==GenderEnum.Male?'MALE':'FEMALE',
+        userType: _individualCompanyEnum == IndividualCompanyEnum.Individual
+            ? 'INDIVIDUAL'
+            : 'COMPANY',
+      );
+    }
   }
 
   Widget _buildRadioTile({
@@ -283,12 +328,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.5)),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+        ),
       ),
       groupValue: groupValue,
-      onChanged: (val) {
+      onChanged: (IndividualCompanyEnum? value) {
         setState(() {
-          _individualCompanyEnum = val;
+          _individualCompanyEnum = value;
+        });
+      },
+    );
+  }
+
+  Widget _buildRadioTileGender({
+    required GenderEnum value,
+    required GenderEnum? groupValue,
+    required String title,
+  }) {
+    return RadioListTile<GenderEnum>(
+      contentPadding: EdgeInsets.all(0.0),
+      value: value,
+      tileColor: Color(0xFFe05170),
+      activeColor: Colors.white,
+      dense: true,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.5)),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+        ),
+      ),
+      groupValue: groupValue,
+      onChanged: (GenderEnum? value) {
+        setState(() {
+          _genderEnum = value;
         });
       },
     );
