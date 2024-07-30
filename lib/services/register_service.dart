@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import '../utils/api_endpoints.dart';
 
 class RegisterService {
   final String _registerUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.register;
+  Completer<void>? _completer;
 
   Future<Map<String, dynamic>> registerUser({
     required String firstName,
@@ -29,14 +30,25 @@ class RegisterService {
     });
 
     try {
-      final response = await http.post(Uri.parse(_registerUrl), headers: headers, body: body);
+      final response = await http.post(
+        Uri.parse(_registerUrl),
+        headers: headers,
+        body: body,
+      ).timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          throw TimeoutException('Request timed out');
+        },
+      );
+
       if (response.statusCode == 200) {
-        return {'success': true, 'message': 'Registration successful'}; // Registration successful
+        return {'success': true, 'message': 'Registration successful'};
       } else {
-        return {'success': false, 'message': json.decode(response.body)['message'] ?? 'Registration failed'}; // Registration failed with message
+        final message = json.decode(response.body)['message'] ?? 'Registration failed';
+        return {'success': false, 'message': message};
       }
     } catch (e) {
-      return {'success': false, 'message': e.toString()}; // Error occurred
+      return {'success': false, 'message': e.toString()};
     }
   }
 }
