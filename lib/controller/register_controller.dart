@@ -17,51 +17,77 @@ class RegisterController extends GetxController {
     required String userType,
   }) async {
     isLoading(true);
-    final response = await registerService.registerUser(
-      firstName: firstName,
-      lastName: lastName,
-      userName: userName,
-      email: email,
-      password: password,
-      phoneNumber: phoneNumber,
-      gender: gender,
-      userType: userType,
-    );
-    isLoading(false);
-
-    if (response['success']) {
-      Get.defaultDialog(
-        title: 'Success',
-        middleText: response['message'],
-        textConfirm: 'back to login page',
-        onConfirm: () {
-          Get.back();
-          Get.back();
-
-        },
-        confirmTextColor: Colors.white,
-        buttonColor: Colors.green,
-        barrierDismissible: false,
-        radius: 10.0,
-        content: Column(
-          children: [
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 50,
-            ),
-            SizedBox(height: 10),
-            Text(response['message']),
-          ],
-        ),
+    try {
+      final response = await registerService.registerUser(
+        firstName: firstName,
+        lastName: lastName,
+        userName: userName,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        userType: userType,
       );
-    } else {
+
+      if (response['success']) {
+        Get.defaultDialog(
+          title: 'Success',
+          middleText: response['message'],
+          textConfirm: 'Back to login page',
+          onConfirm: () {
+            Get.back();
+            Get.back();
+          },
+          confirmTextColor: Colors.white,
+          buttonColor: Colors.green,
+          barrierDismissible: false,
+          radius: 10.0,
+          content: Column(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 50,
+              ),
+              SizedBox(height: 10),
+              Text(response['message']),
+            ],
+          ),
+        );
+      } else {
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: response['message'],
+          textConfirm: 'OK',
+          onConfirm: () {
+            print(response['message']);
+            Get.back();
+          },
+          confirmTextColor: Colors.white,
+          buttonColor: Colors.red,
+          barrierDismissible: false,
+          radius: 10.0,
+          content: Column(
+            children: [
+              Icon(
+                Icons.error,
+                color: Colors.red,
+                size: 50,
+              ),
+              SizedBox(height: 10),
+              Text(response['message']),
+            ],
+          ),
+        );
+      }
+    } catch (error) {
+      // Handle registration error
+      print('Registration failed: $error');
       Get.defaultDialog(
         title: 'Error',
-        middleText: response['message'],
+        middleText: 'Registration failed: $error',
         textConfirm: 'OK',
         onConfirm: () {
-          print(response['message']);
           Get.back();
         },
         confirmTextColor: Colors.white,
@@ -76,10 +102,12 @@ class RegisterController extends GetxController {
               size: 50,
             ),
             SizedBox(height: 10),
-            Text(response['message']),
+            Text('Registration failed: $error'),
           ],
         ),
       );
+    } finally {
+      isLoading(false);
     }
   }
 }
