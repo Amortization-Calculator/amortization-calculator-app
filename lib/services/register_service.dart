@@ -5,11 +5,8 @@ import '../utils/api_endpoints.dart';
 
 class RegisterService {
   final String _registerUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.register;
-  Completer<void>? _completer;
 
   Future<Map<String, dynamic>> registerUser({
-    required String firstName,
-    required String lastName,
     required String userName,
     required String email,
     required String password,
@@ -19,8 +16,6 @@ class RegisterService {
   }) async {
     final headers = {'Content-Type': 'application/json'};
     final body = json.encode({
-      'firstName': firstName,
-      'lastName': lastName,
       'userName': userName,
       'email': email,
       'password': password,
@@ -30,22 +25,42 @@ class RegisterService {
     });
 
     try {
-      final response = await http.post(
+      final response = await http
+          .post(
         Uri.parse(_registerUrl),
         headers: headers,
         body: body,
-      ).timeout(
-        Duration(seconds: 10),
+      )
+          .timeout(
+        const Duration(
+          seconds: 10,
+        ),
         onTimeout: () {
           throw TimeoutException('Request timed out');
         },
       );
 
       if (response.statusCode == 200) {
-        return {'success': true, 'message': 'Registration successful'};
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return {
+          'success': true,
+          'message': responseData['message'],
+          'isAuthSuccessful': responseData['isAuthSuccessful'],
+          'email': responseData['email'],
+          'firstName': responseData['firstName'],
+          'lastName': responseData['lastName'],
+          'userName': responseData['userName'],
+          'gender': responseData['gender'],
+          'userType': responseData['userType'],
+          'token': responseData['token'],
+          'expireDate': responseData['expireDate'],
+        };
       } else {
-        final message = json.decode(response.body)['message'] ?? 'Registration failed';
-        return {'success': false, 'message': message};
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return {
+          'success': false,
+          'message': responseData['message'] ?? 'Registration failed'
+        };
       }
     } catch (e) {
       return {'success': false, 'message': e.toString()};

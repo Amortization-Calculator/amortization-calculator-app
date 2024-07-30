@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-  TextEditingController();
+      TextEditingController();
 
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
@@ -120,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   return 'Please enter your email';
                                 }
                                 const emailPattern =
-                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$';
                                 final regExp = RegExp(emailPattern);
                                 if (!regExp.hasMatch(value)) {
                                   return 'Please enter a valid email address';
@@ -154,7 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'Account Type',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -258,7 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onTap: () {
                                     setState(() {
                                       _obscureConfirmPassText =
-                                      !_obscureConfirmPassText;
+                                          !_obscureConfirmPassText;
                                     });
                                   },
                                   child: Icon(
@@ -320,8 +322,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
       try {
         await _registerController.registerUser(
-          firstName: 'omdaar',
-          lastName: 'kenafadwi',
           userName: nameController.text,
           email: emailController.text,
           password: _passwordTextController.text,
@@ -343,6 +343,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     }
   }
+
   Widget _buildRadioTile({
     required IndividualCompanyEnum value,
     required IndividualCompanyEnum? groupValue,

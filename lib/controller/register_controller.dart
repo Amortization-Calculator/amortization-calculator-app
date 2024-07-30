@@ -1,5 +1,7 @@
+import 'package:amortization_calculator_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/register_service.dart';
 
 class RegisterController extends GetxController {
@@ -7,8 +9,6 @@ class RegisterController extends GetxController {
   RegisterService registerService = RegisterService();
 
   Future<void> registerUser({
-    required String firstName,
-    required String lastName,
     required String userName,
     required String email,
     required String password,
@@ -19,8 +19,6 @@ class RegisterController extends GetxController {
     isLoading(true);
     try {
       final response = await registerService.registerUser(
-        firstName: firstName,
-        lastName: lastName,
         userName: userName,
         email: email,
         password: password,
@@ -29,14 +27,23 @@ class RegisterController extends GetxController {
         userType: userType,
       );
 
-      if (response['success']) {
+      if (response['isAuthSuccessful'] == true) {
+        // Save token using SharedPreferences
+        var token = response['token'];
+        var gender= response['gender'];
+        var expTime= response['expireDate'];
+        print(expTime);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        await prefs.setString('gender', gender);
+        await prefs.setString('expireDate', expTime);
+
         Get.defaultDialog(
           title: 'Success',
           middleText: response['message'],
-          textConfirm: 'Back to login page',
+          textConfirm: 'Registered Successfully',
           onConfirm: () {
-            Get.back();
-            Get.back();
+            Get.offAll(() => HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,
@@ -44,12 +51,12 @@ class RegisterController extends GetxController {
           radius: 10.0,
           content: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 color: Colors.green,
                 size: 50,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(response['message']),
             ],
           ),
@@ -60,7 +67,6 @@ class RegisterController extends GetxController {
           middleText: response['message'],
           textConfirm: 'OK',
           onConfirm: () {
-            print(response['message']);
             Get.back();
           },
           confirmTextColor: Colors.white,
@@ -69,12 +75,12 @@ class RegisterController extends GetxController {
           radius: 10.0,
           content: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.error,
                 color: Colors.red,
                 size: 50,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(response['message']),
             ],
           ),
@@ -96,12 +102,12 @@ class RegisterController extends GetxController {
         radius: 10.0,
         content: Column(
           children: [
-            Icon(
+            const Icon(
               Icons.error,
               color: Colors.red,
               size: 50,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text('Registration failed: $error'),
           ],
         ),
