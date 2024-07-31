@@ -5,10 +5,8 @@ import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../enums.dart';
 import '../services/logout_service.dart';
-
-enum AdvanceArrearsEnum { advance, arrears }
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -58,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _marginInterestRateController.addListener(() => setState(() {}));
     _gracePeriodController.addListener(() => setState(() {}));
     _residualAmountController.addListener(() => setState(() {}));
-    _advanceArrearsEnum = AdvanceArrearsEnum.advance;
+    _advanceArrearsEnum = AdvanceArrearsEnum?.advance;
     _loadUserInfo();
   }
 
@@ -125,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <TextSpan>[
                       TextSpan(
                         text: name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.black,
                         ),
@@ -133,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
                   child: RichText(
                     text: TextSpan(
