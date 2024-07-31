@@ -4,7 +4,7 @@ import 'dart:convert';
 import '../utils/api_endpoints.dart';
 
 class LoginService {
-  final String _loginUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.login;
+  final String _loginUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndpoints.login;
 
   Future<Map<String, dynamic>> loginUser({
     required String userName,

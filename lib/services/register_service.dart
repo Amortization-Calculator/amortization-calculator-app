@@ -4,7 +4,7 @@ import 'dart:convert';
 import '../utils/api_endpoints.dart';
 
 class RegisterService {
-  final String _registerUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.register;
+  final String _registerUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndpoints.register;
 
   Future<Map<String, dynamic>> registerUser({
     required String userName,

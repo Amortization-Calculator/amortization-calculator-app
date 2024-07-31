@@ -17,11 +17,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isConnected = false;
-  String name ="";
+  String name = "";
 
   bool? _checkBox = false;
   String? _valueChoose = "4";
-  final List<String> _listItem = ["4", "6", "12", "24"];
+  final List<String> _listItem = ["4", "6", "12", "24", "36"];
   AdvanceArrearsEnum? _advanceArrearsEnum;
   final _marginInterestRateController = TextEditingController();
   final _assetCostController = TextEditingController();
@@ -37,13 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final _gracePeriodFocusNode = FocusNode();
   final _residualAmountFocusNode = FocusNode();
   final _submitFocusNode = FocusNode();
+
   Future<void> _loadUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('userName') ?? 'User';
     final gender = prefs.getString('gender') ?? 'Mr.';
-
     setState(() {
-      name=(gender == 'MALE' ? 'Mr.' : 'Mrs.')+' '+ username;
+      name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
     });
   }
 
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   nextFocusNode: _amountFinancedFocusNode,
                   icon: Icons.attach_money,
                   isNumeric: true,
-                  isDouble: false,
+                  isDouble: true,
                   validator: (value) {
                     //no validator need
                     return null;
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   nextFocusNode: _numberOfRentalsFocusNode,
                   icon: Icons.account_balance_wallet,
                   isNumeric: true,
-                  isDouble: false,
+                  isDouble: true,
                   validator: (value) {
                     if (value == null || value.isEmpty || value == 0) {
                       return 'Please enter Amount Financed';
@@ -198,7 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     return null;
                   },
                 ),
-
                 TextFormWidget(
                   labelText: "margin interest rate *",
                   hintText: "0.5",
@@ -215,7 +214,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   isDouble: true,
                 ),
-
                 TextFormWidget(
                   labelText: "Grace Period *",
                   hintText: "No G.P",
@@ -258,10 +256,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 CheckboxListTile(
-                  contentPadding: EdgeInsets.all(0.0),
-                  title: Text("Start from this month?"),
+                  contentPadding:const EdgeInsets.all(0.0),
+                  title: const Text("Start from this month?"),
                   value: _checkBox,
                   onChanged: (val) {
                     setState(() {
@@ -271,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   activeColor: Color(0xFF94364a),
                   checkColor: Colors.white,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -281,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: AdvanceArrearsEnum.advance.name,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: _buildRadioTile(
                         value: AdvanceArrearsEnum.arrears,
@@ -291,22 +289,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton.icon(
-                    icon: Icon(Icons.calculate, color: Colors.white),
+                    icon: const Icon(Icons.calculate, color: Colors.white),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         if (_assetCostController.text.isEmpty) {
                           _assetCostController.text =
                               _amountFinancedController.text;
                         }
-                        Get.to(()=>ResultScreen());
-                        //       builder: (context) => ResultScreen()),
-                        // );
+                        Get.to(() => const ResultScreen());
                       }
                     },
-
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF94364a),
                     ),

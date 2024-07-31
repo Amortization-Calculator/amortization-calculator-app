@@ -35,7 +35,6 @@ class LoginController extends GetxController {
         await prefs.setString('expireDate', expTime);
         await prefs.setString('userName', userName);
 
-
         Get.defaultDialog(
           title: 'Success',
           textConfirm: 'Registered Successfully',
