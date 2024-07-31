@@ -5,6 +5,8 @@ import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/logout_service.dart';
+
 enum AdvanceArrearsEnum { advance, arrears }
 
 class HomeScreen extends StatefulWidget {
@@ -91,6 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
           'lib/assets/logo-transparent-png.png',
           height: 60.0,
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0), // Add padding here
+            child: IconButton(
+              icon: Icon(Icons.logout, color: Colors.black), // Logout icon
+              onPressed: () async {
+                LogoutService logoutService = LogoutService();
+                await logoutService.logout();
+              },
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

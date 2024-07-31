@@ -2,6 +2,7 @@ import 'package:amortization_calculator_app/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../services/logout_service.dart';
 import '../home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,11 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     //---------------------------------------------//
-
-    // await prefs.remove('gender');
-    // await prefs.remove('userName');
-    // await prefs.remove('token');
-    // await prefs.remove('expireDate');
+    // LogoutService logoutService = LogoutService();
+    // await logoutService.logout();
     //---------------------------------------------//
 
 
