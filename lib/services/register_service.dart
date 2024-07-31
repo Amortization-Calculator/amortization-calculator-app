@@ -47,8 +47,6 @@ class RegisterService {
           'message': responseData['message'],
           'isAuthSuccessful': responseData['isAuthSuccessful'],
           'email': responseData['email'],
-          'firstName': responseData['firstName'],
-          'lastName': responseData['lastName'],
           'userName': responseData['userName'],
           'gender': responseData['gender'],
           'userType': responseData['userType'],

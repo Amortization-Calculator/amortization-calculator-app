@@ -27,23 +27,25 @@ class RegisterController extends GetxController {
         userType: userType,
       );
 
-      if (response['isAuthSuccessful'] == true) {
+      if (response['success']) {
         // Save token using SharedPreferences
         var token = response['token'];
         var gender= response['gender'];
         var expTime= response['expireDate'];
-        print(expTime);
+        var userName = response['userName'];
+        // print(expTime);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         await prefs.setString('gender', gender);
         await prefs.setString('expireDate', expTime);
+        await prefs.setString('userName', userName);
 
         Get.defaultDialog(
           title: 'Success',
           middleText: response['message'],
           textConfirm: 'Registered Successfully',
           onConfirm: () {
-            Get.offAll(() => HomeScreen());
+            Get.offAll(() =>const HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,
