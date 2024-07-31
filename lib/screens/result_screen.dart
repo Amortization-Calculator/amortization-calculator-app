@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../services/logout_service.dart';
 import '../widgets/build_rich_text_widget.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -79,14 +80,27 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        shadowColor: Colors.black,
+        centerTitle: true,
         title: Image.asset(
           'lib/assets/logo-transparent-png.png',
           height: 60.0,
         ),
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        shadowColor: Colors.black.withOpacity(0.1),
-        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0), // Add padding here
+            child: IconButton(
+              icon: const Icon(Icons.logout, color: Colors.black), // Logout icon
+              onPressed: () async {
+                LogoutService logoutService = LogoutService();
+                await logoutService.logout();
+              },
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
