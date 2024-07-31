@@ -27,6 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     //---------------------------------------------//
+
+    // await prefs.remove('gender');
+    // await prefs.remove('userName');
     // await prefs.remove('token');
     // await prefs.remove('expireDate');
     //---------------------------------------------//
