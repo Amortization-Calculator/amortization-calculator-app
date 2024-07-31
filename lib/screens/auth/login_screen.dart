@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/login_controller.dart';
 import '../../widgets/text_form_widget.dart';
-import '../home_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -34,22 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     if (_formKey.currentState!.validate()) {
-      // Set loading state to true
       setState(() {
         _isLoading = true;
       });
       try {
-        // Perform login
         await _loginController.loginUser(
           userName: nameController.text,
           password: _passwordTextController.text,
         );
       } catch (error) {
-        // Handle login error
         print('Login failed: $error');
-        // Optionally, show an error message to the user
+
       } finally {
-        // Set loading state to false
         setState(() {
           _isLoading = false;
         });
