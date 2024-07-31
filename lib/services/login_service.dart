@@ -45,7 +45,7 @@ class LoginService {
         final Map<String, dynamic> responseData = json.decode(response.body);
         return {
           'success': false,
-          'message': responseData['message'] ?? 'Registration failed'
+          'message': responseData['message'] ?? 'Login failed'
         };
       }
     } catch (e) {

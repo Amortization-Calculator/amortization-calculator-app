@@ -37,7 +37,7 @@ class LoginController extends GetxController {
 
         Get.defaultDialog(
           title: 'Success',
-          textConfirm: 'Registered Successfully',
+          textConfirm: 'Login Successfully',
           onConfirm: () {
             Get.offAll(() => const HomeScreen());
           },

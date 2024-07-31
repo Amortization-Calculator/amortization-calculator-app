@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0), // Add padding here
             child: IconButton(
-              icon: Icon(Icons.logout, color: Colors.black), // Logout icon
+              icon: const Icon(Icons.logout, color: Colors.black), // Logout icon
               onPressed: () async {
                 LogoutService logoutService = LogoutService();
                 await logoutService.logout();
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 RichText(
                   text: TextSpan(
                     text: 'Welcome ',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: (22),
                       color: Color(0xFF970032),
                       fontWeight: FontWeight.bold,
