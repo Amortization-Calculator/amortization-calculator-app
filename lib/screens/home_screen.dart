@@ -3,6 +3,7 @@ import 'package:amortization_calculator_app/screens/result_screen.dart';
 import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AdvanceArrearsEnum { advance, arrears }
 
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isConnected = false;
+  String name ="";
 
   bool? _checkBox = false;
   String? _valueChoose = "4";
@@ -35,11 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final _gracePeriodFocusNode = FocusNode();
   final _residualAmountFocusNode = FocusNode();
   final _submitFocusNode = FocusNode();
+  Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('userName') ?? 'User';
+    final gender = prefs.getString('gender') ?? 'Mr.';
+
+    setState(() {
+      name=(gender == 'MALE' ? 'Mr.' : 'Mrs.')+' '+ username;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
     _assetCostController.addListener(() => setState(() {}));
     _amountFinancedController.addListener(() => setState(() {}));
     _numberOfRentalsController.addListener(() => setState(() {}));
@@ -47,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _gracePeriodController.addListener(() => setState(() {}));
     _residualAmountController.addListener(() => setState(() {}));
     _advanceArrearsEnum = AdvanceArrearsEnum.advance;
+    _loadUserInfo();
   }
 
   @override
@@ -99,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Mr. Omar',
+                        text: name,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,

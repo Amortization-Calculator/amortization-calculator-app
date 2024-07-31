@@ -1,8 +1,9 @@
-import 'package:amortization_calculator_app/screens/auth/register_screen.dart';
-import 'package:amortization_calculator_app/screens/home_screen.dart';
-import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controller/login_controller.dart';
+import '../../widgets/text_form_widget.dart';
+import '../home_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,8 +16,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController nameController = TextEditingController();
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+  final LoginController _loginController =  Get.put(LoginController());
   final TextEditingController _passwordTextController = TextEditingController();
   bool _obscurePassText = true;
+  bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -29,133 +32,172 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      // If the form is valid, proceed with login
-      Get.off(() => HomeScreen()); // Use Get.off to remove the login screen from the navigation stack
+      // Set loading state to true
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        // Perform login
+        await _loginController.loginUser(
+          userName: nameController.text,
+          password: _passwordTextController.text,
+        );
+      } catch (error) {
+        // Handle login error
+        print('Login failed: $error');
+        // Optionally, show an error message to the user
+      } finally {
+        // Set loading state to false
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 60.0),
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'lib/assets/logo-transparent-png.png',
-                  height: 150.0,
-                ),
-                SizedBox(height: 24.0),
-                Text(
-                  'Welcome back,',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                Text(
-                  'Understand Your Repayment Plan.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF94364a),
-                  ),
-                ),
-                SizedBox(height: 24.0),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormWidget(
-                        labelText: 'Name',
-                        hintText: 'Enter your name',
-                        controller: nameController,
-                        focusNode: nameFocusNode,
-                        nextFocusNode: _passwordFocusNode,
-                        icon: Icons.person,
-                        isNumeric: false,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                        isDouble: false,
-                      ),
-                      // SizedBox(height: 24.0),
-                      TextFormField(
-                        focusNode: _passwordFocusNode,
-                        obscureText: _obscurePassText,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: _passwordTextController,
-                        validator: (value) {
-                          if (value == null || value.length < 7) {
-                            return 'Please enter a valid password';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          hintText: "Enter Your Password",
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscurePassText = !_obscurePassText;
-                              });
-                            },
-                            child: Icon(
-                              _obscurePassText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: Colors.black,
-                            ),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText: "Password",
-                        ),
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 50.0),
-                Column(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 60.0),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ElevatedButton(
-                      onPressed: _login, // Call _login function
-                      child: Text('Login', style: TextStyle(color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF94364a), // Button color
-                        minimumSize: Size(double.infinity, 50), // Make button full-width
+                    Image.asset(
+                      'lib/assets/logo-transparent-png.png',
+                      height: 150.0,
+                    ),
+                    SizedBox(height: 24.0),
+                    Text(
+                      'Welcome back,',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 12.0), // Add space between buttons
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.to(()=>RegisterScreen());
-                      },
-                      child: Text('Create Account', style: TextStyle(color: Colors.black)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFe1e2e2), // Button color
-                        minimumSize: Size(double.infinity, 50), // Make button full-width
+                    SizedBox(height: 8.0),
+                    Text(
+                      'Understand Your Repayment Plan.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF94364a),
+                      ),
+                    ),
+                    SizedBox(height: 24.0),
+                    Form(
+                      key: _formKey,
+                      child: AbsorbPointer(
+                        absorbing: _isLoading,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFormWidget(
+                              labelText: 'Name',
+                              hintText: 'Enter your name',
+                              controller: nameController,
+                              focusNode: nameFocusNode,
+                              nextFocusNode: _passwordFocusNode,
+                              icon: Icons.person,
+                              isNumeric: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your name';
+                                }
+                                return null;
+                              },
+                              isDouble: false,
+                            ),
+                            TextFormField(
+                              focusNode: _passwordFocusNode,
+                              obscureText: _obscurePassText,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              controller: _passwordTextController,
+                              validator: (value) {
+                                if (value == null || value.length < 6) {
+                                  return 'Please enter a valid password';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                hintText: "Enter Your Password",
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscurePassText = !_obscurePassText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscurePassText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(),
+                                labelText: "Password",
+                              ),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 50.0),
+                            Column(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: _isLoading ? null : _login,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: _isLoading
+                                        ? Colors.grey
+                                        : Color(0xFF94364a),
+                                    minimumSize: Size(double.infinity, 50),
+                                  ),
+                                  child: Text(
+                                    _isLoading ? 'Logging in...' : 'Login',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                SizedBox(height: 12.0),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.to(() => RegisterScreen());
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFFe1e2e2),
+                                    minimumSize: Size(double.infinity, 50),
+                                  ),
+                                  child: Text(
+                                    'Create Account',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          if (_isLoading)
+            Container(
+              color: Colors.black54,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        ],
       ),
     );
   }

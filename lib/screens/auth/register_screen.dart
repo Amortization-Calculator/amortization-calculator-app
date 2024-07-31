@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-      TextEditingController();
+  TextEditingController();
 
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
@@ -260,7 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onTap: () {
                                     setState(() {
                                       _obscureConfirmPassText =
-                                          !_obscureConfirmPassText;
+                                      !_obscureConfirmPassText;
                                     });
                                   },
                                   child: Icon(
