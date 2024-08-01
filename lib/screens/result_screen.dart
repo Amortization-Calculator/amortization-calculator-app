@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-
+import 'package:get/get.dart';
 import '../services/logout_service.dart';
+import '../services/file_service.dart';
 import '../widgets/build_rich_text_widget.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -19,65 +19,82 @@ class _ResultScreenState extends State<ResultScreen> {
   var _openResult = 'Unknown';
   File? _fileToShare;
 
-  Future<void> openFile() async {
-    if (_fileToShare != null) {
-      // If the file is already created, try opening it
-      final result = await OpenFile.open(_fileToShare!.path);
-      setState(() {
-        _openResult = "type=${result.type}  message=${result.message}";
-      });
-
-      if (result.type == ResultType.noAppToOpen) {
-        _showNoAppDialog();
-      }
-      return;
-    }
-
+  Future<void> fetchAndOpenFile(String filename) async {
+    print('Fetching file: $filename');
+    final fileService = FileService();
     try {
-      final ByteData data = await rootBundle.load('lib/assets/test.xlsx');
-      final Directory tempDir = await getTemporaryDirectory();
-      final File tempFile = File('${tempDir.path}/test.xlsx');
-      await tempFile.writeAsBytes(data.buffer.asUint8List());
-      _fileToShare = tempFile;
-      final result = await OpenFile.open(_fileToShare!.path);
-      setState(() {
-        _openResult = "type=${result.type}  message=${result.message}";
-      });
+      final file = await fileService.fetchFile(filename);
+      if (file != null) {
+        print('File found: ${file.path}');
+        setState(() {
+          _fileToShare = file;
+        });
 
-      if (result.type == ResultType.noAppToOpen) {
-        _showNoAppDialog();
+        final result = await OpenFile.open(file.path);
+        print('OpenFile result: type=${result.type}, message=${result.message}');
+
+        if (result.type == ResultType.noAppToOpen) {
+          // Dialog is shown only when there is no app to open the file
+          _showNoAppDialog();
+        }
+
+        setState(() {
+          _openResult = "type=${result.type}  message=${result.message}";
+        });
+      } else {
+        setState(() {
+          _openResult = "Error: Failed to fetch the file";
+        });
       }
     } catch (e) {
+      print('Error fetching or opening file: $e');
       setState(() {
-        _openResult = "Error: $e";
+        _openResult = "Error: ${e.toString()}";
       });
     }
   }
 
 
   void _showNoAppDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("No Application Found"),
-          content: Text(
-              "No application is available to open this file. Please download an app that can open Excel files."),
-          actions: <Widget>[
-            TextButton(
-              child: Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
+    print('Showing no app dialog');
+    Get.defaultDialog(
+      title: "No Application Found",
+      middleText: "No application is available to open this file. Please download an app that can open Excel files.",
+      textConfirm: "OK",
+      onConfirm: () {
+        print('Dialog confirmed');
+        Get.back();
       },
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.red,
+      barrierDismissible: false,
+      radius: 10.0,
+      content: Column(
+        children: [
+          const Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 50,
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "No application is available to open this file. Please download an app that can open Excel files.",
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments as Map<String, dynamic>?;
+
+    final rentalValue = arguments?['rentalValue'];
+    final excelFile = arguments?['excelFile'] ?? '';
+
+    print("rentalValue: $rentalValue");
+    print("excelFile: $excelFile");
+
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
@@ -91,9 +108,9 @@ class _ResultScreenState extends State<ResultScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0), // Add padding here
+            padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: const Icon(Icons.logout, color: Colors.black), // Logout icon
+              icon: const Icon(Icons.logout, color: Colors.black),
               onPressed: () async {
                 LogoutService logoutService = LogoutService();
                 await logoutService.logout();
@@ -106,22 +123,21 @@ class _ResultScreenState extends State<ResultScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            SizedBox(height: 10.0), // Adjust this value to move the section up
-            RichTextWidget(
+            SizedBox(height: 10.0),
+            const RichTextWidget(
               firstText: 'Calculation ',
               secondFontSize: 20,
               firstFontSize: 20,
               secondText: "Result",
             ),
-            Divider(
+            const Divider(
               height: 20,
               thickness: 2,
               indent: 150,
               endIndent: 150,
               color: Color(0xFF94364a),
             ),
-
-            SizedBox(height: 30.0), // Adjust this value to move the section up
+            const SizedBox(height: 30.0),
             Container(
               padding: const EdgeInsets.all(24.0),
               width: double.infinity,
@@ -141,7 +157,7 @@ class _ResultScreenState extends State<ResultScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Text(
                     'Rental Value Per Month',
                     style: TextStyle(
@@ -150,9 +166,9 @@ class _ResultScreenState extends State<ResultScreen> {
                       color: Colors.grey[800],
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
-                    '2000 EGP',
+                    '$rentalValue EGP',
                     style: TextStyle(
                       fontSize: 32.0,
                       fontWeight: FontWeight.bold,
@@ -162,13 +178,13 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
-              onPressed: openFile,
+              onPressed: () => fetchAndOpenFile(excelFile),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white60,
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                minimumSize: Size(double.infinity, 50.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                minimumSize: const Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
@@ -181,11 +197,10 @@ class _ResultScreenState extends State<ResultScreen> {
                     height: 24.0,
                     width: 24.0,
                   ),
-                  SizedBox(width: 10.0),
-                  Text(
+                  const SizedBox(width: 10.0),
+                  const Text(
                     'Open Excel Sheet',
                     style: TextStyle(
-                      // backgroundColor: Colors.black,
                       color: Colors.black,
                       fontSize: 16,
                     ),
@@ -193,28 +208,29 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
-                final ByteData data =
-                await rootBundle.load('lib/assets/test.xlsx');
-                final Directory tempDir = await getTemporaryDirectory();
-                final File tempFile = File('${tempDir.path}/test.xlsx');
-                await tempFile.writeAsBytes(data.buffer.asUint8List());
-                _fileToShare = tempFile;
-                Share.shareXFiles([XFile(_fileToShare!.path)]);
+                if (_fileToShare != null) {
+                  Share.shareXFiles([XFile(_fileToShare!.path)]);
+                } else {
+                  await fetchAndOpenFile(excelFile);
+                  if (_fileToShare != null) {
+                    Share.shareXFiles([XFile(_fileToShare!.path)]);
+                  }
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red[700],
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-                minimumSize: Size(double.infinity, 50.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                minimumSize: const Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(Icons.share, size: 24.0, color: Colors.white),
                   SizedBox(width: 10.0),
                   Text(
@@ -224,7 +240,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/result_screen.dart';
 import '../services/calc_service.dart';
 
@@ -35,14 +34,33 @@ class CalcController extends GetxController {
         startFromFirstMonth: startFromFirstMonth,
       );
 
+// Print all the data for debugging purposes
+      print('Asset Cost: $assetCost');
+      print('Amount Finance: $amountFinance');
+      print('Interest Rate: $interestRate');
+      print('Effective Rate: $effectiveRate');
+      print('Number of Rentals: $noOfRental');
+      print('Rental Interval: $rentalInterval');
+      print('Residual Value: $residualValue');
+      print('Grace Period: $gracePeriod');
+      print('Beginning: $beginning');
+      print('Start From First Month: $startFromFirstMonth');
+
+      // Check and log the result
+      print('Calculation Result: $result');
+
       if (result['success']) {
-        print('Rental Value: ${result['rental']}');
-        print('Excel File: ${result['excelFile']}');
+        final rentalValue = result['rental'] ?? 'Unknown';
+        final excelFile = result['excelFile'] ?? '';
+
+        print('Rental Value: $rentalValue');
+        print('Excel File: $excelFile');
+
         Get.to(
-              () => const ResultScreen(),
+              () => ResultScreen(),
           arguments: {
-            'rentalValue': result['rental'],
-            'excelFile': result['excelFile'],
+            'rentalValue': rentalValue,
+            'excelFile': excelFile,
           },
         );
       } else {
