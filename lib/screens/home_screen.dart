@@ -3,6 +3,7 @@ import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controller/calc_controller.dart';
+import '../controller/home_controller.dart';
 import '../enums.dart';
 import '../services/logout_service.dart';
 class HomeScreen extends StatefulWidget {
@@ -13,67 +14,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final CalcController _calcController = CalcController();
-  final _formKey = GlobalKey<FormState>();
-  bool isConnected = false;
-  String name = "";
-  bool _isLoading = false;
-
-  bool? _checkBox = false;
-  String? _valueChoose = "4";
-  final List<String> _listItem = ["4", "6", "12", "24", "36"];
-  AdvanceArrearsEnum? _advanceArrearsEnum;
-  final _marginInterestRateController = TextEditingController();
-  final _assetCostController = TextEditingController();
-  final _amountFinancedController = TextEditingController();
-  final _numberOfRentalsController = TextEditingController();
-  final _gracePeriodController = TextEditingController(text: '0');
-  final _residualAmountController = TextEditingController(text: '0');
-
-  final _marginInterestRateFocusNode = FocusNode();
-  final _assetCostFocusNode = FocusNode();
-  final _amountFinancedFocusNode = FocusNode();
-  final _numberOfRentalsFocusNode = FocusNode();
-  final _gracePeriodFocusNode = FocusNode();
-  final _residualAmountFocusNode = FocusNode();
-  final _submitFocusNode = FocusNode();
-
-  Future<void> _loadUserInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('userName') ?? 'User';
-    final gender = prefs.getString('gender') ?? 'Mr.';
-    setState(() {
-      name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
-    });
-  }
+  final HomeController _homeController = HomeController();
 
   @override
   void initState() {
     super.initState();
-    _assetCostController.addListener(() => setState(() {}));
-    _amountFinancedController.addListener(() => setState(() {}));
-    _numberOfRentalsController.addListener(() => setState(() {}));
-    _marginInterestRateController.addListener(() => setState(() {}));
-    _gracePeriodController.addListener(() => setState(() {}));
-    _residualAmountController.addListener(() => setState(() {}));
-    _advanceArrearsEnum = AdvanceArrearsEnum?.advance;
-    _loadUserInfo();
+    _homeController.assetCostController.addListener(() => setState(() {}));
+    _homeController.amountFinancedController.addListener(() => setState(() {}));
+    _homeController.numberOfRentalsController.addListener(() => setState(() {}));
+    _homeController.marginInterestRateController.addListener(() => setState(() {}));
+    _homeController.gracePeriodController.addListener(() => setState(() {}));
+    _homeController.residualAmountController.addListener(() => setState(() {}));
+    _homeController.advanceArrearsEnum = AdvanceArrearsEnum?.advance;
+    _homeController.loadUserInfo();
   }
 
   @override
   void dispose() {
-    _assetCostController.dispose();
-    _amountFinancedController.dispose();
-    _numberOfRentalsController.dispose();
-    _gracePeriodController.dispose();
-    _residualAmountController.dispose();
-    _marginInterestRateFocusNode.dispose();
-    _assetCostFocusNode.dispose();
-    _amountFinancedFocusNode.dispose();
-    _numberOfRentalsFocusNode.dispose();
-    _gracePeriodFocusNode.dispose();
-    _residualAmountFocusNode.dispose();
-    _submitFocusNode.dispose();
+    _homeController.assetCostController.dispose();
+    _homeController.amountFinancedController.dispose();
+    _homeController.numberOfRentalsController.dispose();
+    _homeController.gracePeriodController.dispose();
+    _homeController.residualAmountController.dispose();
+    _homeController.marginInterestRateFocusNode.dispose();
+    _homeController.assetCostFocusNode.dispose();
+    _homeController.amountFinancedFocusNode.dispose();
+    _homeController.numberOfRentalsFocusNode.dispose();
+    _homeController.gracePeriodFocusNode.dispose();
+    _homeController.residualAmountFocusNode.dispose();
+    _homeController.submitFocusNode.dispose();
 
     super.dispose();
   }
@@ -113,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
-                      key: _formKey,
+                      key: _homeController.formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -127,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: name,
+                                  text: _homeController.name,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -172,9 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Asset Cost",
                             hintText: "EGP",
-                            controller: _assetCostController,
-                            focusNode: _assetCostFocusNode,
-                            nextFocusNode: _amountFinancedFocusNode,
+                            controller: _homeController.assetCostController,
+                            focusNode: _homeController.assetCostFocusNode,
+                            nextFocusNode:_homeController.amountFinancedFocusNode,
                             icon: Icons.attach_money,
                             isNumeric: true,
                             isDouble: true,
@@ -186,9 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Amount Financed *",
                             hintText: "EGP",
-                            controller: _amountFinancedController,
-                            focusNode: _amountFinancedFocusNode,
-                            nextFocusNode: _numberOfRentalsFocusNode,
+                            controller: _homeController.amountFinancedController,
+                            focusNode: _homeController.amountFinancedFocusNode,
+                            nextFocusNode: _homeController.numberOfRentalsFocusNode,
                             icon: Icons.account_balance_wallet,
                             isNumeric: true,
                             isDouble: true,
@@ -202,9 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Number Of Rentals *",
                             hintText: "12",
-                            controller: _numberOfRentalsController,
-                            focusNode: _numberOfRentalsFocusNode,
-                            nextFocusNode: _marginInterestRateFocusNode,
+                            controller: _homeController.numberOfRentalsController,
+                            focusNode: _homeController.numberOfRentalsFocusNode,
+                            nextFocusNode: _homeController.marginInterestRateFocusNode,
                             icon: Icons.format_list_numbered,
                             isNumeric: true,
                             isDouble: false,
@@ -218,9 +187,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Margin Interest Rate *",
                             hintText: "0.5",
-                            controller: _marginInterestRateController,
-                            focusNode: _marginInterestRateFocusNode,
-                            nextFocusNode: _gracePeriodFocusNode,
+                            controller: _homeController.marginInterestRateController,
+                            focusNode: _homeController.marginInterestRateFocusNode,
+                            nextFocusNode: _homeController.gracePeriodFocusNode,
                             icon: Icons.percent,
                             isNumeric: true,
                             validator: (value) {
@@ -234,9 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Grace Period *",
                             hintText: "No G.P",
-                            controller: _gracePeriodController,
-                            focusNode: _gracePeriodFocusNode,
-                            nextFocusNode: _residualAmountFocusNode,
+                            controller: _homeController.gracePeriodController,
+                            focusNode: _homeController.gracePeriodFocusNode,
+                            nextFocusNode: _homeController.residualAmountFocusNode,
                             icon: Icons.timer,
                             isNumeric: true,
                             isDouble: false,
@@ -250,9 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Residual Amount *",
                             hintText: "EGP",
-                            controller: _residualAmountController,
-                            focusNode: _residualAmountFocusNode,
-                            nextFocusNode: _submitFocusNode,
+                            controller: _homeController.residualAmountController,
+                            focusNode: _homeController.residualAmountFocusNode,
+                            nextFocusNode: _homeController.submitFocusNode,
                             icon: Icons.account_balance,
                             isNumeric: true,
                             isDouble: false,
@@ -264,12 +233,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                           DropdownWidget(
-                            value: _valueChoose,
-                            items: _listItem,
+                            value: _homeController.valueChoose,
+                            items: _homeController.listItem,
                             labelText: 'Rental Per Year',
                             onChanged: (val) {
                               setState(() {
-                                _valueChoose = val;
+                                _homeController.valueChoose = val;
                               });
                             },
                           ),
@@ -277,10 +246,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           CheckboxListTile(
                             contentPadding: const EdgeInsets.all(0.0),
                             title: const Text("Start from this month?"),
-                            value: _checkBox,
+                            value: _homeController.checkBox,
                             onChanged: (val) {
                               setState(() {
-                                _checkBox = val;
+                                _homeController.checkBox = val;
                               });
                             },
                             activeColor: Color(0xFF94364a),
@@ -292,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.advance,
-                                  groupValue: _advanceArrearsEnum,
+                                  groupValue: _homeController.advanceArrearsEnum,
                                   title: AdvanceArrearsEnum.advance.name,
                                 ),
                               ),
@@ -300,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.arrears,
-                                  groupValue: _advanceArrearsEnum,
+                                  groupValue: _homeController.advanceArrearsEnum,
                                   title: AdvanceArrearsEnum.arrears.name,
                                 ),
                               ),
@@ -310,28 +279,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Center(
                             child: ElevatedButton.icon(
                               icon: const Icon(Icons.calculate, color: Colors.white),
-                              onPressed: _isLoading ? null : () async {
-                                if (_formKey.currentState?.validate() ?? false) {
+                              onPressed: _homeController.isLoading ? null : () async {
+                                if (_homeController.formKey.currentState?.validate() ?? false) {
                                   setState(() {
-                                    _isLoading = true;
+                                    _homeController.isLoading = true;
                                   });
-
-                                  await _calcController.calculate(
-                                    amountFinance: double.parse(_amountFinancedController.text),
-                                    assetCost: double.parse(_assetCostController.text),
-                                    interestRate: double.parse(_marginInterestRateController.text),
-                                    gracePeriod: double.parse(_gracePeriodController.text),
-                                    effectiveRate: double.parse(_marginInterestRateController.text),
-
-                                    noOfRental: int.parse(_numberOfRentalsController.text),
-                                    rentalInterval: int.parse(_valueChoose!),
-                                    beginning: (_advanceArrearsEnum == AdvanceArrearsEnum.advance) ? true : false,
-                                    residualValue: double.parse(_residualAmountController.text),
-                                    startFromFirstMonth: _checkBox!,
-                                  );
-
+                                  await _homeController.calculate();
                                   setState(() {
-                                    _isLoading = false;
+                                    _homeController.isLoading = false;
                                   });
                                 }
                               },
@@ -354,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          if (_isLoading)
+          if (_homeController.isLoading)
             Positioned.fill(
               child: Container(
                 color: Colors.black54,
@@ -387,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupValue: groupValue,
       onChanged: (val) {
         setState(() {
-          _advanceArrearsEnum = val;
+          _homeController.advanceArrearsEnum = val;
         });
       },
     );
