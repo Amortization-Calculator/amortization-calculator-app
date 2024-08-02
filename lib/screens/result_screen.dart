@@ -34,7 +34,6 @@ class _ResultScreenState extends State<ResultScreen> {
         print('OpenFile result: type=${result.type}, message=${result.message}');
 
         if (result.type == ResultType.noAppToOpen) {
-          // Dialog is shown only when there is no app to open the file
           _showNoAppDialog();
         }
 
@@ -89,10 +88,12 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     final arguments = Get.arguments as Map<String, dynamic>?;
 
-    final rentalValue = arguments?['rentalValue'];
+    // final rentalValueStr = arguments?['rentalValue'] ?? '0.0';
+    final rentalValue = arguments?['rentalValue'].round();
+
     final excelFile = arguments?['excelFile'] ?? '';
 
-    print("rentalValue: $rentalValue");
+    // print("rentalValue: $Int.parse(rentalValue)");
     print("excelFile: $excelFile");
 
     return Scaffold(

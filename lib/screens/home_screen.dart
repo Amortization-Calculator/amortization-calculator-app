@@ -322,8 +322,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     interestRate: double.parse(_marginInterestRateController.text),
                                     gracePeriod: double.parse(_gracePeriodController.text),
                                     effectiveRate: double.parse(_marginInterestRateController.text),
-                                    noOfRental: int.parse(_valueChoose!),
-                                    rentalInterval: int.parse(_numberOfRentalsController.text),
+
+                                    noOfRental: int.parse(_numberOfRentalsController.text),
+                                    rentalInterval: int.parse(_valueChoose!),
                                     beginning: (_advanceArrearsEnum == AdvanceArrearsEnum.advance) ? true : false,
                                     residualValue: double.parse(_residualAmountController.text),
                                     startFromFirstMonth: _checkBox!,

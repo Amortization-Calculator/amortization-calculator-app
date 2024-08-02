@@ -43,6 +43,7 @@ dependencies:
   get: ^4.6.6
   http: ^1.2.2
   shared_preferences: ^2.2.3
+  device_preview: ^1.2.0
 
 
 

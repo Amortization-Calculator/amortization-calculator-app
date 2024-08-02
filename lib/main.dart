@@ -1,4 +1,6 @@
 import 'package:amortization_calculator_app/screens/auth/splash_screen.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:amortization_calculator_app/screens/auth/login_screen.dart';
@@ -11,7 +13,12 @@ import 'controller/DependencyInjection.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Dependencyinjection.init();
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) =>const MyApp(), // Wrap your app
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -53,11 +60,14 @@ class _MyAppState extends State<MyApp> {
       },
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => SplashScreen()), // Set initial route to SplashScreen
+        GetPage(name: '/', page: () => SplashScreen()),
+        // Set initial route to SplashScreen
         GetPage(name: '/HomeScreen', page: () => const HomeScreen()),
-        GetPage(name: '/NoInternetScreen', page: () => const NoInternetScreen()),
+        GetPage(
+            name: '/NoInternetScreen', page: () => const NoInternetScreen()),
         GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
-        GetPage(name: '/LoginScreen', page: () => const LoginScreen()), // Ensure LoginScreen is accessible
+        GetPage(name: '/LoginScreen', page: () => const LoginScreen()),
+        // Ensure LoginScreen is accessible
       ],
       debugShowCheckedModeBanner: false,
     );
