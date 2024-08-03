@@ -53,14 +53,18 @@ class CalcController extends GetxController {
         final rentalValue = result['rental'] ?? 'Unknown';
         final excelFile = result['excelFile'] ?? '';
 
+
         print('Rental Value: $rentalValue');
         print('Excel File: $excelFile');
 
         Get.to(
-              () => ResultScreen(),
+              () =>  const ResultScreen(),
           arguments: {
             'rentalValue': rentalValue,
             'excelFile': excelFile,
+            'assetCost':assetCost,
+            'amountFinance':amountFinance
+
           },
         );
       } else {

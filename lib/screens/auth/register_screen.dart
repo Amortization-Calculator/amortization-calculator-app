@@ -239,6 +239,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: Colors.black,
                               ),
                             ),
+                            Text('* password must be as 1A@a2 '),
                             SizedBox(height: 20),
                             TextFormField(
                               obscureText: _obscureConfirmPassText,
@@ -284,7 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: _isLoading
                                       ? Colors.grey
-                                      : Color(0xFF94364a),
+                                      : Color(0xFF148C79),
                                   minimumSize: Size(double.infinity, 50),
                                 ),
                                 child: Text(
@@ -352,7 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return RadioListTile<IndividualCompanyEnum>(
       contentPadding: EdgeInsets.all(0.0),
       value: value,
-      tileColor: Color(0xFFe05170),
+      tileColor: Color(0xFF148C79),
       activeColor: Colors.white,
       dense: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.5)),
@@ -382,7 +383,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return RadioListTile<GenderEnum>(
       contentPadding: EdgeInsets.all(0.0),
       value: value,
-      tileColor: Color(0xFFe05170),
+      tileColor: Color(0xFF148C79),
       activeColor: Colors.white,
       dense: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.5)),

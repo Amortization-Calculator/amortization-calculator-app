@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../controller/calc_controller.dart';
 import '../controller/home_controller.dart';
 import '../enums.dart';
 import '../services/logout_service.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -21,8 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _homeController.assetCostController.addListener(() => setState(() {}));
     _homeController.amountFinancedController.addListener(() => setState(() {}));
-    _homeController.numberOfRentalsController.addListener(() => setState(() {}));
-    _homeController.marginInterestRateController.addListener(() => setState(() {}));
+    _homeController.numberOfRentalsController
+        .addListener(() => setState(() {}));
+    _homeController.marginInterestRateController
+        .addListener(() => setState(() {}));
     _homeController.gracePeriodController.addListener(() => setState(() {}));
     _homeController.residualAmountController.addListener(() => setState(() {}));
     _homeController.advanceArrearsEnum = AdvanceArrearsEnum?.advance;
@@ -66,9 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 actions: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 16.0), // Add padding here
+                    padding: const EdgeInsets.only(right: 16.0),
+                    // Add padding here
                     child: IconButton(
-                      icon: const Icon(Icons.logout, color: Colors.black), // Logout icon
+                      icon: const Icon(Icons.logout, color: Colors.black),
+                      // Logout icon
                       onPressed: () async {
                         LogoutService logoutService = LogoutService();
                         await logoutService.logout();
@@ -143,26 +146,41 @@ class _HomeScreenState extends State<HomeScreen> {
                             hintText: "EGP",
                             controller: _homeController.assetCostController,
                             focusNode: _homeController.assetCostFocusNode,
-                            nextFocusNode:_homeController.amountFinancedFocusNode,
-                            icon: Icons.attach_money,
+                            nextFocusNode:
+                                _homeController.amountFinancedFocusNode,
+                            icon: Icons.money_outlined,
                             isNumeric: true,
                             isDouble: true,
                             validator: (value) {
-                              //no validator need
+                              if (value == null || value.isEmpty) {
+                                return null;
+                              }
+                              double? assetCost = double.tryParse(value);
+                              double? amountFinanced = double.tryParse(_homeController.amountFinancedController.text);
+                              if (assetCost == null) {
+                                return 'Invalid Asset Cost';
+                              }
+                              if (amountFinanced != null && assetCost < amountFinanced) {
+                                return 'Asset Cost must be at least as Amount Financed';
+                              }
                               return null;
                             },
                           ),
                           TextFormWidget(
                             labelText: "Amount Financed *",
                             hintText: "EGP",
-                            controller: _homeController.amountFinancedController,
+                            controller:
+                                _homeController.amountFinancedController,
                             focusNode: _homeController.amountFinancedFocusNode,
-                            nextFocusNode: _homeController.numberOfRentalsFocusNode,
+                            nextFocusNode:
+                                _homeController.numberOfRentalsFocusNode,
                             icon: Icons.account_balance_wallet,
                             isNumeric: true,
                             isDouble: true,
                             validator: (value) {
-                              if (value == null || value.isEmpty || double.tryParse(value) == null) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  double.tryParse(value) == null) {
                                 return 'Please enter Amount Financed';
                               }
                               return null;
@@ -171,29 +189,37 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Number Of Rentals *",
                             hintText: "12",
-                            controller: _homeController.numberOfRentalsController,
+                            controller:
+                                _homeController.numberOfRentalsController,
                             focusNode: _homeController.numberOfRentalsFocusNode,
-                            nextFocusNode: _homeController.marginInterestRateFocusNode,
+                            nextFocusNode:
+                                _homeController.marginInterestRateFocusNode,
                             icon: Icons.format_list_numbered,
                             isNumeric: true,
                             isDouble: false,
                             validator: (value) {
-                              if (value == null || value.isEmpty || int.tryParse(value) == null) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  int.tryParse(value) == null) {
                                 return 'Please enter Number Of Rentals';
                               }
                               return null;
                             },
                           ),
                           TextFormWidget(
-                            labelText: "Margin Interest Rate *",
+                            labelText: "Interest Rate *",
                             hintText: "0.5",
-                            controller: _homeController.marginInterestRateController,
-                            focusNode: _homeController.marginInterestRateFocusNode,
+                            controller:
+                                _homeController.marginInterestRateController,
+                            focusNode:
+                                _homeController.marginInterestRateFocusNode,
                             nextFocusNode: _homeController.gracePeriodFocusNode,
                             icon: Icons.percent,
                             isNumeric: true,
                             validator: (value) {
-                              if (value == null || value.isEmpty || double.tryParse(value) == null) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  double.tryParse(value) == null) {
                                 return 'Please enter margin interest rate';
                               }
                               return null;
@@ -205,12 +231,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             hintText: "No G.P",
                             controller: _homeController.gracePeriodController,
                             focusNode: _homeController.gracePeriodFocusNode,
-                            nextFocusNode: _homeController.residualAmountFocusNode,
+                            nextFocusNode:
+                                _homeController.residualAmountFocusNode,
                             icon: Icons.timer,
                             isNumeric: true,
                             isDouble: false,
                             validator: (value) {
-                              if (value == null || value.isEmpty || int.tryParse(value) == null) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  int.tryParse(value) == null) {
                                 return 'Please enter Grace Period';
                               }
                               return null;
@@ -219,14 +248,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Residual Amount *",
                             hintText: "EGP",
-                            controller: _homeController.residualAmountController,
+                            controller:
+                                _homeController.residualAmountController,
                             focusNode: _homeController.residualAmountFocusNode,
                             nextFocusNode: _homeController.submitFocusNode,
                             icon: Icons.account_balance,
                             isNumeric: true,
                             isDouble: false,
                             validator: (value) {
-                              if (value == null || value.isEmpty || double.tryParse(value) == null) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  double.tryParse(value) == null) {
                                 return 'Please enter Residual Amount';
                               }
                               return null;
@@ -243,34 +275,38 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          CheckboxListTile(
-                            contentPadding: const EdgeInsets.all(0.0),
-                            title: const Text("Start from this month?"),
-                            value: _homeController.checkBox,
-                            onChanged: (val) {
-                              setState(() {
-                                _homeController.checkBox = val;
-                              });
-                            },
-                            activeColor: Color(0xFF94364a),
-                            checkColor: Colors.white,
-                          ),
-                          const SizedBox(height: 10),
+                          // CheckboxListTile(
+                          //   contentPadding: const EdgeInsets.all(0.0),
+                          //   title: const Text("Start from this month?"),
+                          //   value: _homeController.checkBox,
+                          //   onChanged: (val) {
+                          //     setState(() {
+                          //       _homeController.checkBox = val;
+                          //     });
+                          //   },
+                          //   activeColor: Color(0xFF94364a),
+                          //   checkColor: Colors.white,
+                          // ),
+                          // const SizedBox(height: 10),
                           Row(
                             children: [
                               Expanded(
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.advance,
-                                  groupValue: _homeController.advanceArrearsEnum,
-                                  title: AdvanceArrearsEnum.advance.name,
+                                  groupValue:
+                                      _homeController.advanceArrearsEnum,
+                                  title:
+                                      'in ' + AdvanceArrearsEnum.advance.name,
                                 ),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.arrears,
-                                  groupValue: _homeController.advanceArrearsEnum,
-                                  title: AdvanceArrearsEnum.arrears.name,
+                                  groupValue:
+                                      _homeController.advanceArrearsEnum,
+                                  title:
+                                      'in ' + AdvanceArrearsEnum.arrears.name,
                                 ),
                               ),
                             ],
@@ -278,23 +314,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 20),
                           Center(
                             child: ElevatedButton.icon(
-                              icon: const Icon(Icons.calculate, color: Colors.white),
-                              onPressed: _homeController.isLoading ? null : () async {
-                                if (_homeController.formKey.currentState?.validate() ?? false) {
-                                  setState(() {
-                                    _homeController.isLoading = true;
-                                  });
-                                  await _homeController.calculate();
-                                  setState(() {
-                                    _homeController.isLoading = false;
-                                  });
-                                }
-                              },
+                              icon: const Icon(Icons.calculate,
+                                  color: Colors.white),
+                              onPressed: _homeController.isLoading
+                                  ? null
+                                  : () async {
+                                      if (_homeController.formKey.currentState
+                                              ?.validate() ??
+                                          false) {
+                                        setState(() {
+                                          _homeController.isLoading = true;
+                                        });
+                                        await _homeController.calculate();
+                                        setState(() {
+                                          _homeController.isLoading = false;
+                                        });
+                                      }
+                                    },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF94364a),
+                                backgroundColor:  const Color(0xFF148C79)
                               ),
-                              label: Text(
-                                'Start Now',
+                              label: const Text(
+                                'Calculate',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -329,15 +370,22 @@ class _HomeScreenState extends State<HomeScreen> {
     required String title,
   }) {
     return RadioListTile<AdvanceArrearsEnum>(
-      contentPadding: EdgeInsets.all(0.0),
+      contentPadding: const EdgeInsets.all(0.0),
       value: value,
-      tileColor: Color(0xFFe05170),
+      tileColor: Color(0xFF148C79),
       activeColor: Colors.white,
       dense: true,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.5)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          5.5,
+        ),
+      ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
       ),
       groupValue: groupValue,
       onChanged: (val) {

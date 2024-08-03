@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
-import 'package:share_plus/share_plus.dart';
 import 'package:get/get.dart';
 import '../services/logout_service.dart';
 import '../services/file_service.dart';
 import '../widgets/build_rich_text_widget.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:share_plus/share_plus.dart';
+import 'dart:io';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({Key? key}) : super(key: key);
@@ -18,6 +18,9 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   var _openResult = 'Unknown';
   File? _fileToShare;
+  int? _rentalValue;
+  int? _originalRentalValue; // To store the original rental value
+  String?_originalAmountFinance;
 
   Future<void> fetchAndOpenFile(String filename) async {
     print('Fetching file: $filename');
@@ -31,15 +34,16 @@ class _ResultScreenState extends State<ResultScreen> {
         });
 
         final result = await OpenFile.open(file.path);
-        print('OpenFile result: type=${result.type}, message=${result.message}');
+        print(
+            'OpenFile result: type=${result.type}, message=${result.message}');
 
         if (result.type == ResultType.noAppToOpen) {
           _showNoAppDialog();
+        } else {
+          setState(() {
+            _openResult = "type=${result.type}  message=${result.message}";
+          });
         }
-
-        setState(() {
-          _openResult = "type=${result.type}  message=${result.message}";
-        });
       } else {
         setState(() {
           _openResult = "Error: Failed to fetch the file";
@@ -52,7 +56,6 @@ class _ResultScreenState extends State<ResultScreen> {
       });
     }
   }
-
 
   void _showNoAppDialog() {
     print('Showing no app dialog');
@@ -84,16 +87,27 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments as Map<String, dynamic>?;
+    _originalRentalValue ??= arguments?['rentalValue']
+        ?.round(); // Store original rental value if not already stored
+    _originalAmountFinance ??= arguments?['amountFinance']?.toString() ??
+        '1'; // Store original rental value if not already stored
+    _rentalValue = _rentalValue ??
+        _originalRentalValue; // Use original value if _rentalValue is null
 
-    // final rentalValueStr = arguments?['rentalValue'] ?? '0.0';
-    final rentalValue = arguments?['rentalValue'].round();
+    final amountFinance = arguments?['amountFinance']?.toString() ?? '1';
+    print('amountFinance ->' + amountFinance);
+    final assetCost = arguments?['assetCost']?.toString() ?? '0';
+    print('assetCost ->' + assetCost);
+    final percentage = (double.parse(amountFinance) / double.parse(assetCost))
+        .clamp(0.0, 1.0);
+    print(percentage);
 
     final excelFile = arguments?['excelFile'] ?? '';
 
-    // print("rentalValue: $Int.parse(rentalValue)");
     print("excelFile: $excelFile");
 
     return Scaffold(
@@ -124,7 +138,7 @@ class _ResultScreenState extends State<ResultScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             const RichTextWidget(
               firstText: 'Calculation ',
               secondFontSize: 20,
@@ -142,7 +156,7 @@ class _ResultScreenState extends State<ResultScreen> {
             Container(
               padding: const EdgeInsets.all(24.0),
               width: double.infinity,
-              constraints: BoxConstraints(maxWidth: 600),
+              constraints: const BoxConstraints(maxWidth: 600),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(12.0),
@@ -151,7 +165,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -168,23 +182,57 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   const SizedBox(height: 8.0),
-                  Text(
-                    '$rentalValue EGP',
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[900],
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: _rentalValue?.toString() ?? 'N/A',
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' EGP',
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
             const Spacer(),
+            CircularPercentIndicator(
+              radius: 100.0,
+              lineWidth: 15.0,
+              animation: true,
+              percent: percentage,
+              center: new Text(
+                "${(percentage * 100).toStringAsFixed(1)}%",
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 20.0),
+              ),
+              footer: new Text(
+                "Financing Ratio",
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 17.0),
+              ),
+              circularStrokeCap: CircularStrokeCap.round,
+              progressColor: Color(0xFF94364a),
+            ),
+            const Spacer(),
             ElevatedButton(
               onPressed: () => fetchAndOpenFile(excelFile),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white60,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 12.0),
                 minimumSize: const Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -222,26 +270,30 @@ class _ResultScreenState extends State<ResultScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red[700],
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                backgroundColor: Color(0xFF148C79),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 12.0),
                 minimumSize: const Size(double.infinity, 50.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.share, size: 24.0, color: Colors.white),
+                children: [
+                  Icon(Icons.share, size: 24.0, color: Colors.white,),
                   SizedBox(width: 10.0),
                   Text(
-                    'Share it',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    'Share',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 30.0),
           ],
         ),
       ),

@@ -44,6 +44,7 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.2.3
   device_preview: ^1.2.0
+  percent_indicator: ^4.2.3
 
 
 

@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: _isLoading
                                         ? Colors.grey
-                                        : Color(0xFF94364a),
+                                        : Color(0xFF148C79),
                                     minimumSize: Size(double.infinity, 50),
                                   ),
                                   child: Text(

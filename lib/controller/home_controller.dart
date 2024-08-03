@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/logout_service.dart';
 import '../enums.dart';
 import 'calc_controller.dart';
 
@@ -11,7 +10,7 @@ class HomeController {
   bool isLoading = false;
   bool? checkBox = false;
   String? valueChoose = "4";
-  final List<String> listItem = ["4", "6", "12", "24", "36"];
+  final List<String> listItem = ["1", "2", "4", "12"];
   AdvanceArrearsEnum? advanceArrearsEnum = AdvanceArrearsEnum.advance;
 
   final TextEditingController marginInterestRateController = TextEditingController();
@@ -36,11 +35,6 @@ class HomeController {
     name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
   }
 
-  Future<void> logout() async {
-    LogoutService logoutService = LogoutService();
-    await logoutService.logout();
-  }
-
   Future<void> calculate() async {
     if (formKey.currentState?.validate() ?? false) {
       isLoading = true;
@@ -55,7 +49,7 @@ class HomeController {
         rentalInterval: int.parse(valueChoose!),
         beginning: (advanceArrearsEnum == AdvanceArrearsEnum.advance) ? true : false,
         residualValue: double.parse(residualAmountController.text),
-        startFromFirstMonth: checkBox!,
+        startFromFirstMonth:false,
       );
 
       isLoading = false;
