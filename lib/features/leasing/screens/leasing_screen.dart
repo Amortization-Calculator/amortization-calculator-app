@@ -26,7 +26,7 @@ class _LeasingScreenState extends State<LeasingScreen> {
         .addListener(() => setState(() {}));
     _leasingScreenController.gracePeriodController.addListener(() => setState(() {}));
     _leasingScreenController.residualAmountController.addListener(() => setState(() {}));
-    _leasingScreenController.advanceArrearsEnum = AdvanceArrearsEnum?.advance;
+    _leasingScreenController.advanceArrearsEnum = AdvanceArrearsEnum.advance;
   }
 
   @override
