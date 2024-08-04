@@ -9,7 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import 'dart:io';
 
 class ResultScreen extends StatefulWidget {
-  const ResultScreen({Key? key}) : super(key: key);
+  const ResultScreen({super.key});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
