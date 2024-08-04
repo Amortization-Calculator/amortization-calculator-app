@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/api_endpoints.dart';
+import '../../../utils/api_endpoints.dart';
 
 class CalcService {
   final String _calcUrl = ApiEndpoints.baseUrl + ApiEndpoints.calculator.calc;

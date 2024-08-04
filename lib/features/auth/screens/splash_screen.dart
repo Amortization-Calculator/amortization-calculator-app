@@ -1,9 +1,8 @@
-import 'package:amortization_calculator_app/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/logout_service.dart';
-import '../home_screen.dart';
+import '../../home/screens/home_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

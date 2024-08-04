@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../enums.dart';
+import '../../../constants/enums.dart';
 import 'calc_controller.dart';
 
-class HomeController {
+class LeasingScreenController {
   final CalcController calcController = CalcController();
   final formKey = GlobalKey<FormState>();
-  String name = "";
   bool isLoading = false;
   bool? checkBox = false;
   String? valueChoose = "4";
@@ -28,12 +26,6 @@ class HomeController {
   final FocusNode residualAmountFocusNode = FocusNode();
   final FocusNode submitFocusNode = FocusNode();
 
-  Future<void> loadUserInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('userName') ?? 'User';
-    final gender = prefs.getString('gender') ?? 'Mr.';
-    name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
-  }
 
   Future<void> calculate() async {
     if (formKey.currentState?.validate() ?? false) {

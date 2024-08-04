@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../screens/auth/login_screen.dart';
+import '../screens/login_screen.dart';
 
 class LogoutService {
   Future<void> logout() async {
@@ -12,7 +12,6 @@ class LogoutService {
 
     } catch (e) {
       print("Error clearing shared preferences: $e");
-      // You may want to handle the error more gracefully in a real app.
     }
   }
 }

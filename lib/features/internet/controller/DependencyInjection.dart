@@ -1,4 +1,4 @@
-import 'package:amortization_calculator_app/controller/network_controller.dart';
+import 'package:amortization_calculator_app/features/internet/controller/network_controller.dart';
 import 'package:get/get.dart';
 
 class Dependencyinjection{

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:get/get.dart';
-import '../services/logout_service.dart';
+import '../../auth/services/logout_service.dart';
 import '../services/file_service.dart';
-import '../widgets/build_rich_text_widget.dart';
+import '../../../widgets/build_rich_text_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
@@ -16,7 +16,6 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  var _openResult = 'Unknown';
   File? _fileToShare;
   int? _rentalValue;
   int? _originalRentalValue; // To store the original rental value
@@ -39,21 +38,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
         if (result.type == ResultType.noAppToOpen) {
           _showNoAppDialog();
-        } else {
-          setState(() {
-            _openResult = "type=${result.type}  message=${result.message}";
-          });
         }
-      } else {
-        setState(() {
-          _openResult = "Error: Failed to fetch the file";
-        });
       }
     } catch (e) {
       print('Error fetching or opening file: $e');
-      setState(() {
-        _openResult = "Error: ${e.toString()}";
-      });
     }
   }
 

@@ -1,7 +1,8 @@
-import 'package:amortization_calculator_app/screens/home_screen.dart';
+import 'package:amortization_calculator_app/features/leasing/screens/leasing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../home/screens/home_screen.dart';
 import '../services/login_service.dart';
 
 class LoginController extends GetxController {
@@ -20,44 +21,37 @@ class LoginController extends GetxController {
       );
 
       if (response['success']) {
-        print('here1');
-        print(response['token']);
-        print(response['userName']);
-
         // Save token using SharedPreferences
         var token = response['token'];
-        var userName = response['userName'];
-        var gender= response['gender'];
         var expTime= response['expireDate'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
-        await prefs.setString('gender', gender);
         await prefs.setString('expireDate', expTime);
-        await prefs.setString('userName', userName);
-
         Get.defaultDialog(
           title: 'Success',
           textConfirm: 'Login Successfully',
           onConfirm: () {
-            Get.offAll(() => const HomeScreen());
+            Get.offAll(() => const HomeScreen(),arguments: {
+              'userName':response['userName'],
+              'gender': response['gender']
+            });
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,
           barrierDismissible: false,
           radius: 10.0,
-          content: Column(
+          content: const Column(
             children: [
-              const Icon(
+              Icon(
                 Icons.check_circle,
                 color: Colors.green,
                 size: 50,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
             ],
           ),
         );
       } else {
-        print('here2');
         Get.defaultDialog(
           title: 'Error',
           middleText: response['message'],
@@ -84,7 +78,6 @@ class LoginController extends GetxController {
       }
     } catch (error) {
       // Handle registration error
-      print('Login failed: $error');
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Login failed: $error',

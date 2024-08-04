@@ -1,49 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:amortization_calculator_app/widgets/drop_down_widget.dart';
 import 'package:amortization_calculator_app/widgets/text_form_widget.dart';
-import '../controller/home_controller.dart';
-import '../enums.dart';
-import '../services/logout_service.dart';
+import '../controller/leasing_screen_controller.dart';
+import '../../../constants/enums.dart';
+import '../../auth/services/logout_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class LeasingScreen extends StatefulWidget {
+  const LeasingScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<LeasingScreen> createState() => _LeasingScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final HomeController _homeController = HomeController();
+class _LeasingScreenState extends State<LeasingScreen> {
+  final LeasingScreenController _leasingScreenController = LeasingScreenController();
 
   @override
   void initState() {
     super.initState();
-    _homeController.assetCostController.addListener(() => setState(() {}));
-    _homeController.amountFinancedController.addListener(() => setState(() {}));
-    _homeController.numberOfRentalsController
+    _leasingScreenController.assetCostController.addListener(() => setState(() {}));
+    _leasingScreenController.amountFinancedController.addListener(() => setState(() {}));
+    _leasingScreenController.numberOfRentalsController
         .addListener(() => setState(() {}));
-    _homeController.marginInterestRateController
+    _leasingScreenController.marginInterestRateController
         .addListener(() => setState(() {}));
-    _homeController.gracePeriodController.addListener(() => setState(() {}));
-    _homeController.residualAmountController.addListener(() => setState(() {}));
-    _homeController.advanceArrearsEnum = AdvanceArrearsEnum?.advance;
-    _homeController.loadUserInfo();
+    _leasingScreenController.gracePeriodController.addListener(() => setState(() {}));
+    _leasingScreenController.residualAmountController.addListener(() => setState(() {}));
+    _leasingScreenController.advanceArrearsEnum = AdvanceArrearsEnum?.advance;
   }
 
   @override
   void dispose() {
-    _homeController.assetCostController.dispose();
-    _homeController.amountFinancedController.dispose();
-    _homeController.numberOfRentalsController.dispose();
-    _homeController.gracePeriodController.dispose();
-    _homeController.residualAmountController.dispose();
-    _homeController.marginInterestRateFocusNode.dispose();
-    _homeController.assetCostFocusNode.dispose();
-    _homeController.amountFinancedFocusNode.dispose();
-    _homeController.numberOfRentalsFocusNode.dispose();
-    _homeController.gracePeriodFocusNode.dispose();
-    _homeController.residualAmountFocusNode.dispose();
-    _homeController.submitFocusNode.dispose();
+    _leasingScreenController.assetCostController.dispose();
+    _leasingScreenController.amountFinancedController.dispose();
+    _leasingScreenController.numberOfRentalsController.dispose();
+    _leasingScreenController.gracePeriodController.dispose();
+    _leasingScreenController.residualAmountController.dispose();
+    _leasingScreenController.marginInterestRateFocusNode.dispose();
+    _leasingScreenController.assetCostFocusNode.dispose();
+    _leasingScreenController.amountFinancedFocusNode.dispose();
+    _leasingScreenController.numberOfRentalsFocusNode.dispose();
+    _leasingScreenController.gracePeriodFocusNode.dispose();
+    _leasingScreenController.residualAmountFocusNode.dispose();
+    _leasingScreenController.submitFocusNode.dispose();
 
     super.dispose();
   }
@@ -80,74 +79,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+              Center(
+                child: RichText(
+                  text:const TextSpan(
+                    text: 'Leasing ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF970032),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Calculator',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Center(
+                child: Divider(
+                  height: 20,
+                  thickness: 2,
+                  indent: 150,
+                  endIndent: 150,
+                  color: Color(0xFF94364a),
+                ),
+              ),
+
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
-                      key: _homeController.formKey,
+                      key: _leasingScreenController.formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RichText(
-                            text: TextSpan(
-                              text: 'Welcome ',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: Color(0xFF970032),
-                                fontWeight: FontWeight.bold,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: _homeController.name,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Center(
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Calc ',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFF970032),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Amortization',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          const Center(
-                            child: Divider(
-                              height: 20,
-                              thickness: 2,
-                              indent: 150,
-                              endIndent: 150,
-                              color: Color(0xFF94364a),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
+
                           TextFormWidget(
                             labelText: "Asset Cost",
                             hintText: "EGP",
-                            controller: _homeController.assetCostController,
-                            focusNode: _homeController.assetCostFocusNode,
+                            controller: _leasingScreenController.assetCostController,
+                            focusNode: _leasingScreenController.assetCostFocusNode,
                             nextFocusNode:
-                                _homeController.amountFinancedFocusNode,
+                            _leasingScreenController.amountFinancedFocusNode,
                             icon: Icons.money_outlined,
                             isNumeric: true,
                             isDouble: true,
@@ -156,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return null;
                               }
                               double? assetCost = double.tryParse(value);
-                              double? amountFinanced = double.tryParse(_homeController.amountFinancedController.text);
+                              double? amountFinanced = double.tryParse(_leasingScreenController.amountFinancedController.text);
                               if (assetCost == null) {
                                 return 'Invalid Asset Cost';
                               }
@@ -170,10 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelText: "Amount Financed *",
                             hintText: "EGP",
                             controller:
-                                _homeController.amountFinancedController,
-                            focusNode: _homeController.amountFinancedFocusNode,
+                            _leasingScreenController.amountFinancedController,
+                            focusNode: _leasingScreenController.amountFinancedFocusNode,
                             nextFocusNode:
-                                _homeController.numberOfRentalsFocusNode,
+                            _leasingScreenController.numberOfRentalsFocusNode,
                             icon: Icons.account_balance_wallet,
                             isNumeric: true,
                             isDouble: true,
@@ -190,10 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelText: "Number Of Rentals *",
                             hintText: "12",
                             controller:
-                                _homeController.numberOfRentalsController,
-                            focusNode: _homeController.numberOfRentalsFocusNode,
+                            _leasingScreenController.numberOfRentalsController,
+                            focusNode: _leasingScreenController.numberOfRentalsFocusNode,
                             nextFocusNode:
-                                _homeController.marginInterestRateFocusNode,
+                            _leasingScreenController.marginInterestRateFocusNode,
                             icon: Icons.format_list_numbered,
                             isNumeric: true,
                             isDouble: false,
@@ -210,10 +191,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelText: "Interest Rate *",
                             hintText: "0.5",
                             controller:
-                                _homeController.marginInterestRateController,
+                            _leasingScreenController.marginInterestRateController,
                             focusNode:
-                                _homeController.marginInterestRateFocusNode,
-                            nextFocusNode: _homeController.gracePeriodFocusNode,
+                            _leasingScreenController.marginInterestRateFocusNode,
+                            nextFocusNode: _leasingScreenController.gracePeriodFocusNode,
                             icon: Icons.percent,
                             isNumeric: true,
                             validator: (value) {
@@ -229,10 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextFormWidget(
                             labelText: "Grace Period *",
                             hintText: "No G.P",
-                            controller: _homeController.gracePeriodController,
-                            focusNode: _homeController.gracePeriodFocusNode,
+                            controller: _leasingScreenController.gracePeriodController,
+                            focusNode: _leasingScreenController.gracePeriodFocusNode,
                             nextFocusNode:
-                                _homeController.residualAmountFocusNode,
+                            _leasingScreenController.residualAmountFocusNode,
                             icon: Icons.timer,
                             isNumeric: true,
                             isDouble: false,
@@ -249,9 +230,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelText: "Residual Amount *",
                             hintText: "EGP",
                             controller:
-                                _homeController.residualAmountController,
-                            focusNode: _homeController.residualAmountFocusNode,
-                            nextFocusNode: _homeController.submitFocusNode,
+                            _leasingScreenController.residualAmountController,
+                            focusNode: _leasingScreenController.residualAmountFocusNode,
+                            nextFocusNode: _leasingScreenController.submitFocusNode,
                             icon: Icons.account_balance,
                             isNumeric: true,
                             isDouble: false,
@@ -265,12 +246,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                           DropdownWidget(
-                            value: _homeController.valueChoose,
-                            items: _homeController.listItem,
+                            value: _leasingScreenController.valueChoose,
+                            items: _leasingScreenController.listItem,
                             labelText: 'Rental Per Year',
                             onChanged: (val) {
                               setState(() {
-                                _homeController.valueChoose = val;
+                                _leasingScreenController.valueChoose = val;
                               });
                             },
                           ),
@@ -294,9 +275,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.advance,
                                   groupValue:
-                                      _homeController.advanceArrearsEnum,
+                                  _leasingScreenController.advanceArrearsEnum,
                                   title:
-                                      'in ' + AdvanceArrearsEnum.advance.name,
+                                      'in ${AdvanceArrearsEnum.advance.name}',
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -304,9 +285,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: _buildRadioTile(
                                   value: AdvanceArrearsEnum.arrears,
                                   groupValue:
-                                      _homeController.advanceArrearsEnum,
+                                  _leasingScreenController.advanceArrearsEnum,
                                   title:
-                                      'in ' + AdvanceArrearsEnum.arrears.name,
+                                      'in ${AdvanceArrearsEnum.arrears.name}',
                                 ),
                               ),
                             ],
@@ -316,18 +297,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ElevatedButton.icon(
                               icon: const Icon(Icons.calculate,
                                   color: Colors.white),
-                              onPressed: _homeController.isLoading
+                              onPressed: _leasingScreenController.isLoading
                                   ? null
                                   : () async {
-                                      if (_homeController.formKey.currentState
+                                      if (_leasingScreenController.formKey.currentState
                                               ?.validate() ??
                                           false) {
                                         setState(() {
-                                          _homeController.isLoading = true;
+                                          _leasingScreenController.isLoading = true;
                                         });
-                                        await _homeController.calculate();
+                                        await _leasingScreenController.calculate();
                                         setState(() {
-                                          _homeController.isLoading = false;
+                                          _leasingScreenController.isLoading = false;
                                         });
                                       }
                                     },
@@ -350,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          if (_homeController.isLoading)
+          if (_leasingScreenController.isLoading)
             Positioned.fill(
               child: Container(
                 color: Colors.black54,
@@ -372,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return RadioListTile<AdvanceArrearsEnum>(
       contentPadding: const EdgeInsets.all(0.0),
       value: value,
-      tileColor: Color(0xFF148C79),
+      tileColor: const Color(0xFF148C79),
       activeColor: Colors.white,
       dense: true,
       shape: RoundedRectangleBorder(
@@ -390,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
       groupValue: groupValue,
       onChanged: (val) {
         setState(() {
-          _homeController.advanceArrearsEnum = val;
+          _leasingScreenController.advanceArrearsEnum = val;
         });
       },
     );

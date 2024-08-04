@@ -33,30 +33,9 @@ class CalcController extends GetxController {
         beginning: beginning,
         startFromFirstMonth: startFromFirstMonth,
       );
-
-// Print all the data for debugging purposes
-      print('Asset Cost: $assetCost');
-      print('Amount Finance: $amountFinance');
-      print('Interest Rate: $interestRate');
-      print('Effective Rate: $effectiveRate');
-      print('Number of Rentals: $noOfRental');
-      print('Rental Interval: $rentalInterval');
-      print('Residual Value: $residualValue');
-      print('Grace Period: $gracePeriod');
-      print('Beginning: $beginning');
-      print('Start From First Month: $startFromFirstMonth');
-
-      // Check and log the result
-      print('Calculation Result: $result');
-
       if (result['success']) {
         final rentalValue = result['rental'] ?? 'Unknown';
         final excelFile = result['excelFile'] ?? '';
-
-
-        print('Rental Value: $rentalValue');
-        print('Excel File: $excelFile');
-
         Get.to(
               () =>  const ResultScreen(),
           arguments: {
@@ -64,11 +43,9 @@ class CalcController extends GetxController {
             'excelFile': excelFile,
             'assetCost':assetCost,
             'amountFinance':amountFinance
-
           },
         );
       } else {
-        print('Calculation failed: ${result['message']}');
         Get.defaultDialog(
           title: 'Error',
           middleText: result['message'],
@@ -94,7 +71,6 @@ class CalcController extends GetxController {
         );
       }
     } catch (error) {
-      print('Calculation failed: $error');
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Calculation failed: $error',

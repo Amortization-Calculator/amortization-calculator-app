@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../utils/api_endpoints.dart';
+import '../../../utils/api_endpoints.dart';
 
 class RegisterService {
   final String _registerUrl = ApiEndpoints.baseUrl + ApiEndpoints.authEndpoints.register;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/register_controller.dart';
-import '../../enums.dart';
-import '../../widgets/text_form_widget.dart';
+import '../controller/register_controller.dart';
+import '../../../constants/enums.dart';
+import '../../../widgets/text_form_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

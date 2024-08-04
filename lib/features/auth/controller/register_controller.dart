@@ -1,7 +1,7 @@
-import 'package:amortization_calculator_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../home/screens/home_screen.dart';
 import '../services/register_service.dart';
 
 class RegisterController extends GetxController {
