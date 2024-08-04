@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/api_endpoints.dart';
 
-class FileService {
+class ExcelService {
   final String getFileUrl = ApiEndpoints.baseUrl + ApiEndpoints.calculator.calc;
 
   Future<File?> fetchFile(String filename) async {

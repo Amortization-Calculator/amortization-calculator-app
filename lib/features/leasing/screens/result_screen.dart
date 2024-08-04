@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:get/get.dart';
 import '../../auth/services/logout_service.dart';
-import '../services/file_service.dart';
+import '../services/excel_service.dart';
 import '../../../widgets/build_rich_text_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
+
+import '../services/pdf_service.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -18,14 +20,14 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   File? _fileToShare;
   int? _rentalValue;
-  int? _originalRentalValue; // To store the original rental value
+  int? _originalRentalValue;
   String? _originalAmountFinance;
 
-  Future<void> fetchAndOpenFile(String filename) async {
+  Future<void> fetchAndOpenExcelFile(String filename) async {
     print('Fetching file: $filename');
-    final fileService = FileService();
+    final excelService = ExcelService();
     try {
-      final file = await fileService.fetchFile(filename);
+      final file = await excelService.fetchFile(filename);
       if (file != null) {
         print('File found: ${file.path}');
         setState(() {
@@ -44,6 +46,26 @@ class _ResultScreenState extends State<ResultScreen> {
       print('Error fetching or opening file: $e');
     }
   }
+  Future<void> fetchAndOpenPdfFile(String filename) async {
+    print('Fetching PDF file: $filename');
+    final pdfService = PdfService();
+    try {
+      final file = await pdfService.fetchPdf(filename);
+      print('PDF file found: ${file}');
+      if (file != null) {
+        print('PDF file found: ${file.path}');
+        final result = await OpenFile.open(file.path);
+        print('OpenFile result: type=${result.type}, message=${result.message}');
+
+        if (result.type == ResultType.noAppToOpen) {
+          _showNoAppDialog();
+        }
+      }
+    } catch (e) {
+      print('Error fetching or opening PDF file: $e');
+    }
+  }
+
 
   void _showNoAppDialog() {
     
@@ -215,7 +237,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () => {fetchAndOpenFile(excelFile),print('a')},
+              onPressed: () => fetchAndOpenExcelFile(excelFile),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white60,
                 padding: const EdgeInsets.symmetric(
@@ -244,20 +266,51 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => fetchAndOpenPdfFile(excelFile),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal, // Soft green color, // Subtle color
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 12.0),
+                minimumSize: const Size(double.infinity, 50.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/assets/pdf.png',
+                    height: 24.0,
+                    width: 24.0,
+                  ),
+                  const SizedBox(width: 10.0),
+                  const Text(
+                    'Open PDF File      ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 if (_fileToShare != null) {
                   Share.shareXFiles([XFile(_fileToShare!.path)]);
                 } else {
-                  await fetchAndOpenFile(excelFile);
+                  await fetchAndOpenExcelFile(excelFile);
                   if (_fileToShare != null) {
                     Share.shareXFiles([XFile(_fileToShare!.path)]);
                   }
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF148C79),
+                backgroundColor: const Color(0xFFd32f2e),
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20.0, vertical: 12.0),
                 minimumSize: const Size(double.infinity, 50.0),

@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: snapshot.data!,
+                          text: snapshot.data,
                           style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
