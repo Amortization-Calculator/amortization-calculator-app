@@ -1,18 +1,12 @@
-import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeController extends GetxController {
-  late final String name;
+class HomeController {
+  Future<String> loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('userName') ?? 'User';
+    final gender = prefs.getString('gender') ?? 'Mr.';
+    var name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
 
-  @override
-  void onInit() {
-    super.onInit();
-    loadUserInfo();
-  }
-
-  void loadUserInfo() {
-    final args = Get.arguments;
-    final username = args['userName'] ?? 'User';
-    final gender = args['gender'] ?? 'MALE';
-    name = '${gender == 'MALE' ? 'Mr.' : 'Mrs.'} $username';
+    return name; // Return the constructed name
   }
 }

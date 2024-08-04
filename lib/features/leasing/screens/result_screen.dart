@@ -19,7 +19,7 @@ class _ResultScreenState extends State<ResultScreen> {
   File? _fileToShare;
   int? _rentalValue;
   int? _originalRentalValue; // To store the original rental value
-  String?_originalAmountFinance;
+  String? _originalAmountFinance;
 
   Future<void> fetchAndOpenFile(String filename) async {
     print('Fetching file: $filename');
@@ -46,28 +46,28 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   void _showNoAppDialog() {
-    print('Showing no app dialog');
+    
     Get.defaultDialog(
       title: "No Application Found",
-      middleText: "No application is available to open this file. Please download an app that can open Excel files.",
+      middleText:
+          "No application is available to open this file. Please download an app that can open Excel files.",
       textConfirm: "OK",
       onConfirm: () {
-        print('Dialog confirmed');
         Get.back();
       },
       confirmTextColor: Colors.white,
       buttonColor: Colors.red,
       barrierDismissible: false,
       radius: 10.0,
-      content: Column(
+      content: const Column(
         children: [
-          const Icon(
+          Icon(
             Icons.error,
             color: Colors.red,
             size: 50,
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: 10),
+          Text(
             "No application is available to open this file. Please download an app that can open Excel files.",
             textAlign: TextAlign.center,
           ),
@@ -79,24 +79,19 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments as Map<String, dynamic>?;
-    _originalRentalValue ??= arguments?['rentalValue']
-        ?.round(); // Store original rental value if not already stored
-    _originalAmountFinance ??= arguments?['amountFinance']?.toString() ??
-        '1'; // Store original rental value if not already stored
+    _originalRentalValue ??= arguments?['rentalValue']?.round();
+    _originalAmountFinance ??= arguments?['amountFinance']?.toString() ?? '1';
     _rentalValue = _rentalValue ??
-        _originalRentalValue; // Use original value if _rentalValue is null
+        _originalRentalValue;
 
     final amountFinance = arguments?['amountFinance']?.toString() ?? '1';
-    print('amountFinance ->' + amountFinance);
+
     final assetCost = arguments?['assetCost']?.toString() ?? '0';
-    print('assetCost ->' + assetCost);
-    final percentage = (double.parse(amountFinance) / double.parse(assetCost))
-        .clamp(0.0, 1.0);
-    print(percentage);
+
+    final percentage =
+        (double.parse(amountFinance) / double.parse(assetCost)).clamp(0.0, 1.0);
 
     final excelFile = arguments?['excelFile'] ?? '';
-
-    print("excelFile: $excelFile");
 
     return Scaffold(
       appBar: AppBar(
@@ -175,13 +170,13 @@ class _ResultScreenState extends State<ResultScreen> {
                       children: [
                         TextSpan(
                           text: _rentalValue?.toString() ?? 'N/A',
-                          style: TextStyle(
+                          style:const TextStyle(
                             fontSize: 32.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ' EGP',
                           style: TextStyle(
                             fontSize: 32.0,
@@ -201,22 +196,26 @@ class _ResultScreenState extends State<ResultScreen> {
               lineWidth: 15.0,
               animation: true,
               percent: percentage,
-              center: new Text(
+              center: Text(
                 "${(percentage * 100).toStringAsFixed(1)}%",
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20.0),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
-              footer: new Text(
+              footer: const Text(
                 "Financing Ratio",
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 17.0),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17.0,
+                ),
               ),
               circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Color(0xFF94364a),
+              progressColor: const Color(0xFF94364a),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () => fetchAndOpenFile(excelFile),
+              onPressed: () => {fetchAndOpenFile(excelFile),print('a')},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white60,
                 padding: const EdgeInsets.symmetric(
@@ -258,7 +257,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF148C79),
+                backgroundColor: const Color(0xFF148C79),
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20.0, vertical: 12.0),
                 minimumSize: const Size(double.infinity, 50.0),
@@ -269,7 +268,11 @@ class _ResultScreenState extends State<ResultScreen> {
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.share, size: 24.0, color: Colors.white,),
+                  Icon(
+                    Icons.share,
+                    size: 24.0,
+                    color: Colors.white,
+                  ),
                   SizedBox(width: 10.0),
                   Text(
                     'Share',

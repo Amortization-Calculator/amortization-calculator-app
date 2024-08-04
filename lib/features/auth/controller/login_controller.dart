@@ -24,17 +24,18 @@ class LoginController extends GetxController {
         // Save token using SharedPreferences
         var token = response['token'];
         var expTime= response['expireDate'];
+        var userName = response['userName'];
+        var gender = response['gender'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         await prefs.setString('expireDate', expTime);
+        await prefs.setString('userName', userName);
+        await prefs.setString('gender', gender);
         Get.defaultDialog(
           title: 'Success',
           textConfirm: 'Login Successfully',
           onConfirm: () {
-            Get.offAll(() => const HomeScreen(),arguments: {
-              'userName':response['userName'],
-              'gender': response['gender']
-            });
+            Get.offAll(() => const HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,

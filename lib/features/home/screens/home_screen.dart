@@ -6,26 +6,26 @@ import 'package:get/get.dart';
 import '../../auth/services/logout_service.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
-
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final  HomeController _homeController = HomeController();
+  late Future<String> nameFuture;
+  final HomeController _homeController = HomeController();
 
   @override
   void initState() {
     super.initState();
-    _homeController.loadUserInfo();
+    nameFuture = _homeController.loadUserInfo();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:               AppBar(
+      appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -38,10 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            // Add padding here
             child: IconButton(
               icon: const Icon(Icons.logout, color: Colors.black),
-              // Logout icon
               onPressed: () async {
                 LogoutService logoutService = LogoutService();
                 await logoutService.logout();
@@ -55,29 +53,42 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichText(
-              text: TextSpan(
-                text: 'Welcome ',
-                style: const TextStyle(
-                  fontSize: 22,
-                  color: Color(0xFF970032),
-                  fontWeight: FontWeight.bold,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:_homeController.name ,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
+            FutureBuilder<String>(
+              future: nameFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return const Text('Error loading user info');
+                } else if (!snapshot.hasData) {
+                  return const Text('No user info available');
+                } else {
+                  return RichText(
+                    text: TextSpan(
+                      text: 'Welcome ',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Color(0xFF970032),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: snapshot.data!,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
             ),
             const SizedBox(height: 20),
             Center(
               child: RichText(
-                text:const TextSpan(
+                text: const TextSpan(
                   text: 'Calc ',
                   style: TextStyle(
                     fontSize: 18,
@@ -106,19 +117,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Color(0xFF94364a),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
-              'Choose One Of Our Services',
+              'Choose From Our Services',
               style: TextStyle(fontSize: 22),
             ),
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
                 Get.to(() => const LeasingScreen());
-
               },
               borderRadius: BorderRadius.circular(15.0),
-
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),

@@ -40,15 +40,15 @@ class _SplashScreenState extends State<SplashScreen> {
         // Token is expired, delete it and redirect to RegisterScreen
         await prefs.remove('token');
         await prefs.remove('expireDate');
-        Get.offAll(() => LoginScreen());
+        Get.offAll(() => const LoginScreen());
       } else {
         // Token is valid, redirect to HomeScreen
-        Get.offAll(() => HomeScreen());
+        Get.offAll(() =>  const HomeScreen());
         // Get.offAll(() => LoginScreen());
       }
     } else {
       // No token, user is not logged in
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => const LoginScreen());
     }
   }
 
