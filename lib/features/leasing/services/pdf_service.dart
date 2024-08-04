@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/api_endpoints.dart';
 
 class PdfService {
-  final String getPdfUrl = ApiEndpoints.baseUrl + ApiEndpoints.calculator.calc + 'pdf/';
+  final String getPdfUrl = '${ApiEndpoints.baseUrl}${ApiEndpoints.calculator.calc}pdf/';
 
   Future<File?> fetchPdf(String filename) async {
     final prefs = await SharedPreferences.getInstance();
@@ -31,7 +31,7 @@ class PdfService {
       if (response.statusCode == 200) {
         if (response.headers['content-type'] == 'application/pdf') {
           final contentDisposition = response.headers['content-disposition'];
-          final pdfFilename = contentDisposition?.split('filename=')?.last ?? filename;
+          final pdfFilename = contentDisposition?.split('filename=').last ?? filename;
 
           final fileBytes = response.bodyBytes;
           final tempDir = Directory.systemTemp;
