@@ -7,6 +7,7 @@ import '../../../widgets/build_rich_text_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
+import 'package:intl/intl.dart';  // Import the intl package
 
 import '../services/pdf_service.dart';
 
@@ -111,9 +112,11 @@ class _ResultScreenState extends State<ResultScreen> {
     final assetCost = arguments?['assetCost']?.toString() ?? '0';
 
     final percentage =
-        (double.parse(amountFinance) / double.parse(assetCost)).clamp(0.0, 1.0);
+        ((double.parse(assetCost)-double.parse(amountFinance)) / double.parse(amountFinance)).clamp(0.0, 1.0);
 
     final excelFile = arguments?['excelFile'] ?? '';
+    final formattedRentalValue = NumberFormat('#,###').format(_rentalValue ?? 0);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -191,7 +194,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: _rentalValue?.toString() ?? 'N/A',
+                          text: formattedRentalValue.toString(),
                           style:const TextStyle(
                             fontSize: 32.0,
                             fontWeight: FontWeight.bold,
