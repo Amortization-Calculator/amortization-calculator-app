@@ -56,13 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
             FutureBuilder<String>(
               future: nameFuture,
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return const Text('Error loading user info');
-                } else if (!snapshot.hasData) {
-                  return const Text('No user info available');
-                } else {
                   return RichText(
                     text: TextSpan(
                       text: 'Welcome ',
@@ -82,7 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   );
-                }
               },
             ),
             const SizedBox(height: 20),

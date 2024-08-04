@@ -256,19 +256,6 @@ class _LeasingScreenState extends State<LeasingScreen> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          // CheckboxListTile(
-                          //   contentPadding: const EdgeInsets.all(0.0),
-                          //   title: const Text("Start from this month?"),
-                          //   value: _homeController.checkBox,
-                          //   onChanged: (val) {
-                          //     setState(() {
-                          //       _homeController.checkBox = val;
-                          //     });
-                          //   },
-                          //   activeColor: Color(0xFF94364a),
-                          //   checkColor: Colors.white,
-                          // ),
-                          // const SizedBox(height: 10),
                           Row(
                             children: [
                               Expanded(
