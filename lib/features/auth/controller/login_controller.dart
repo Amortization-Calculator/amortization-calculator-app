@@ -1,7 +1,5 @@
-import 'package:amortization_calculator_app/features/leasing/screens/leasing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../home/screens/home_screen.dart';
 import '../services/login_service.dart';
@@ -36,7 +34,7 @@ class LoginController extends GetxController {
           title: 'Success',
           textConfirm: 'Login Successfully',
           onConfirm: () {
-            Get.offAll(() => HomeScreen());
+            Get.offAll(() => const HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,
