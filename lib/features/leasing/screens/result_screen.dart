@@ -7,7 +7,7 @@ import '../../../widgets/build_rich_text_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
-import 'package:intl/intl.dart';  // Import the intl package
+import 'package:intl/intl.dart';
 
 import '../services/pdf_service.dart';
 
@@ -25,20 +25,15 @@ class _ResultScreenState extends State<ResultScreen> {
   String? _originalAmountFinance;
 
   Future<void> fetchAndOpenExcelFile(String filename) async {
-    print('Fetching file: $filename');
     final excelService = ExcelService();
     try {
       final file = await excelService.fetchFile(filename);
       if (file != null) {
-        print('File found: ${file.path}');
         setState(() {
           _fileToShare = file;
         });
 
         final result = await OpenFile.open(file.path);
-        print(
-            'OpenFile result: type=${result.type}, message=${result.message}');
-
         if (result.type == ResultType.noAppToOpen) {
           _showNoAppDialog();
         }
@@ -48,16 +43,11 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
   Future<void> fetchAndOpenPdfFile(String filename) async {
-    print('Fetching PDF file: $filename');
     final pdfService = PdfService();
     try {
       final file = await pdfService.fetchPdf(filename);
-      print('PDF file found: ${file}');
       if (file != null) {
-        print('PDF file found: ${file.path}');
         final result = await OpenFile.open(file.path);
-        print('OpenFile result: type=${result.type}, message=${result.message}');
-
         if (result.type == ResultType.noAppToOpen) {
           _showNoAppDialog();
         }
@@ -69,11 +59,8 @@ class _ResultScreenState extends State<ResultScreen> {
 
 
   void _showNoAppDialog() {
-    
     Get.defaultDialog(
       title: "No Application Found",
-      middleText:
-          "No application is available to open this file. Please download an app that can open Excel files.",
       textConfirm: "OK",
       onConfirm: () {
         Get.back();
@@ -91,7 +78,7 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           SizedBox(height: 10),
           Text(
-            "No application is available to open this file. Please download an app that can open Excel files.",
+            "No application is available to open this file.",
             textAlign: TextAlign.center,
           ),
         ],
@@ -112,7 +99,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final assetCost = arguments?['assetCost']?.toString() ?? '0';
 
     final percentage =
-        ((double.parse(assetCost)-double.parse(amountFinance)) / double.parse(amountFinance)).clamp(0.0, 1.0);
+        ((double.parse(amountFinance)) / double.parse(assetCost)).clamp(0.0, 1.0);
 
     final excelFile = arguments?['excelFile'] ?? '';
     final formattedRentalValue = NumberFormat('#,###').format(_rentalValue ?? 0);

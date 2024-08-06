@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../constants/enums.dart';
 import 'calc_controller.dart';
 
-class LeasingScreenController {
+class LeasingController extends GetxController {
   final CalcController calcController = CalcController();
   final formKey = GlobalKey<FormState>();
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   bool? checkBox = false;
   String? valueChoose = "4";
   final List<String> listItem = ["1", "2", "4", "12"];
-  AdvanceArrearsEnum? advanceArrearsEnum = AdvanceArrearsEnum.advance;
+  Rx<AdvanceArrearsEnum?> advanceArrearsEnum = AdvanceArrearsEnum.advance.obs;
 
   final TextEditingController marginInterestRateController = TextEditingController();
   final TextEditingController assetCostController = TextEditingController();
@@ -29,22 +30,30 @@ class LeasingScreenController {
 
   Future<void> calculate() async {
     if (formKey.currentState?.validate() ?? false) {
-      isLoading = true;
+      isLoading.value = true;
 
       await calcController.calculate(
         amountFinance: double.parse(amountFinancedController.text),
         assetCost: double.parse(assetCostController.text),
-        interestRate: double.parse(marginInterestRateController.text),
+        interestRate: double.parse(marginInterestRateController.text)/100,
         gracePeriod: double.parse(gracePeriodController.text),
         effectiveRate: double.parse(marginInterestRateController.text),
         noOfRental: int.parse(numberOfRentalsController.text),
         rentalInterval: int.parse(valueChoose!),
-        beginning: (advanceArrearsEnum == AdvanceArrearsEnum.advance) ? true : false,
+        beginning: (advanceArrearsEnum.value == AdvanceArrearsEnum.advance) ? true : false,
         residualValue: double.parse(residualAmountController.text),
         startFromFirstMonth:false,
       );
 
-      isLoading = false;
+      isLoading.value = false;
+    }
+  }
+  void onCalculateButtonPressed() async {
+    if (formKey.currentState?.validate() ?? false) {
+      isLoading.value = true;
+      await calculate();
+      isLoading.value = false;
     }
   }
 }
+

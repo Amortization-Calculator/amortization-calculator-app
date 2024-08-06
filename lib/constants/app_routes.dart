@@ -17,7 +17,7 @@ class AppRoutes {
     //----------------------------------------------------------------------
     GetPage(name: '/HomeScreen', page: () => const HomeScreen()),
     //----------------------------------------------------------------------
-    GetPage(name: '/LeasingScreen', page: () => const LeasingScreen()),
+    GetPage(name: '/LeasingScreen', page: () => LeasingScreen()),
     GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
     //----------------------------------------------------------------------
 

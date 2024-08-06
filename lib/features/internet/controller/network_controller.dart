@@ -1,8 +1,6 @@
 import 'package:amortization_calculator_app/features/internet/screens/no_internet_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-
-// NetworkController.dart
 class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
   var connectionStatus = ConnectivityResult.none.obs;
@@ -16,10 +14,9 @@ class NetworkController extends GetxController {
 
   void _updateConnectionStatus(ConnectivityResult result) {
     connectionStatus.value = result;
-    print(result);
     if (result == ConnectivityResult.none) {
       if (Get.currentRoute != '/noInternet') {
-        Get.to(() => NoInternetScreen());
+        Get.to(() => const NoInternetScreen());
       }
     } else {
       if (Get.currentRoute == '/NoInternetScreen') {

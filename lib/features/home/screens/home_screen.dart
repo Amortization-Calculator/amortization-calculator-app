@@ -1,9 +1,9 @@
 import 'package:amortization_calculator_app/features/home/controller/home_controller.dart';
 import 'package:amortization_calculator_app/features/leasing/screens/leasing_screen.dart';
+import 'package:amortization_calculator_app/widgets/custom_appBar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../auth/services/logout_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,29 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        shadowColor: Colors.black,
-        centerTitle: true,
-        title: Image.asset(
-          'lib/assets/logo-transparent-png.png',
-          height: 60.0,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.logout, color: Colors.black),
-              onPressed: () async {
-                LogoutService logoutService = LogoutService();
-                await logoutService.logout();
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -117,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             InkWell(
               onTap: () {
-                Get.to(() => const LeasingScreen());
+                Get.to(() => LeasingScreen());
               },
               borderRadius: BorderRadius.circular(15.0),
               child: Card(

@@ -11,7 +11,6 @@ class PdfService {
     final token = prefs.getString('token');
 
     if (token == null) {
-      print('Token not found');
       throw Exception('Token not found');
     }
 
@@ -25,9 +24,6 @@ class PdfService {
         },
       );
 
-      print('Response Content-Type: ${response.headers['content-type']}');
-      print('Response Content-Disposition: ${response.headers['content-disposition']}');
-
       if (response.statusCode == 200) {
         if (response.headers['content-type'] == 'application/pdf') {
           final contentDisposition = response.headers['content-disposition'];
@@ -40,18 +36,14 @@ class PdfService {
 
           // Save file
           await tempFile.writeAsBytes(fileBytes);
-          print('File saved at: $tempFilePath');
           return tempFile;
         } else {
-          print('The fetched file is not a PDF. Content-Type: ${response.headers['content-type']}');
           throw Exception('Fetched file is not a PDF');
         }
       } else {
-        print('Failed to load PDF. Status code: ${response.statusCode}');
         throw Exception('Failed to load PDF');
       }
     } catch (e) {
-      print('Error fetching PDF: $e');
       return null;
     }
   }

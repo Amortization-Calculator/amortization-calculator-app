@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         final mediaQueryData = MediaQuery.of(context);
         final scale = mediaQueryData.textScaler.clamp(
           minScaleFactor: 1.0,
-          maxScaleFactor: 1.3,
+          maxScaleFactor: 1.4,
         );
         return MediaQuery(
           data: mediaQueryData.copyWith(

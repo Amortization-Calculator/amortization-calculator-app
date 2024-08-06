@@ -11,7 +11,6 @@ class ExcelService {
     final token = prefs.getString('token');
 
     if (token == null) {
-      print('Token not found');
       throw Exception('Token not found');
     }
 
@@ -26,23 +25,15 @@ class ExcelService {
       );
 
       if (response.statusCode == 200) {
-        print('File fetched successfully');
         final fileBytes = response.bodyBytes;
         final tempDir = Directory.systemTemp;
         final tempFilePath = '${tempDir.path}/$filename';
         final tempFile = File(tempFilePath);
 
-        // Ensure file does not already exist
-        if (await tempFile.exists()) {
-          print('File already exists: $tempFilePath');
-        }
-
         // Save file
         await tempFile.writeAsBytes(fileBytes);
-        print('File saved at: $tempFilePath');
         return tempFile;
       } else {
-        print('Failed to load file. Status code: ${response.statusCode}');
         throw Exception('Failed to load file');
       }
     } catch (e) {

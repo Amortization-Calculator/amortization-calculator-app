@@ -43,11 +43,6 @@ class CalcService {
         'startFromFristMonth': startFromFirstMonth,
 
     });
-
-    print("Request URL: $_calcUrl");
-    print("Request Headers: $headers");
-    print("Request Body: $body");
-
     try {
       final response = await http
           .post(
@@ -61,9 +56,6 @@ class CalcService {
           throw TimeoutException('Request timed out');
         },
       );
-
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -80,7 +72,6 @@ class CalcService {
         };
       }
     } catch (e) {
-      print('Error during calculation: $e');
       return {'success': false, 'message': e.toString()};
     }
   }
