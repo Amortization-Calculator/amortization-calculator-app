@@ -36,7 +36,7 @@ class LoginController extends GetxController {
           title: 'Success',
           textConfirm: 'Login Successfully',
           onConfirm: () {
-            Get.offAll(() => const HomeScreen());
+            Get.offAll(() => HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,

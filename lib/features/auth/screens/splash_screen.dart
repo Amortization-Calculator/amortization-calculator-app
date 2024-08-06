@@ -20,16 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     String? expireDateStr = prefs.getString('expireDate');
-    print("token");
-    print(token);
-    print('expireDateStr');
-    print(expireDateStr);
-
-
-    //---------------------------------------------//
-    // LogoutService logoutService = LogoutService();
-    // await logoutService.logout();
-    //---------------------------------------------//
 
 
     if (token != null && expireDateStr != null) {
@@ -42,12 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
         await prefs.remove('expireDate');
         Get.offAll(() => const LoginScreen());
       } else {
-        // Token is valid, redirect to HomeScreen
-        Get.offAll(() =>  const HomeScreen());
-        // Get.offAll(() => LoginScreen());
+        Get.offAll(() =>   HomeScreen());
       }
     } else {
-      // No token, user is not logged in
+
       Get.offAll(() => const LoginScreen());
     }
   }

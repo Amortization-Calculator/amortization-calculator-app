@@ -45,7 +45,7 @@ class RegisterController extends GetxController {
           middleText: response['message'],
           textConfirm: 'Registered Successfully',
           onConfirm: () {
-            Get.offAll(() =>const HomeScreen());
+            Get.offAll(() => HomeScreen());
           },
           confirmTextColor: Colors.white,
           buttonColor: Colors.green,
