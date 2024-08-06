@@ -54,3 +54,53 @@ String? validateResidualAmount(String? value) {
   return null;
 }
 //--------------------------------------------------------------
+//                       register form validators
+//--------------------------------------------------------------
+String? validateName(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your name';
+  }
+  return null;
+}
+
+String? validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  }
+  const emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+  final regExp = RegExp(emailPattern);
+  if (!regExp.hasMatch(value)) {
+    return 'Please enter a valid email address';
+  }
+  return null;
+}
+
+String? validatePhoneNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your phone number';
+  }
+  const phonePattern = r'^01[0125][0-9]{8}$';
+  final regExp = RegExp(phonePattern);
+  if (!regExp.hasMatch(value)) {
+    return 'Please enter a valid phone number';
+  }
+  return null;
+}
+
+String? validatePassword(String? value) {
+  if (value == null || value.length < 6) {
+    return 'The password must be at least 6 characters';
+  }
+  return null;
+}
+
+String? validateConfirmPassword(String? value, String? password) {
+  if (value == null || value.length < 6) {
+    return 'The password must be at least 6 characters';
+  }
+  if (value != password) {
+    return 'Passwords do not match';
+  }
+  return null;
+}
+//--------------------------------------------------------------
