@@ -153,14 +153,13 @@ class _ResultScreenState extends State<ResultScreen> {
               width: double.infinity,
               constraints: const BoxConstraints(maxWidth: 600),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(12.0),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+                    spreadRadius: 1,
+                    offset: const Offset(0, 1),
                   ),
                 ],
               ),
