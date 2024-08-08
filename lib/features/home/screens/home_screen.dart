@@ -3,6 +3,7 @@ import 'package:amortization_calculator_app/widgets/custom_appBar_widget.dart';
 import 'package:amortization_calculator_app/widgets/custom_divider_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/title_widget.dart';
+import '../../mortgage/screens/mortgage_screen.dart';
 import '../widgets/service_card_widget.dart';
 import '../widgets/welcome_text_widget.dart';
 
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const Center(
               child:
-                  TitleWidget(firstText: 'Calc ', secondText: 'Amortization'),
+              TitleWidget(firstText: 'Calc ', secondText: 'Amortization'),
             ),
             const SizedBox(height: 20),
             const CustomDividerWidget(),
@@ -33,9 +34,15 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ServiceCardWidget(
-              title: 'Leasing',
+              title: 'Leasing Calculator',
               iconPath: 'lib/assets/leasing.png',
               page: LeasingScreen(),
+            ),
+            const SizedBox(height: 10),
+            const ServiceCardWidget(
+              title: 'Mortgage Calculator',
+              iconPath: 'lib/assets/mortage.png',
+              page: MortgageScreen(),
             ),
           ],
         ),
