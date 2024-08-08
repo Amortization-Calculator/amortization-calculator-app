@@ -1,6 +1,7 @@
-import 'package:amortization_calculator_app/features/internet/screens/no_internet_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+
+import '../screens/no_internet_screen.dart';
 class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
   var connectionStatus = ConnectivityResult.none.obs;

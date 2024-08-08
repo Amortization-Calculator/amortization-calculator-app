@@ -1,6 +1,7 @@
-import 'package:amortization_calculator_app/features/internet/controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controller/network_controller.dart';
 
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});

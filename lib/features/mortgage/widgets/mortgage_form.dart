@@ -1,4 +1,4 @@
-import 'package:amortization_calculator_app/features/mortgage/widgets/slider_container_widget.dart';
+import 'package:amortization_calculator/features/mortgage/widgets/slider_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';

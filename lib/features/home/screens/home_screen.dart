@@ -1,8 +1,9 @@
-import 'package:amortization_calculator_app/features/leasing/screens/leasing_screen.dart';
-import 'package:amortization_calculator_app/widgets/custom_appBar_widget.dart';
-import 'package:amortization_calculator_app/widgets/custom_divider_widget.dart';
+
 import 'package:flutter/material.dart';
+import '../../../widgets/custom_appBar_widget.dart';
+import '../../../widgets/custom_divider_widget.dart';
 import '../../../widgets/title_widget.dart';
+import '../../leasing/screens/leasing_screen.dart';
 import '../../mortgage/screens/mortgage_screen.dart';
 import '../widgets/service_card_widget.dart';
 import '../widgets/welcome_text_widget.dart';
