@@ -14,9 +14,11 @@ class SplashScreen extends StatelessWidget {
 
     authController.checkLoginStatus();
 
-    return const Scaffold(
+    return  Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Image.asset(
+          'lib/assets/logo_1024.png'
+      ),
       ),
     );
   }
