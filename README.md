@@ -1,6 +1,5 @@
 # amortization_calculator_app
 
-International Company for Leasing S.A.E.
 
 ## Getting Started
 
