@@ -13,7 +13,7 @@ String? validateAssetCost(String? value, TextEditingController amountFinancedCon
   if (amountFinanced != null && assetCost < amountFinanced) {
     return 'Asset Cost must be at least as Amount Financed';
   }
-  if(amountFinanced != null&& (assetCost/amountFinanced)*100>90) {
+  if(amountFinanced != null&& (amountFinanced/assetCost)*100>90) {
     return 'Financing Ratio cno not be more than 90 %';
   }
   return null;
@@ -88,19 +88,42 @@ String? validatePhoneNumber(String? value) {
 }
 
 String? validatePassword(String? value) {
-  if (value == null || value.length < 6) {
-    return 'The password must be at least 6 characters';
+  if (value == null || value.length < 8) {
+    return 'The password must be at least 8 characters';
   }
   return null;
 }
 
 String? validateConfirmPassword(String? value, String? password) {
-  if (value == null || value.length < 6) {
-    return 'The password must be at least 6 characters';
+  if (value == null || value.length < 8) {
+    return 'The password must be at least 8 characters';
   }
   if (value != password) {
     return 'Passwords do not match';
   }
   return null;
 }
+
 //--------------------------------------------------------------
+//                          mortgage form validators
+//--------------------------------------------------------------
+String? unitPrice(String? value) {
+  if (value == null || value.isEmpty || double.tryParse(value) == null) {
+    return 'Please enter the unit Price';
+  }
+  return null;
+}
+String? downPaymentForTheUnit(String? value,TextEditingController unitPrice) {
+  double? unitPriceValue = double.tryParse(unitPrice.text);
+
+  if (value == null || value.isEmpty || double.tryParse(value) == null) {
+    return 'Please enter the down Payment For The Unit';
+  }
+  if(unitPriceValue!=null&&(double.tryParse(value)!/unitPriceValue)*100<20){
+    return 'down Payment For The Unit must be at least 20%';
+  }
+  if(unitPriceValue!=null&&(double.tryParse(value)!>unitPriceValue)){
+    return 'Down Payment Can not be more than the Unit Price';
+  }
+  return null;
+}

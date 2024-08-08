@@ -30,6 +30,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: true,
             validator: validateAmountFinanced,
           ),
+          const SizedBox(height: 10),
           TextFormWidget(
             labelText: "Asset Cost",
             hintText: "EGP",
@@ -41,6 +42,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: true,
             validator: (value) => validateAssetCost(value, controller.amountFinancedController),
           ),
+          const SizedBox(height: 10),
           TextFormWidget(
             labelText: "Number Of Rentals *",
             hintText: "12",
@@ -52,6 +54,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateNumberOfRentals,
           ),
+          const SizedBox(height: 10),
           TextFormWidget(
             labelText: "Interest Rate *",
             hintText: "5 %",
@@ -63,6 +66,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateInterestRate,
           ),
+          const SizedBox(height: 10),
           TextFormWidget(
             labelText: "Grace Period *",
             hintText: "No G.P",
@@ -74,6 +78,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateGracePeriod,
           ),
+          const SizedBox(height: 10),
           TextFormWidget(
             labelText: "Residual Amount *",
             hintText: "EGP",
@@ -85,6 +90,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateResidualAmount,
           ),
+          const SizedBox(height: 10),
           DropdownWidget(
             value: controller.valueChoose,
             items: controller.listItem,
@@ -119,7 +125,7 @@ class LeasingForm extends StatelessWidget {
               ],
             );
           }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Center(
             child: ElevatedButton.icon(
               icon: const Icon(Icons.calculate, color: Colors.white),
