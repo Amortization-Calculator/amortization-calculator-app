@@ -46,10 +46,20 @@ jobs:
       - name: Check export log
         run: tail -n 50 export.log
 
+      - name: List contents of build directory
+        run: ls -R build/ios/iphoneos
+
       - name: Check if IPA file exists
-        run: ls build/ios/iphoneos/*.ipa
+        run: |
+          if [ -f build/ios/iphoneos/Runner.ipa ]; then
+            echo "IPA file exists."
+          else
+            echo "IPA file does not exist."
+            exit 1
+          fi
 
       - name: Upload binaries to release
+        if: success() # Only run this if the previous steps succeeded
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
