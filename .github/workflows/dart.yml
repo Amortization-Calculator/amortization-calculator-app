@@ -29,14 +29,22 @@ jobs:
                      -sdk iphoneos \
                      -configuration Release \
                      archive \
-                     -archivePath build/ios/iphoneos/Runner.xcarchive
+                     -archivePath build/ios/iphoneos/Runner.xcarchive \
+                     | tee xcodebuild.log | xcpretty
+
+      - name: Check xcodebuild log
+        run: tail -n 50 xcodebuild.log
 
       - name: Export IPA
         run: |
           xcodebuild -exportArchive \
                      -archivePath build/ios/iphoneos/Runner.xcarchive \
                      -exportOptionsPlist ios/ExportOptions.plist \
-                     -exportPath build/ios/iphoneos
+                     -exportPath build/ios/iphoneos \
+                     | tee export.log | xcpretty
+
+      - name: Check export log
+        run: tail -n 50 export.log
 
       - name: Check if IPA file exists
         run: ls build/ios/iphoneos/*.ipa
