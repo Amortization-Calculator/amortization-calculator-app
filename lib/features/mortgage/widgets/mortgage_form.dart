@@ -11,7 +11,7 @@ class MortgageForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MortgageController>();
+    final controller = Get.put(MortgageController());
 
     return Form(
       key: controller.formKey,
