@@ -4,8 +4,8 @@ import 'constants/app_routes.dart';
 import 'features/internet/controller/DependencyInjection.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   Dependencyinjection.init();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
       const MyApp(),
   );
