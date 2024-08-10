@@ -8,7 +8,7 @@ class LogoutService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.clear();
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() =>  LoginScreen());
 
     } catch (e) {
       print("Error clearing shared preferences: $e");

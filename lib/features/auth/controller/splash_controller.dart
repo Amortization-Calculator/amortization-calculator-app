@@ -17,12 +17,12 @@ class SplashController extends GetxController {
 
       if (DateTime.now().isAfter(expireDate)) {
         await splashService.removeToken();
-        Get.offAll(() => const LoginScreen());
+        Get.offAll(() =>  LoginScreen());
       } else {
         Get.offAll(() => const HomeScreen());
       }
     } else {
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() =>  LoginScreen());
     }
   }
 }
