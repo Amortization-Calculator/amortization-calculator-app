@@ -9,6 +9,7 @@ class CalcService {
 
   Future<String> _getAuthToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('token'));
     return prefs.getString('token') ?? '';
   }
 
@@ -49,13 +50,13 @@ class CalcService {
         Uri.parse(_calcUrl),
         headers: headers,
         body: body,
-      )
-          .timeout(
-        const Duration(seconds: 10),
-        onTimeout: () {
-          throw TimeoutException('Request timed out');
-        },
       );
+        //   .timeout(
+        // const Duration(seconds: 10),
+        // onTimeout: () {
+        //   throw TimeoutException('Request timed out');
+        // },
+      // );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
