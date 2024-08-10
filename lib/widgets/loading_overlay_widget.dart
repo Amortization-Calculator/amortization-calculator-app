@@ -10,12 +10,12 @@ class LoadingOverlayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (isLoading.value) {
-        return Positioned.fill(
-          child: Container(
-            color: Colors.black54,
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
+        return  Container(
+          color: Colors.black54,
+          width: double.infinity, // Full screen width
+          height: double.infinity, // Full screen height
+          child: const Center(
+            child: CircularProgressIndicator(),
           ),
         );
       } else {

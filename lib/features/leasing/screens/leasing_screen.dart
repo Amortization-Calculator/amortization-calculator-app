@@ -32,7 +32,7 @@ class LeasingScreen extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 9,vertical: 8),
                       child: LeasingForm(controller: controller),
                     ),
                   ),

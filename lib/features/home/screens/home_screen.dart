@@ -17,35 +17,38 @@ class HomeScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const WelcomeTextWidget(),
-            const SizedBox(height: 20),
-            const Center(
-              child:
-              TitleWidget(firstText: 'Calc ', secondText: 'Amortization'),
-            ),
-            const SizedBox(height: 20),
-            const CustomDividerWidget(),
-            const SizedBox(height: 20),
-            const Text(
-              'Choose From Our Services',
-              style: TextStyle(fontSize: 22),
-            ),
-            const SizedBox(height: 20),
-            ServiceCardWidget(
-              title: 'Leasing Calculator',
-              iconPath: 'lib/assets/leasing.png',
-              page: LeasingScreen(),
-            ),
-            const SizedBox(height: 10),
-            const ServiceCardWidget(
-              title: 'Mortgage Calculator',
-              iconPath: 'lib/assets/mortage.png',
-              page: MortgageScreen(),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WelcomeTextWidget(),
+              const SizedBox(height: 20),
+              const Center(
+                child:
+                TitleWidget(firstText: 'Calc ', secondText: 'Amortization'),
+              ),
+              const SizedBox(height: 20),
+              const CustomDividerWidget(),
+              const SizedBox(height: 20),
+              const Text(
+                'Choose From Our Services',
+                style: TextStyle(fontSize: 22),
+              ),
+              const SizedBox(height: 20),
+              ServiceCardWidget(
+                title: 'Leasing Calculator',
+                iconPath: 'lib/assets/leasing.png',
+                page: LeasingScreen(),
+              ),
+              const SizedBox(height: 10),
+              const ServiceCardWidget(
+                title: 'Mortgage Calculator',
+                iconPath: 'lib/assets/mortage.png',
+                page: MortgageScreen(),
+              ),
+              
+            ],
+          ),
         ),
       ),
     );

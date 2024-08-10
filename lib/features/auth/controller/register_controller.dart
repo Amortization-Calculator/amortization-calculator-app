@@ -26,13 +26,15 @@ class RegisterController extends GetxController {
   final FocusNode passwordFocusNode = FocusNode();
 
   // Visibility and Loading states
-  bool obscurePassText = true;
-  bool obscureConfirmPassText = true;
+  RxBool obscurePassText = true.obs;
+  RxBool obscureConfirmPassText = true.obs;
   var isLoading = false.obs;
 
   final RegisterService registerService = RegisterService();
 
   Future<void> registerUser() async {
+    FocusScope.of(Get.context!).unfocus();
+
     if (formKey.currentState!.validate()) {
       isLoading(true);
       try {
@@ -109,7 +111,6 @@ class RegisterController extends GetxController {
           );
         }
       } catch (error) {
-        print('Registration failed: $error');
         Get.defaultDialog(
           title: 'Error',
           middleText: 'Registration failed: $error',

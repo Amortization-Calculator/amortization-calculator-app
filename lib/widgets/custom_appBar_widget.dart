@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../features/auth/services/logout_service.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final bool showLogout;
+
+  const CustomAppBar({super.key, this.showLogout = true}); // Default is true
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         'lib/assets/logo-transparent-png.png',
         height: 60.0,
       ),
-      actions: [
+      actions: showLogout
+          ? [
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: IconButton(
@@ -27,7 +30,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             },
           ),
         ),
-      ],
+      ]
+          : [], // Show logout button only if showLogout is true
     );
   }
 

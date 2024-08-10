@@ -6,7 +6,6 @@ import '../../../widgets/text_form_widget.dart';
 import '../../../constants/enums.dart';
 import '../controller/register_controller.dart';
 
-
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
 
@@ -64,13 +63,14 @@ class RegisterForm extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Obx(
-                  () => Row(
+              () => Row(
                 children: [
                   Expanded(
                     child: GenericRadioTileWidget<IndividualCompanyEnum>(
                       value: IndividualCompanyEnum.Individual,
                       title: 'Individual',
-                      groupValue: registerController.individualCompanyEnum.value,
+                      groupValue:
+                          registerController.individualCompanyEnum.value,
                       onChanged: (IndividualCompanyEnum? value) {
                         registerController.individualCompanyEnum.value = value!;
                       },
@@ -81,7 +81,8 @@ class RegisterForm extends StatelessWidget {
                     child: GenericRadioTileWidget<IndividualCompanyEnum>(
                       value: IndividualCompanyEnum.Company,
                       title: 'Company',
-                      groupValue: registerController.individualCompanyEnum.value,
+                      groupValue:
+                          registerController.individualCompanyEnum.value,
                       onChanged: (IndividualCompanyEnum? value) {
                         registerController.individualCompanyEnum.value = value!;
                       },
@@ -100,7 +101,7 @@ class RegisterForm extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Obx(
-                  () => Row(
+              () => Row(
                 children: [
                   Expanded(
                     child: GenericRadioTileWidget<GenderEnum>(
@@ -127,61 +128,63 @@ class RegisterForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            TextFormField(
-              focusNode: registerController.passwordFocusNode,
-              obscureText: registerController.obscurePassText,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.visiblePassword,
-              controller: registerController.passwordTextController,
-              validator: (value) => validatePassword(value),
-              decoration: InputDecoration(
-                hintText: "Enter Your Password",
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    registerController.obscurePassText =
-                    !registerController.obscurePassText;
-                  },
-                  child: Icon(
-                    registerController.obscurePassText
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Colors.black,
+            Obx(
+              () => TextFormField(
+                focusNode: registerController.passwordFocusNode,
+                obscureText: registerController.obscurePassText.value,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.visiblePassword,
+                controller: registerController.passwordTextController,
+                validator: (value) => validatePassword(value),
+                decoration: InputDecoration(
+                  hintText: "Enter Your Password",
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      registerController.obscurePassText.value ^= true;
+                    },
+                    child: Icon(
+                      registerController.obscurePassText.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.black,
+                    ),
                   ),
+                  border: const OutlineInputBorder(),
+                  labelText: "Password",
                 ),
-                border: const OutlineInputBorder(),
-                labelText: "Password",
-              ),
-              style: const TextStyle(
-                color: Colors.black,
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
               ),
             ),
             const SizedBox(height: 20),
-            TextFormField(
-              obscureText: registerController.obscureConfirmPassText,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.visiblePassword,
-              controller: registerController.confirmPasswordTextController,
-              validator: (value) => validateConfirmPassword(
-                  value, registerController.passwordTextController.text),
-              decoration: InputDecoration(
-                hintText: "Confirm Your Password",
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    registerController.obscureConfirmPassText =
-                    !registerController.obscureConfirmPassText;
-                  },
-                  child: Icon(
-                    registerController.obscureConfirmPassText
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Colors.black,
+            Obx(
+              () => TextFormField(
+                obscureText: registerController.obscureConfirmPassText.value,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.visiblePassword,
+                controller: registerController.confirmPasswordTextController,
+                validator: (value) => validateConfirmPassword(
+                    value, registerController.passwordTextController.text),
+                decoration: InputDecoration(
+                  hintText: "Confirm Your Password",
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      registerController.obscureConfirmPassText.value ^= true;
+                    },
+                    child: Icon(
+                      registerController.obscureConfirmPassText.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.black,
+                    ),
                   ),
+                  border: const OutlineInputBorder(),
+                  labelText: "Confirm Password",
                 ),
-                border: const OutlineInputBorder(),
-                labelText: "Confirm Password",
-              ),
-              style: const TextStyle(
-                color: Colors.black,
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
               ),
             ),
             const SizedBox(height: 20),

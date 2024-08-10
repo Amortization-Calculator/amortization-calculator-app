@@ -21,6 +21,8 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
+    FocusScope.of(Get.context!).unfocus();
+
     if (formKey.currentState!.validate()) {
       isLoading(true);
       try {
@@ -84,14 +86,15 @@ class LoginController extends GetxController {
       buttonColor: Colors.red,
       barrierDismissible: false,
       radius: 10.0,
-      content: const Column(
+      content: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.error,
             color: Colors.red,
             size: 50,
           ),
-          SizedBox(height: 10),
+          Text(message), // Display the message
+          const SizedBox(height: 10),
         ],
       ),
     );
