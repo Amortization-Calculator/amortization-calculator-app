@@ -2,8 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controller/splash_controller.dart';
-import '../../internet/controller/network_controller.dart';
+import '../controllers/splash_controller.dart';
+import '../../internet/controllers/network_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

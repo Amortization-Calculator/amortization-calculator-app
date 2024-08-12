@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../widgets/loading_overlay_widget.dart';
-import '../controller/login_controller.dart';
+import '../controllers/login_controller.dart';
 import '../widgets/header_widget.dart';
 import '../widgets/login_form_widget.dart';
 

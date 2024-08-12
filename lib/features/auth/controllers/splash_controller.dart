@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import '../../home/screens/home_screen.dart';
-import '../../internet/controller/network_controller.dart';
+import '../../internet/controllers/network_controller.dart';
 import '../../internet/screens/no_internet_screen.dart';
 import '../screens/login_screen.dart';
 import '../services/splash_service.dart';

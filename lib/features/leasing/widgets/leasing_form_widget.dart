@@ -5,7 +5,7 @@ import '../../../constants/enums.dart';
 import '../../../widgets/drop_down_widget.dart';
 import '../../../widgets/generic_radio_tile_widget.dart';
 import '../../../widgets/text_form_widget.dart';
-import '../controller/leasing_controller.dart';
+import '../controllers/leasing_controller.dart';
 
 class LeasingForm extends StatelessWidget {
   final LeasingController controller;

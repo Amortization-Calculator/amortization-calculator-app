@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../widgets/title_widget.dart';
-import '../controller/leasing_controller.dart';
+import '../controllers/leasing_controller.dart';
 import '../../../widgets/loading_overlay_widget.dart';
 import '../../../widgets/custom_appBar_widget.dart';
 import '../../../widgets/custom_divider_widget.dart';

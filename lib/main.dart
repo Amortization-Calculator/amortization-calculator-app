@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'constants/app_routes.dart';
-import 'features/internet/controller/DependencyInjection.dart';
+import 'features/internet/controllers/DependencyInjection.dart';
 
 Future<void> main() async {
   Dependencyinjection.init();

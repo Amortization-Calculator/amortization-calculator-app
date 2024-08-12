@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
-import '../controller/login_controller.dart';
+import '../controllers/login_controller.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../screens/register_screen.dart';
 

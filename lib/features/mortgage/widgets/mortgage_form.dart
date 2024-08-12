@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
 import '../../../widgets/text_form_widget.dart';
-import '../controller/mortgage_controller.dart';
+import '../controllers/mortgage_controller.dart';
 import '../widgets/result_widget.dart';
 
 class MortgageForm extends StatelessWidget {

@@ -4,7 +4,7 @@ import '../../../validators.dart';
 import '../../../widgets/generic_radio_tile_widget.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../../../constants/enums.dart';
-import '../controller/register_controller.dart';
+import '../controllers/register_controller.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});

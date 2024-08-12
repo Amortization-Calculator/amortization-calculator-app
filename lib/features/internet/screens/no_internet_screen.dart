@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controller/network_controller.dart';
+import '../controllers/network_controller.dart';
 
 class NoInternetScreen extends StatelessWidget {
   const NoInternetScreen({super.key});

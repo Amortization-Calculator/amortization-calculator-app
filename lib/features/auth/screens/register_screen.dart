@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../widgets/custom_divider_widget.dart';
 import '../../../widgets/loading_overlay_widget.dart';
-import '../controller/register_controller.dart';
+import '../controllers/register_controller.dart';
 import '../widgets/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {

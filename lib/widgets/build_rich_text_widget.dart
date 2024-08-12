@@ -11,8 +11,8 @@ class RichTextWidget extends StatelessWidget {
     required this.secondText,
     required this.firstFontSize,
     required this.secondFontSize,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class RichTextWidget extends StatelessWidget {
         text: firstText,
         style: TextStyle(
           fontSize: firstFontSize,
-          color: Color(0xFF970032), // Primary color
+          color: const Color(0xFF970032), // Primary color
           fontWeight: FontWeight.bold,
         ),
         children: <TextSpan>[
@@ -29,7 +29,7 @@ class RichTextWidget extends StatelessWidget {
             text: secondText,
             style: TextStyle(
               fontSize: secondFontSize,
-              color: Color(0xFF5e0210), // Secondary color
+              color: const Color(0xFF5e0210), // Secondary color
             ),
           ),
         ],
