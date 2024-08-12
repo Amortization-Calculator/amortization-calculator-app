@@ -9,6 +9,7 @@ import '../features/internet/screens/no_internet_screen.dart';
 import '../features/leasing/screens/leasing_screen.dart';
 import '../features/leasing/screens/result_screen.dart';
 import '../features/mortgage/screens/mortgage_screen.dart';
+import '../features/team/screens/team_screen.dart';
 
 class AppRoutes {
   static final routes = [
@@ -24,6 +25,8 @@ class AppRoutes {
     GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
     //----------------------------------------------------------------------
     GetPage(name: '/MortgageScreen', page: () => const MortgageScreen()),
+    //----------------------------------------------------------------------
+    GetPage(name: '/TeamScreen', page: () => const TeamScreen()),
 
   ];
 }

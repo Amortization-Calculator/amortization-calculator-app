@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ServiceCardWidget extends StatelessWidget {
-  final Widget page;
+  final String page;
   final String iconPath;
   final String title;
 
@@ -17,7 +17,7 @@ class ServiceCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => page);
+        Get.toNamed(page);
       },
       borderRadius: BorderRadius.circular(15.0),
       child: SizedBox(

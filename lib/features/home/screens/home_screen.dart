@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../widgets/custom_appBar_widget.dart';
 import '../../../widgets/custom_divider_widget.dart';
 import '../../../widgets/title_widget.dart';
-import '../../leasing/screens/leasing_screen.dart';
-import '../../mortgage/screens/mortgage_screen.dart';
-import '../../team/screens/team_screen.dart';
 import '../widgets/service_card_widget.dart';
 import '../widgets/welcome_text_widget.dart';
 
@@ -13,46 +10,46 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(),
+    return const Scaffold(
+      appBar: CustomAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const WelcomeTextWidget(),
-              const SizedBox(height: 20),
-              const Center(
+              WelcomeTextWidget(),
+              SizedBox(height: 20),
+              Center(
                 child: TitleWidget(
                   firstText: 'Calc ',
                   secondText: 'Amortization',
                 ),
               ),
-              const SizedBox(height: 20),
-              const CustomDividerWidget(),
-              const SizedBox(height: 20),
-              const Text(
+              SizedBox(height: 20),
+              CustomDividerWidget(),
+              SizedBox(height: 20),
+              Text(
                 'Choose From Our Services',
                 style: TextStyle(fontSize: 22),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               ServiceCardWidget(
                 title: 'Leasing Calculator',
                 iconPath: 'lib/assets/leasing.png',
-                page: LeasingScreen(),
+                page: '/LeasingScreen',
               ),
-              const SizedBox(height: 10),
-              const ServiceCardWidget(
+              SizedBox(height: 10),
+              ServiceCardWidget(
                 title: 'Mortgage Calculator',
                 iconPath: 'lib/assets/mortage.png',
-                page: MortgageScreen(),
+                page: '/MortgageScreen',
               ),
-              const SizedBox(height: 10),
-              const ServiceCardWidget(
+              SizedBox(height: 10),
+              ServiceCardWidget(
                 title: 'Team',
                 iconPath: 'lib/assets/team.png',
-                page: TeamScreen(),
+                page: '/TeamScreen',
               ),
             ],
           ),
