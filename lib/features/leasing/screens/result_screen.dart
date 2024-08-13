@@ -21,8 +21,6 @@ class ResultScreen extends StatelessWidget {
     controller.originalRentalValue?.value = arguments?['rentalValue']?.round();
     controller.originalAmountFinance?.value =
         arguments?['amountFinance']?.toString() ?? '1';
-    controller.rentalValue?.value =
-    (controller.rentalValue?.value ?? controller.originalRentalValue?.value)!;
     controller.originalAssetCost?.value =
         arguments?['assetCost']?.toString() ?? '0';
 

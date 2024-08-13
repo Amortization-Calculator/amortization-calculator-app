@@ -7,7 +7,6 @@ import '../services/pdf_service.dart';
 
 class ResultModel {
   File? fileToShare;
-  int? rentalValue;
   int? originalRentalValue;
   String? originalAmountFinance;
   String? originalAssetCost;

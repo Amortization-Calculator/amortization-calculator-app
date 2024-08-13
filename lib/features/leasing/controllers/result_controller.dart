@@ -6,7 +6,6 @@ import '../models/result_model.dart';
 class ResultController extends GetxController {
   final ResultModel model = ResultModel();
 
-  RxInt? rentalValue = 0.obs;
   RxString? originalAmountFinance = ''.obs;
   RxString? originalAssetCost = ''.obs;
   RxInt? originalRentalValue = 0.obs;
