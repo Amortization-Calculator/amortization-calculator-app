@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../dashboard/screens/dashboard_screen.dart';
 import '../../home/screens/home_screen.dart';
-import '../../leasing/screens/result_screen.dart';
 import '../services/login_service.dart';
 
 

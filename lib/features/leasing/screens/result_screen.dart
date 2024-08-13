@@ -1,134 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:open_file_plus/open_file_plus.dart';
-import 'package:get/get.dart';
-import '../../auth/services/logout_service.dart';
-import '../services/excel_service.dart';
-import '../../../widgets/build_rich_text_widget.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:share_plus/share_plus.dart';
 import 'dart:io';
+
+import 'package:amortization_calculator/widgets/custom_appBar_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+import '../../../widgets/custom_divider_widget.dart';
+import '../controllers/result_controller.dart';
+import '../../../widgets/build_rich_text_widget.dart';
 
-import '../services/pdf_service.dart';
-
-class ResultScreen extends StatefulWidget {
+class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
 
   @override
-  State<ResultScreen> createState() => _ResultScreenState();
-}
-
-class _ResultScreenState extends State<ResultScreen> {
-  File? _fileToShare;
-  int? _rentalValue;
-  int? _originalRentalValue;
-  String? _originalAmountFinance;
-
-  Future<void> fetchAndOpenExcelFile(String filename) async {
-    final excelService = ExcelService();
-    try {
-      final file = await excelService.fetchFile(filename);
-      if (file != null) {
-        setState(() {
-          _fileToShare = file;
-        });
-
-        final result = await OpenFile.open(file.path);
-        if (result.type == ResultType.noAppToOpen) {
-          _showNoAppDialog();
-        }
-      }
-    } catch (e) {
-      print('Error fetching or opening file: $e');
-    }
-  }
-  Future<void> fetchAndOpenPdfFile(String filename) async {
-    final pdfService = PdfService();
-    try {
-      final file = await pdfService.fetchPdf(filename);
-      if (file != null) {
-        final result = await OpenFile.open(file.path);
-        if (result.type == ResultType.noAppToOpen) {
-          _showNoAppDialog();
-        }
-      }
-    } catch (e) {
-      print('Error fetching or opening PDF file: $e');
-    }
-  }
-
-
-  void _showNoAppDialog() {
-    Get.defaultDialog(
-      title: "No Application Found",
-      textConfirm: "OK",
-      onConfirm: () {
-        Get.back();
-      },
-      confirmTextColor: Colors.white,
-      buttonColor: Colors.red,
-      barrierDismissible: false,
-      radius: 10.0,
-      content: const Column(
-        children: [
-          Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50,
-          ),
-          SizedBox(height: 10),
-          Text(
-            "No application is available to open this file.",
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ResultController controller = Get.put(ResultController());
     final arguments = Get.arguments as Map<String, dynamic>?;
-    _originalRentalValue ??= arguments?['rentalValue']?.round();
-    _originalAmountFinance ??= arguments?['amountFinance']?.toString() ?? '1';
-    _rentalValue = _rentalValue ??
-        _originalRentalValue;
 
-    final amountFinance = arguments?['amountFinance']?.toString() ?? '1';
+    controller.originalRentalValue?.value = arguments?['rentalValue']?.round();
+    controller.originalAmountFinance?.value =
+        arguments?['amountFinance']?.toString() ?? '1';
+    controller.rentalValue?.value =
+    (controller.rentalValue?.value ?? controller.originalRentalValue?.value)!;
+    controller.originalAssetCost?.value =
+        arguments?['assetCost']?.toString() ?? '0';
 
-    final assetCost = arguments?['assetCost']?.toString() ?? '0';
-
-    final percentage =
-        ((double.parse(amountFinance)) / double.parse(assetCost)).clamp(0.0, 1.0);
-
+    final percentage = ((double.parse(controller.originalAmountFinance!.value)) /
+        double.parse(controller.originalAssetCost!.value))
+        .clamp(0.0, 1.0);
     final excelFile = arguments?['excelFile'] ?? '';
-    final formattedRentalValue = NumberFormat('#,###').format(_rentalValue ?? 0);
+    final formattedRentalValue =
+    NumberFormat('#,###').format(controller.originalRentalValue?.value ?? 0);
 
+    File? fileToShare;
 
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        shadowColor: Colors.black,
-        centerTitle: true,
-        title: Image.asset(
-          'lib/assets/logo-transparent-png.png',
-          height: 60.0,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.logout, color: Colors.black),
-              onPressed: () async {
-                LogoutService logoutService = LogoutService();
-                await logoutService.logout();
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
@@ -140,14 +48,8 @@ class _ResultScreenState extends State<ResultScreen> {
               firstFontSize: 20,
               secondText: "Result",
             ),
-            const Divider(
-              height: 20,
-              thickness: 2,
-              indent: 150,
-              endIndent: 150,
-              color: Color(0xFF94364a),
-            ),
-            const SizedBox(height: 30.0),
+            const CustomDividerWidget(),
+            const SizedBox(height: 20.0),
             Container(
               padding: const EdgeInsets.all(24.0),
               width: double.infinity,
@@ -181,7 +83,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       children: [
                         TextSpan(
                           text: formattedRentalValue.toString(),
-                          style:const TextStyle(
+                          style: const TextStyle(
                             fontSize: 32.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -226,7 +128,9 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () => fetchAndOpenExcelFile(excelFile),
+                onPressed: () async {
+                  await controller.fetchAndOpenExcelFile(excelFile);
+                },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white60,
                 padding: const EdgeInsets.symmetric(
@@ -257,9 +161,12 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => fetchAndOpenPdfFile(excelFile),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal, // Soft green color, // Subtle color
+                onPressed: () async {
+                  await controller
+                      .fetchAndOpenPdfFile(excelFile.replaceAll('.xlsx', '.pdf'));
+                },
+                style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20.0, vertical: 12.0),
                 minimumSize: const Size(double.infinity, 50.0),
@@ -289,12 +196,12 @@ class _ResultScreenState extends State<ResultScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                if (_fileToShare != null) {
-                  Share.shareXFiles([XFile(_fileToShare!.path)]);
+                if (fileToShare != null) {
+                  Share.shareXFiles([XFile(fileToShare!.path)]);
                 } else {
-                  await fetchAndOpenExcelFile(excelFile);
-                  if (_fileToShare != null) {
-                    Share.shareXFiles([XFile(_fileToShare!.path)]);
+                  fileToShare = await controller.fetchExcelFile(excelFile);
+                  if (fileToShare != null) {
+                    Share.shareXFiles([XFile(fileToShare!.path)]);
                   }
                 }
               },
@@ -326,7 +233,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 20),
           ],
         ),
       ),
