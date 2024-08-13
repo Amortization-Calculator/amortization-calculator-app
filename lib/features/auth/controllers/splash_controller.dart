@@ -1,3 +1,4 @@
+import 'package:amortization_calculator/features/dashboard/screens/dashboard_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import '../../home/screens/home_screen.dart';
@@ -20,6 +21,9 @@ class SplashController extends GetxController {
 
     String? token = await splashService.getToken();
     String? expireDateStr = await splashService.getExpireDate();
+    String? name = await splashService.getUserName();
+    print('name');
+    print(name);
 
     if (token != null && expireDateStr != null) {
       DateTime expireDate = DateTime.parse(expireDateStr);
@@ -28,7 +32,11 @@ class SplashController extends GetxController {
         await splashService.removeToken();
         Get.offAll(() => LoginScreen());
       } else {
-        Get.offAll(() => const HomeScreen());
+        if(name=='admin'){
+          Get.offAll(() => const DashboardScreen());
+        }else {
+          Get.offAll(() => const HomeScreen());
+        }
       }
     } else {
       Get.offAll(() => LoginScreen());

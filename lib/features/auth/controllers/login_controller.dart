@@ -2,7 +2,9 @@ import 'package:amortization_calculator/features/auth/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../dashboard/screens/dashboard_screen.dart';
 import '../../home/screens/home_screen.dart';
+import '../../leasing/screens/result_screen.dart';
 import '../services/login_service.dart';
 
 
@@ -38,7 +40,12 @@ class LoginController extends GetxController {
             title: 'Success',
             textConfirm: 'Login Successfully',
             onConfirm: () {
-              Get.offAll(() => const HomeScreen());
+              if(userModel.userName=='admin'){
+                Get.offAll(() => const DashboardScreen());
+              }else{
+                Get.offAll(() => const HomeScreen());
+              }
+
             },
             confirmTextColor: Colors.white,
             buttonColor: Colors.green,

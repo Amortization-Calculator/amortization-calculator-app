@@ -17,4 +17,10 @@ class SplashService {
     await prefs.remove('token');
     await prefs.remove('expireDate');
   }
+
+  Future<String?> getUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userName');
+  }
+
 }

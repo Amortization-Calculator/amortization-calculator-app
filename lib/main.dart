@@ -52,6 +52,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages:AppRoutes.routes,
       debugShowCheckedModeBanner: false,
+      // enableLog: true, // Enable debug logging
+
     );
   }
 }

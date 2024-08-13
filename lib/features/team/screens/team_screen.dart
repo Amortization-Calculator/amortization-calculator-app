@@ -18,7 +18,7 @@ class TeamScreen extends StatelessWidget {
           child: Column(
             children: [
               const TitleWidget(
-                firstText: 'Meet out ',
+                firstText: 'Meet Our ',
                 secondText: 'Team',
                 fontSize: 24,
               ),
