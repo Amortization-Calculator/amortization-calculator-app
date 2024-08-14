@@ -18,7 +18,7 @@ class ResultModel {
     return await excelService.fetchFile(filename);
   }
 
-  Future<void> openExcelFile(File file) async {
+  Future<void> openFile(File file) async {
     try {
       final result = await OpenFile.open(file.path);
       if (result.type == ResultType.noAppToOpen) {
@@ -33,10 +33,12 @@ class ResultModel {
     final file = await fetchExcelFile(filename);
     if (file != null) {
       fileToShare = file;
-      await openExcelFile(file);
+      await openFile(file);
     }
   }
-
+Future<File?> fetchPdfFile(String filename) async{
+    return await pdfService.fetchPdf(filename);
+}
   Future<void> fetchAndOpenPdfFile(String filename) async {
     try {
       final file = await pdfService.fetchPdf(filename);

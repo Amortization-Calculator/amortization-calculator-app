@@ -1,14 +1,14 @@
 import 'dart:io';
-
 import 'package:amortization_calculator/widgets/custom_appBar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../widgets/custom_divider_widget.dart';
 import '../controllers/result_controller.dart';
 import '../../../widgets/build_rich_text_widget.dart';
+import '../widgets/custom_circular_indicator.dart';
+import '../widgets/custom_result_button.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
@@ -18,21 +18,36 @@ class ResultScreen extends StatelessWidget {
     final ResultController controller = Get.put(ResultController());
     final arguments = Get.arguments as Map<String, dynamic>?;
 
-    controller.originalRentalValue?.value = arguments?['rentalValue']?.round();
-    controller.originalAmountFinance?.value =
+    controller.originalRentalValue.value = arguments?['rentalValue']?.round();
+    controller.originalAmountFinance.value =
         arguments?['amountFinance']?.toString() ?? '1';
-    controller.originalAssetCost?.value =
+    controller.originalAssetCost.value =
         arguments?['assetCost']?.toString() ?? '0';
 
-    final percentage = ((double.parse(controller.originalAmountFinance!.value)) /
-        double.parse(controller.originalAssetCost!.value))
+    final percentage = ((double.parse(controller.originalAmountFinance.value)) /
+        double.parse(controller.originalAssetCost.value))
         .clamp(0.0, 1.0);
     final excelFile = arguments?['excelFile'] ?? '';
-    final formattedRentalValue =
-    NumberFormat('#,###').format(controller.originalRentalValue?.value ?? 0);
+    final formattedRentalValue = NumberFormat('#,###')
+        .format(controller.originalRentalValue.value);
 
-    File? fileToShare;
+    final Rx<File?> pdfFile = Rx<File?>(null);
+    final Rx<File?> excelFileToShare = Rx<File?>(null);
 
+
+    Future<void> fetchAndOpenPdfFile() async {
+      pdfFile.value ??= await controller.fetchPdfFile(excelFile.replaceAll('.xlsx', '.pdf'));
+      if (pdfFile.value != null) {
+        await controller.openFile(pdfFile.value!);
+      } else {
+        Get.snackbar(
+          'Error',
+          'PDF file not found!',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    }
     return Scaffold(
       appBar: const CustomAppBar(),
       body: Padding(
@@ -102,134 +117,62 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            CircularPercentIndicator(
-              radius: 100.0,
-              lineWidth: 15.0,
-              animation: true,
-              percent: percentage,
-              center: Text(
-                "${(percentage * 100).toStringAsFixed(1)}%",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
-              ),
-              footer: const Text(
-                "Financing Ratio",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
-                ),
-              ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: const Color(0xFF94364a),
+            CustomCircularIndicator(
+              percentage: percentage,
             ),
             const Spacer(),
-            ElevatedButton(
-                onPressed: () async {
-                  await controller.fetchAndOpenExcelFile(excelFile);
-                },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white60,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 12.0),
-                minimumSize: const Size(double.infinity, 50.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'lib/assets/excel.png',
-                    height: 24.0,
-                    width: 24.0,
-                  ),
-                  const SizedBox(width: 10.0),
-                  const Text(
-                    'Open Excel Sheet',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () async {
-                  await controller
-                      .fetchAndOpenPdfFile(excelFile.replaceAll('.xlsx', '.pdf'));
-                },
-                style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 12.0),
-                minimumSize: const Size(double.infinity, 50.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'lib/assets/pdf.png',
-                    height: 24.0,
-                    width: 24.0,
-                  ),
-                  const SizedBox(width: 10.0),
-                  const Text(
-                    'Open PDF File      ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
+            CustomResultButton(
+              buttonText: 'Open Excel Sheet',
+              imagePath: 'lib/assets/excel.png',
+              buttonColor: Colors.white60,
+              textColor: Colors.black,
               onPressed: () async {
-                if (fileToShare != null) {
-                  Share.shareXFiles([XFile(fileToShare!.path)]);
+                excelFileToShare.value ??= await controller.fetchExcelFile(excelFile);
+                if (excelFileToShare.value != null) {
+                  await controller.openFile(excelFileToShare.value!);
                 } else {
-                  fileToShare = await controller.fetchExcelFile(excelFile);
-                  if (fileToShare != null) {
-                    Share.shareXFiles([XFile(fileToShare!.path)]);
-                  }
+                  Get.snackbar(
+                    'Error',
+                    'Excel file not found!',
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                  );
                 }
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFd32f2e),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 12.0),
-                minimumSize: const Size(double.infinity, 50.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.share,
-                    size: 24.0,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Share',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+            ),
+            const SizedBox(height: 20),
+            CustomResultButton(
+              buttonText: 'Open PDF File',
+              imagePath: 'lib/assets/pdf.png',
+              buttonColor: Colors.teal,
+              onPressed: fetchAndOpenPdfFile,
+            ),
+            const SizedBox(height: 20),
+            CustomResultButton(
+              buttonText: 'Share',
+              iconData: Icons.share,
+              buttonColor: const Color(0xFFd32f2e),
+              onPressed: () async {
+                excelFileToShare.value ??= await controller.fetchExcelFile(excelFile);
+                pdfFile.value ??= await controller.fetchPdfFile(excelFile);
+
+                if (excelFileToShare.value != null && pdfFile.value != null) {
+                  Share.shareXFiles(
+                    [
+                      XFile(excelFileToShare.value!.path),
+                      XFile(pdfFile.value!.path),
+                    ],
+                    text: 'Here are the calculation files for your review.',
+                  );
+                } else {
+                  Get.snackbar(
+                    'Error',
+                    'Files not found!',
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                  );
+                }
+              },
             ),
             const SizedBox(height: 20),
           ],
