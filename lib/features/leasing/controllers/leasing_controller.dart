@@ -55,7 +55,7 @@ class LeasingController extends GetxController {
         interestRate: double.parse(marginInterestRateController.text)/100,
         gracePeriod: double.parse(gracePeriodController.text),
         effectiveRate: double.parse(marginInterestRateController.text),
-        noOfRental: int.parse(numberOfRentalsController.text),
+        noOfRental: int.parse(numberOfRentalsController.text)*12,
         rentalInterval: rentalIntervalValue, // Use the numeric value
         beginning: advanceArrearsEnum.value == AdvanceArrearsEnum.advance,
         residualValue: double.parse(residualAmountController.text),

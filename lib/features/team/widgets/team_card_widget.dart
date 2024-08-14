@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../controllers/team_member_controller.dart';
 import '../models/team_member_model.dart';
 
-
 class TeamCardWidget extends StatelessWidget {
   final TeamMember teamMember;
   final TeamMemberController controller = Get.put(TeamMemberController());
@@ -29,13 +28,10 @@ class TeamCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipOval(
-                child: Image.asset(
-                  teamMember.image,
-                  height: 110,
-                  width: 110,
-                  fit: BoxFit.cover,
-                ),
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: AssetImage(teamMember.image),
+                backgroundColor: Colors.transparent, // Optional: Add a background color
               ),
               const SizedBox(height: 10),
               Text(

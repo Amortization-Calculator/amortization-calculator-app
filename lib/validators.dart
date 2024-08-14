@@ -28,7 +28,7 @@ String? validateAmountFinanced(String? value) {
 
 String? validateNumberOfRentals(String? value) {
   if (value == null || value.isEmpty || int.tryParse(value) == null) {
-    return 'Please enter Number Of Rentals';
+    return 'Please enter Number Of Years';
   }
   return null;
 }

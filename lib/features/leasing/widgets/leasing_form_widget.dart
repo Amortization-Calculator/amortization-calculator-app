@@ -44,8 +44,8 @@ class LeasingForm extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           TextFormWidget(
-            labelText: "Number Of Rentals *",
-            hintText: "12",
+            labelText: "Number Of Years *",
+            hintText: "3",
             controller: controller.numberOfRentalsController,
             focusNode: controller.numberOfRentalsFocusNode,
             nextFocusNode: controller.marginInterestRateFocusNode,

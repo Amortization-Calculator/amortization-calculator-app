@@ -26,7 +26,7 @@ class TeamScreen extends StatelessWidget {
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Mostafa Siam',
-                  image: 'lib/assets/non.png',
+                  image: 'lib/assets/mostafa.png',
                   title: 'Product Manager',
                   email: 'siam_mostafa@hotmail.com',
                 ),
