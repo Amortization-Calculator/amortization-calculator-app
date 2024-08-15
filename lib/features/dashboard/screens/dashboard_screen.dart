@@ -29,15 +29,11 @@ class DashboardScreen extends StatelessWidget {
             Center(
               child: Obx(
                 () {
-                  if (dashboardController.isLoading.value) {
-                    return ResultWidget(
-                      title: 'Number Of Users',
-                      suffix: 'User',
-                      value: dashboardController.userCount,
-                    );
-                  } else {
-                    return Text(dashboardController.errorMessage.value);
-                  }
+                  return ResultWidget(
+                    title: 'Number Of Users',
+                    suffix: 'User',
+                    value: dashboardController.userCount,
+                  );
                 },
               ),
             ),
