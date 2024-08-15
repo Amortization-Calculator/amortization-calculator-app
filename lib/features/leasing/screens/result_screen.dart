@@ -8,7 +8,7 @@ import '../../../widgets/custom_divider_widget.dart';
 import '../controllers/result_controller.dart';
 import '../../../widgets/build_rich_text_widget.dart';
 import '../widgets/custom_circular_indicator.dart';
-import '../widgets/custom_result_button.dart';
+import '../../../widgets/custom_result_button.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});

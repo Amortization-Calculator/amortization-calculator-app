@@ -1,29 +1,58 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../../widgets/custom_appBar_widget.dart';
 import '../../../widgets/custom_divider_widget.dart';
+import '../../../widgets/custom_result_button.dart';
+import '../../../widgets/result_widget.dart';
 import '../../home/widgets/welcome_text_widget.dart';
+import '../controllers/dashboard_controller.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(),
-     body:
-     Padding(
-       padding: EdgeInsets.all(16.0),
-       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           WelcomeTextWidget(),
-           SizedBox(height: 20),
-           CustomDividerWidget(),
-         ],
-       ),
-     ),
+    final DashboardController dashboardController =
+        Get.put(DashboardController());
 
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const WelcomeTextWidget(),
+            const SizedBox(height: 20),
+            const CustomDividerWidget(),
+            const SizedBox(height: 20),
+            Center(
+              child: Obx(
+                () {
+                  if (dashboardController.isLoading.value) {
+                    return ResultWidget(
+                      title: 'Number Of Users',
+                      suffix: 'User',
+                      value: dashboardController.userCount,
+                    );
+                  } else {
+                    return Text(dashboardController.errorMessage.value);
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            CustomResultButton(
+              buttonColor: Colors.red,
+              onPressed: () async {
+                dashboardController.deactivateAllUsers();
+              },
+              buttonText: 'Deactivate All Users',
+              textColor: Colors.white,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

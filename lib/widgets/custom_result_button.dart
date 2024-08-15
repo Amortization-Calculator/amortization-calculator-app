@@ -16,7 +16,7 @@ class CustomResultButton extends StatelessWidget {
     required this.buttonColor,
     this.textColor = Colors.white,
     super.key,
-  }) : assert(imagePath != null || iconData != null, 'Either imagePath or iconData must be provided.');
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,10 @@ class CustomResultButton extends StatelessWidget {
             Icon(
               iconData,
               size: 24.0,
-              color: Colors.white,
+              color: textColor,  // Ensure icon color matches text color
             ),
-          const SizedBox(width: 10.0),
+          if (imagePath != null || iconData != null) // Add spacing only when an image or icon is present
+            const SizedBox(width: 10.0),
           Text(
             buttonText,
             style: TextStyle(
