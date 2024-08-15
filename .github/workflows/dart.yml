@@ -26,10 +26,24 @@ jobs:
 
       - run: flutter build ios --release --no-codesign
 
+      - name: List build directory contents
+        run: ls -R build/ios
+        continue-on-error: true
+
+      - name: Check for .app bundle
+        run: |
+          if [ -d "build/ios/iphonesimulator/Runner.app" ]; then
+            echo ".app bundle found."
+          else
+            echo ".app bundle not found."
+            exit 1
+          fi
+
       - name: Archive the .app bundle for simulator
         run: |
           cd build/ios/iphonesimulator
           zip -r FlutterApp.zip Runner.app
+        continue-on-error: true
 
       - name: Upload .app bundle as artifact
         uses: actions/upload-artifact@v3
