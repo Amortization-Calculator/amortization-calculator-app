@@ -18,7 +18,7 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-      
+
       - run: flutter pub get
 
       - run: pod repo update
@@ -38,3 +38,12 @@ jobs:
         with:
           name: FlutterApp.zip
           path: build/ios/iphoneos/FlutterApp.zip
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/ios/iphoneos/FlutterApp.zip
+          tag: v1.0  # Update this tag as needed
+          overwrite: true
+          body: "This is the first release of the .app bundle"
