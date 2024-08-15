@@ -28,10 +28,8 @@ jobs:
 
       - name: Archive the .app bundle
         run: |
-          mkdir -p build/ios/iphoneos/Payload
-          mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/Runner.app
           cd build/ios/iphoneos
-          zip -r FlutterApp.zip Payload/Runner.app
+          zip -r FlutterApp.zip Runner.app
 
       - name: Upload .app bundle as artifact
         uses: actions/upload-artifact@v3
@@ -44,6 +42,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterApp.zip
-          tag: v1.0  # Update this tag as needed
+          tag: v1.0
           overwrite: true
           body: "This is the first release of the .app bundle"
