@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 class ResultWidget extends StatelessWidget {
-  final RxInt value;
+  final int value;
   final String title;
   final String suffix;
 
@@ -15,7 +15,7 @@ class ResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedValue = (value.value).toString();
+    final formattedValue = (value).toString();
     return Container(
       padding: const EdgeInsets.all(24.0),
       width: double.infinity,

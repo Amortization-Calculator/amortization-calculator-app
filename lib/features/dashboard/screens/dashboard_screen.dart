@@ -13,7 +13,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DashboardController dashboardController =
-        Get.put(DashboardController());
+    Get.put(DashboardController());
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -27,15 +27,27 @@ class DashboardScreen extends StatelessWidget {
             const CustomDividerWidget(),
             const SizedBox(height: 20),
             Center(
-              child: Obx(
-                () {
-                  return ResultWidget(
-                    title: 'Number Of Users',
-                    suffix: 'User',
-                    value: dashboardController.userCount,
+              child: Obx(() {
+
+                final userCount = dashboardController.isLoading.value
+                    ? 0
+                    : dashboardController.userCount.value;
+
+                // Show an error message if there is an error
+                if (dashboardController.errorMessage.isNotEmpty) {
+                  return Text(
+                    'Error: ${dashboardController.errorMessage.value}',
+                    style: const TextStyle(color: Colors.red),
                   );
-                },
-              ),
+                }
+
+                // Display the result widget with the user count
+                return ResultWidget(
+                  title: 'Number Of Users',
+                  suffix: 'User',
+                  value: userCount,
+                );
+              }),
             ),
             const SizedBox(height: 20),
             CustomResultButton(
