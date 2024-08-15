@@ -1,4 +1,4 @@
-name: iOS Simulator Build
+name: iOS Build
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   build-ios:
-    name: 🎉 iOS Build for Simulator
+    name: 🎉 iOS Build
     runs-on: macos-latest
 
     steps:
@@ -26,36 +26,15 @@ jobs:
 
       - run: flutter build ios --release --no-codesign
 
-      - name: List build directory contents
-        run: ls -R build/ios
-        continue-on-error: true
-
-      - name: Check for .app bundle
+      - name: Archive the .app bundle
         run: |
-          if [ -d "build/ios/iphonesimulator/Runner.app" ]; then
-            echo ".app bundle found."
-          else
-            echo ".app bundle not found."
-            exit 1
-          fi
-
-      - name: Archive the .app bundle for simulator
-        run: |
-          cd build/ios/iphonesimulator
-          zip -r FlutterApp.zip Runner.app
-        continue-on-error: true
+          mkdir -p build/ios/iphoneos/Payload
+          mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/Runner.app
+          cd build/ios/iphoneos
+          zip -r FlutterApp.zip Payload/Runner.app
 
       - name: Upload .app bundle as artifact
         uses: actions/upload-artifact@v3
         with:
           name: FlutterApp.zip
-          path: build/ios/iphonesimulator/FlutterApp.zip
-
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/ios/iphonesimulator/FlutterApp.zip
-          tag: v1.0  # Update this tag as needed
-          overwrite: true
-          body: "This is the first release of the simulator build"
+          path: build/ios/iphoneos/FlutterApp.zip
