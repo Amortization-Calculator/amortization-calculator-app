@@ -15,7 +15,8 @@ class GenericRadioTileWidget<T> extends StatelessWidget {
     required this.groupValue,
     required this.title,
     required this.onChanged,
-    this.tileColor = const Color(0xFF148C79),
+    //                   color: Color(0xFF970032),
+    this.tileColor = const Color(0xFF970032),
     this.activeColor = Colors.white,
     this.borderRadius = 8.0,
   });

@@ -29,6 +29,7 @@ class TeamScreen extends StatelessWidget {
                   image: 'lib/assets/mostafa.png',
                   title: 'Product Manager',
                   email: 'siam_mostafa@hotmail.com',
+                  linkedinProfileUrl: 'https://www.linkedin.com/in/mostafa-siam-184b53109?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BpFtbbhFLQ6muy%2FncFg9FRw%3D%3D'
                 ),
               ),
               TeamCardWidget(

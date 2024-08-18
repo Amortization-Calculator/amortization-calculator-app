@@ -130,7 +130,7 @@ class LeasingForm extends StatelessWidget {
             child: ElevatedButton.icon(
               icon: const Icon(Icons.calculate, color: Colors.white),
               onPressed: controller.isLoading.value ? null : controller.onCalculateButtonPressed,
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF148C79)),
+              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF970032),),
               label: const Text(
                 'Calculate',
                 style: TextStyle(color: Colors.white),

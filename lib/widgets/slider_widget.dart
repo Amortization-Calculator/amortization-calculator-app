@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SliderWidget extends StatefulWidget {
-  final Function(double) onValueChanged; // Callback function
+  final Function(double) onValueChanged;
 
   const SliderWidget({super.key, required this.onValueChanged});
 
@@ -31,9 +31,9 @@ class _SliderWidgetState extends State<SliderWidget> {
             });
             widget.onValueChanged(value);
           },
-          activeColor: Colors.teal,
-          inactiveColor: Colors.teal.withOpacity(0.3),
-          thumbColor: Colors.tealAccent,
+          activeColor: Colors.red,
+          inactiveColor: Colors.red.withOpacity(0.6),
+          thumbColor: const Color(0xFFf44235),
         ),
       ],
     );
