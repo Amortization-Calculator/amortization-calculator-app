@@ -26,6 +26,7 @@ class TeamScreen extends StatelessWidget {
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Mostafa Siam',
+                  phone: '+201022216219',
                   image: 'lib/assets/mostafa.png',
                   title: 'Product Manager',
                   email: 'siam_mostafa@hotmail.com',
@@ -35,6 +36,7 @@ class TeamScreen extends StatelessWidget {
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Omar Kenawi',
+                  phone: '+201283667973',
                   image: 'lib/assets/omarKenawi.png',
                   title: 'Mobile Developer',
                   email: 'omar.sseeddeekk@gmail.com',
@@ -45,6 +47,7 @@ class TeamScreen extends StatelessWidget {
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Abdallah Mohamed',
+                  phone: '+201100764196',
                   image: 'lib/assets/beso.png',
                   title: 'Back End Developer',
                   email: 'abdallah.moh.153@gmail.com',

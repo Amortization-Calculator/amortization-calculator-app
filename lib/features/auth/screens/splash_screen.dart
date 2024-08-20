@@ -23,6 +23,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.asset('lib/assets/logo_1024.png'),
       ),

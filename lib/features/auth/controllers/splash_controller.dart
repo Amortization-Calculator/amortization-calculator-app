@@ -33,7 +33,7 @@ class SplashController extends GetxController {
         Get.offAll(() => LoginScreen());
       } else {
         if(name=='admin'){
-          Get.offAll(() =>  DashboardScreen());
+          Get.offAll(() =>  const DashboardScreen());
         }else {
           Get.offAll(() => const HomeScreen());
         }

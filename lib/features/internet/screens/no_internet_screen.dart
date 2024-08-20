@@ -17,34 +17,34 @@ class NoInternetScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.wifi_off,
                 size: 100,
                 color: Colors.red,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'No Internet Connection',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'Please check your internet settings and try again.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   await networkController.checkConnectivity();
                   networkController.tryConnect();
                 },
-                child: Text('Retry'),
+                child: const Text('Retry'),
               ),
             ],
           ),

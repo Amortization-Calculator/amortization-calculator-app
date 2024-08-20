@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../controllers/team_member_controller.dart';
 import '../models/team_member_model.dart';
 
+
+
 class TeamCardWidget extends StatelessWidget {
   final TeamMember teamMember;
   final TeamMemberController controller = Get.put(TeamMemberController());
@@ -51,6 +53,12 @@ class TeamCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  IconButton(
+                    icon: const Icon(Icons.phone),
+                    onPressed: () {
+                      controller.makePhoneCall(teamMember.phone);
+                    },
+                  ),
                   IconButton(
                     icon: const Icon(Icons.email_outlined),
                     onPressed: () {
