@@ -25,7 +25,7 @@ class MortgageForm extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withOpacity(0.06),
                   spreadRadius: 1,
                   blurRadius: 1,
                   offset: const Offset(0, 0),
