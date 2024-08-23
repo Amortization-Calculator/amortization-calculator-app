@@ -10,14 +10,12 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the SplashController and NetworkController
     final SplashController authController = Get.put(SplashController());
     final NetworkController networkController = Get.find<NetworkController>();
 
-    // Observe the connection status and act accordingly
+
     networkController.connectionStatus.listen((status) {
       if (status != ConnectivityResult.none) {
-        // When there's an active connection, proceed to check login status
         authController.checkLoginStatus();
       }
     });

@@ -27,7 +27,7 @@ class ServiceCardWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.0),
           ),
           color: Colors.white,
-          elevation: 1,
+          elevation: 0.4,
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(

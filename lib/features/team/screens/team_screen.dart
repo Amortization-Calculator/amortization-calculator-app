@@ -28,7 +28,7 @@ class TeamScreen extends StatelessWidget {
                   name: 'Mostafa Siam',
                   phone: '+201022216219',
                   image: 'lib/assets/mostafa.png',
-                  title: 'Product Manager',
+                  title: 'Product Owner',
                   email: 'siam_mostafa@hotmail.com',
                   linkedinProfileUrl: 'https://www.linkedin.com/in/mostafa-siam-184b53109?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BpFtbbhFLQ6muy%2FncFg9FRw%3D%3D'
                 ),
@@ -49,7 +49,7 @@ class TeamScreen extends StatelessWidget {
                   name: 'Abdallah Mohamed',
                   phone: '+201100764196',
                   image: 'lib/assets/beso.png',
-                  title: 'Back End Developer',
+                  title: 'Backend Developer',
                   email: 'abdallah.moh.153@gmail.com',
                   githubProfileUrl: 'https://github.com/Abdallah85',
                   linkedinProfileUrl: 'https://www.linkedin.com/in/abdallah-mmohamed/',

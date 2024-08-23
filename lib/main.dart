@@ -5,9 +5,7 @@ import 'constants/app_routes.dart';
 import 'features/internet/controllers/DependencyInjection.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure this is first
-
-  // Lock the orientation to portrait mode before running the app
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
