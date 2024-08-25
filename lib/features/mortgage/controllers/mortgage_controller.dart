@@ -43,7 +43,7 @@ class MortgageController extends GetxController {
     double downPayment = double.tryParse(downPaymentForTheUnitController.text) ?? 0;
     double interestRate = double.tryParse(interestRateController.text) ?? 0;
 
-    financeAmount.value = _mortgageService.calculateFinanceAmount(unitPrice, downPayment);
+    financeAmount.value = _mortgageService.calculateAmountFinanceByUnit(unitPrice, downPayment);
     monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
         financeAmount.value,
         interestRate,

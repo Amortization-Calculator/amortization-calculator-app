@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
               ServiceCardWidget(
                 title: 'Mortgage Calculator',
                 iconPath: 'lib/assets/mortage.png',
-                page: '/MortgageScreen',
+                page: '/ChooseServiceScreen',
               ),
               SizedBox(height: 10),
               ServiceCardWidget(

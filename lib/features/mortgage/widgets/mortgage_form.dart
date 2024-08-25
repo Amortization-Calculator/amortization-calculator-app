@@ -94,7 +94,7 @@ class MortgageForm extends StatelessWidget {
           Obx(() => ResultWidget(
             financeAmount: (controller.monthlyInstallment.round() * 100 / 50),
             name: 'Expected Salary',
-          )),
+          ),),
         ],
       ),
     );

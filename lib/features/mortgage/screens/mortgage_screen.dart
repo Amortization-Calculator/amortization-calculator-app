@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/custom_appBar_widget.dart';
-import '../../../widgets/custom_divider_widget.dart';
-import '../../../widgets/title_widget.dart';
 import '../widgets/mortgage_form.dart';
 
 class MortgageScreen extends StatelessWidget {
@@ -14,16 +11,6 @@ class MortgageScreen extends StatelessWidget {
         children: [
           Column(
             children: [
-              CustomAppBar(),
-              SizedBox(height: 20),
-              Center(
-                child: TitleWidget(
-                  firstText: 'Mortgage ',
-                  secondText: 'Calculator',
-                ),
-              ),
-              SizedBox(height: 20),
-              CustomDividerWidget(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(

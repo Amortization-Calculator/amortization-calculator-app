@@ -1,4 +1,5 @@
 
+import 'package:amortization_calculator/features/mortgage/screens/choose_service_screen.dart';
 import 'package:get/get.dart';
 
 import '../features/auth/screens/login_screen.dart';
@@ -9,8 +10,9 @@ import '../features/internet/screens/no_internet_screen.dart';
 import '../features/leasing/screens/leasing_screen.dart';
 import '../features/leasing/screens/result_screen.dart';
 import '../features/mortgage/screens/mortgage_screen.dart';
+import '../features/mortgage/screens/salary_based_screen.dart';
 import '../features/team/screens/team_screen.dart';
-
+//ChooseServiceScreen
 class AppRoutes {
   static final routes = [
     GetPage(name: '/', page: () => const SplashScreen()),
@@ -24,7 +26,10 @@ class AppRoutes {
     GetPage(name: '/LeasingScreen', page: () => LeasingScreen()),
     GetPage(name: '/ResultScreen', page: () => const ResultScreen()),
     //----------------------------------------------------------------------
+    GetPage(name: '/ChooseServiceScreen', page: () => const ChooseServiceScreen()),
+
     GetPage(name: '/MortgageScreen', page: () => const MortgageScreen()),
+    GetPage(name: '/SalaryBasedScreen', page:() =>  SalaryBasedScreen()),
     //----------------------------------------------------------------------
     GetPage(name: '/TeamScreen', page: () => const TeamScreen()),
 

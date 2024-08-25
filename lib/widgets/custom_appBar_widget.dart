@@ -3,8 +3,15 @@ import '../features/auth/services/logout_service.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showLogout;
+  final bool showTabs;
+  final TabController? tabController;
 
-  const CustomAppBar({super.key, this.showLogout = true}); // Default is true
+  const CustomAppBar({
+    super.key,
+    this.showLogout = true,
+    this.showTabs = true,
+    this.tabController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +25,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         'lib/assets/logo-transparent-png.png',
         height: 60.0,
       ),
+      bottom: showTabs && tabController != null
+          ? TabBar(
+        controller: tabController,
+        indicatorColor: Colors.transparent,
+        dividerColor: Colors.white,
+        labelColor: Colors.black,
+        unselectedLabelColor: Colors.grey,
+        tabs: const [
+          Tab(text: 'By Unit Price'),
+          Tab(text: 'By Salary'),
+        ],
+        labelStyle: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontSize: 16,
+        ),
+      )
+          : null,
       actions: showLogout
           ? [
         Padding(
@@ -31,10 +58,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ]
-          : [], // Show logout button only if showLogout is true
+          : [],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+    kToolbarHeight +
+        (showTabs && tabController != null ? kTextTabBarHeight : 0.0),
+  );
 }
