@@ -5,16 +5,24 @@ import '../services/mortgage_service.dart';
 
 class MortgageController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  final TextEditingController unitPriceController = TextEditingController(text: '0');
-  final TextEditingController downPaymentForTheUnitController = TextEditingController(text: '0');
-  final TextEditingController interestRateController = TextEditingController(text: '0');
+  final TextEditingController unitPriceController =
+      TextEditingController(text: '0');
+  final TextEditingController downPaymentForTheUnitController =
+      TextEditingController(text: '0');
+  final TextEditingController interestRateController =
+      TextEditingController(text: '0');
+  final TextEditingController grossReceivableController =
+      TextEditingController(text: '0');
+
   final FocusNode unitPriceFocusNode = FocusNode();
   final FocusNode interestRateFocusNode = FocusNode();
   final FocusNode downPaymentForTheUnitFocusNode = FocusNode();
+  final FocusNode grossReceivableFocusNode = FocusNode();
 
   var sliderValue = 1.0.obs;
   var financeAmount = 0.0.obs;
   var monthlyInstallment = 0.0.obs;
+  var grossReceivable = 0.0.obs;
   final NumberFormat currencyFormatter = NumberFormat('#,##0', 'en_US');
 
   final MortgageService _mortgageService = MortgageService();
@@ -40,23 +48,18 @@ class MortgageController extends GetxController {
 
   void _updateValues() {
     double unitPrice = double.tryParse(unitPriceController.text) ?? 0;
-    double downPayment = double.tryParse(downPaymentForTheUnitController.text) ?? 0;
+    double downPayment =
+        double.tryParse(downPaymentForTheUnitController.text) ?? 0;
     double interestRate = double.tryParse(interestRateController.text) ?? 0;
-
-    financeAmount.value = _mortgageService.calculateAmountFinanceByUnit(unitPrice, downPayment);
+    financeAmount.value =
+        _mortgageService.calculateAmountFinanceByUnit(unitPrice, downPayment);
     monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
-        financeAmount.value,
-        interestRate,
-        sliderValue.value.round()
-    );
+        financeAmount.value, interestRate, sliderValue.value.round());
+    grossReceivable.value = monthlyInstallment.value * 12;
   }
 
   void updateSliderValue(double value) {
     sliderValue.value = value;
-    monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
-        financeAmount.value,
-        double.tryParse(interestRateController.text) ?? 0,
-        sliderValue.value.round()
-    );
+    _updateValues();
   }
 }

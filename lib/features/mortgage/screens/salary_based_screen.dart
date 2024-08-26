@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
+import '../../../widgets/custom_result_button.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../controllers/salary_based_controller.dart';
+import '../services/pdf_service.dart';
 import '../widgets/slider_container_widget.dart';
 import '../widgets/result_widget.dart';
 
@@ -18,6 +20,7 @@ class SalaryBasedScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(16.0),
@@ -54,7 +57,6 @@ class SalaryBasedScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    // const SizedBox(height: 30),
                     TextFormWidget(
                       labelText: "Interest Rate *",
                       hintText: "5 %",
@@ -78,42 +80,56 @@ class SalaryBasedScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Obx(
                 () => ResultWidget(
-                  financeAmount:
-                      (controller.unitPrice.value),
+                  financeAmount: (controller.unitPrice.value),
                   name: 'Unit Price',
                 ),
               ),
               const SizedBox(height: 10),
               Obx(
                 () => ResultWidget(
-                  financeAmount:
-                      (controller.downPayment.value),
+                  financeAmount: (controller.downPayment.value),
                   name: 'Down Payment',
                 ),
               ),
               const SizedBox(height: 10),
               Obx(
                 () => ResultWidget(
-                  financeAmount:
-                      (controller.amountFinance.value),
+                  financeAmount: (controller.amountFinance.value),
                   name: 'Amount Finance',
                 ),
               ),
               const SizedBox(height: 10),
               Obx(
-                    () => ResultWidget(
-                  financeAmount:
-                  controller.monthlyInstallment.value,
+                () => ResultWidget(
+                  financeAmount: controller.monthlyInstallment.value,
                   name: 'Monthly Installment',
                 ),
               ),
               const SizedBox(height: 10),
               Obx(
-                    () => ResultWidget(
-                  financeAmount:
-                  (controller.monthlyInstallment.round() * 100 / 50),
+                () => ResultWidget(
+                  financeAmount: (controller.grossReceivable.value),
                   name: 'Gross Receivable',
                 ),
+              ),
+              const SizedBox(height: 20),
+              CustomResultButton(
+                buttonText: 'Print & Save as PDF ',
+                buttonColor: const Color(0xFFd32f2e),
+                onPressed: () async {
+                  final pdfService = PdfService(
+                    duration: controller.sliderValue.value,
+                    unitPrice: controller.unitPrice.value,
+                    downPayment: controller.downPayment.value,
+                    amountFinance: controller.amountFinance.value,
+                    monthlyInstallment: controller.monthlyInstallment.value,
+                    grossReceivable: controller.grossReceivable.value,
+                    salary: double.tryParse(controller.salaryController.text) ??
+                        0.0,
+                    interestRate: controller.interestRateController.text,
+                  );
+                  await pdfService.generateAndSharePdf();
+                },
               ),
             ],
           ),

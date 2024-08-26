@@ -45,7 +45,9 @@ class MortgageForm extends StatelessWidget {
                   isNumeric: true,
                   isDouble: true,
                   validator: (value) {
-                    if (value == null || value.isEmpty || double.tryParse(value) == null) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        double.tryParse(value) == null) {
                       return 'Please enter a valid unit price';
                     }
                     return null;
@@ -60,7 +62,8 @@ class MortgageForm extends StatelessWidget {
                   icon: Icons.money,
                   isNumeric: true,
                   isDouble: true,
-                  validator: (value) => downPaymentForTheUnit(value, controller.unitPriceController),
+                  validator: (value) => downPaymentForTheUnit(
+                      value, controller.unitPriceController),
                 ),
                 TextFormWidget(
                   labelText: "Interest Rate *",
@@ -74,28 +77,39 @@ class MortgageForm extends StatelessWidget {
                   validator: validateInterestRate,
                 ),
                 Obx(() => SliderContainerWidget(
-                  sliderValue: controller.sliderValue.value,
-                  onValueChanged: controller.updateSliderValue,
-                )),
+                      sliderValue: controller.sliderValue.value,
+                      onValueChanged: controller.updateSliderValue,
+                    )),
               ],
             ),
           ),
           const SizedBox(height: 10),
           Obx(() => ResultWidget(
-            financeAmount: controller.financeAmount.value,
-            name: 'Financing Amount',
-          )),
+                financeAmount: controller.financeAmount.value,
+                name: 'Financing Amount',
+              )),
           const SizedBox(height: 10),
           Obx(() => ResultWidget(
-            financeAmount: controller.monthlyInstallment.value,
-            name: 'Monthly Installment',
-          )),
+                financeAmount: controller.monthlyInstallment.value,
+                name: 'Monthly Installment',
+              )),
           const SizedBox(height: 10),
-          Obx(() => ResultWidget(
-            financeAmount: (controller.monthlyInstallment.round() * 100 / 50),
-            name: 'Expected Salary',
-          ),),
+          Obx(
+            () => ResultWidget(
+              financeAmount: (controller.monthlyInstallment.round() * 100 / 50),
+              name: 'Expected Salary',
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          Obx(
+                () => ResultWidget(
+              financeAmount: (controller.grossReceivable.value),
+              name: 'Gross Receivable',
+            ),
+          ),
         ],
+
       ),
     );
   }

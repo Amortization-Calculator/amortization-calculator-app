@@ -46,6 +46,7 @@ class MortgageBasedSalaryController extends GetxController {
         interestRate,
         sliderValue.value.round()
     );
+    grossReceivable.value=monthlyInstallment.value*sliderValue.value;
 
   }
 

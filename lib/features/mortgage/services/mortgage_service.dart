@@ -23,7 +23,7 @@ class MortgageService {
     return (amountFinance * 10.0 / 8.0) - amountFinance;
   }
   double grossReceivable(double duration,double monthlyInstallment){
-    return monthlyInstallment*duration ;
+    return monthlyInstallment*duration*12 ;
   }
 
   double calculateMonthlyInstallment(
