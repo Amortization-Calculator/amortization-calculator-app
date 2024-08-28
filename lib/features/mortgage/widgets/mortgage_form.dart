@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../validators.dart';
 import '../../../widgets/custom_result_button.dart';
+import '../../../widgets/pop_up_alert_dialog.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../controllers/mortgage_controller.dart';
 import '../services/mortgage_by_unit_price_pdf_service.dart';
@@ -124,22 +125,34 @@ class MortgageForm extends StatelessWidget {
             buttonText: 'Print & Save as PDF ',
             buttonColor: const Color(0xFFd32f2e),
             onPressed: () async {
-              final double unitPrice = double.tryParse(controller.unitPriceController.text) ?? 0.0;
-              final double downPayment = double.tryParse(controller.downPaymentForTheUnitController.text) ?? 0.0;
+              // Validate the form
+              if (controller.formKey.currentState?.validate() ?? false) {
+                final double unitPrice =
+                    double.tryParse(controller.unitPriceController.text) ?? 0.0;
+                final double downPayment = double.tryParse(
+                        controller.downPaymentForTheUnitController.text) ??
+                    0.0;
 
-              final pdfService = MortgageByUnitPricePdfService(
-                salary: controller.monthlyInstallment.round() * 100 / 50,
-                duration: controller.sliderValue.value,
-                amountFinance: controller.financeAmount.value,
-                grossReceivable: controller.grossReceivable.value,
-                interestRate: controller.interestRateController.text,
-                monthlyInstallment: controller.monthlyInstallment.value,
-                unitPrice: unitPrice,
-                downPayment: downPayment,
-              );
-              await pdfService.generateAndSharePdf();
+                final pdfService = MortgageByUnitPricePdfService(
+                  salary: controller.monthlyInstallment.round() * 100 / 50,
+                  duration: controller.sliderValue.value,
+                  amountFinance: controller.financeAmount.value,
+                  grossReceivable: controller.grossReceivable.value,
+                  interestRate: controller.interestRateController.text,
+                  monthlyInstallment: controller.monthlyInstallment.value,
+                  unitPrice: unitPrice,
+                  downPayment: downPayment,
+                );
+                await pdfService.generateAndSharePdf();
+              } else {
+                Get.dialog(
+                  const PopUpAlertDialog(
+                    title: ("Error"),
+                    content: 'Please Enter Valid Input',
+                  ),
+                );
+              }
             },
-
           ),
         ],
       ),

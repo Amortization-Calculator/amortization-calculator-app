@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../validators.dart';
 import '../../../widgets/custom_result_button.dart';
+import '../../../widgets/pop_up_alert_dialog.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../controllers/salary_based_controller.dart';
 import '../services/mortgage_by_salary_pdf_service.dart';
@@ -20,121 +21,133 @@ class SalaryBasedScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
-                      spreadRadius: 1.w,
-                      blurRadius: 1.w,
-                      offset: Offset(0.w, 1.h),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormWidget(
-                      labelText: "Salary *",
-                      hintText: "EGP",
-                      controller: controller.salaryController,
-                      focusNode: controller.salaryFocusNode,
-                      nextFocusNode: controller.interestRateFocusNode,
-                      icon: Icons.monetization_on_outlined,
-                      isNumeric: true,
-                      isDouble: true,
-                      validator: (value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            double.tryParse(value) == null) {
-                          return 'Please enter a valid salary';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10.h),
-                    TextFormWidget(
-                      labelText: "Interest Rate *",
-                      hintText: "5 %",
-                      controller: controller.interestRateController,
-                      focusNode: controller.interestRateFocusNode,
-                      nextFocusNode: FocusNode(),
-                      icon: Icons.percent,
-                      isNumeric: true,
-                      isDouble: false,
-                      validator: validateInterestRate,
-                    ),
-                    SizedBox(height: 10.h),
-                    Obx(
-                      () => SliderContainerWidget(
-                        sliderValue: controller.sliderValue.value,
-                        onValueChanged: controller.updateSliderValue,
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        spreadRadius: 1.w,
+                        blurRadius: 1.w,
+                        offset: Offset(0.w, 1.h),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormWidget(
+                        labelText: "Salary *",
+                        hintText: "EGP",
+                        controller: controller.salaryController,
+                        focusNode: controller.salaryFocusNode,
+                        nextFocusNode: controller.interestRateFocusNode,
+                        icon: Icons.monetization_on_outlined,
+                        isNumeric: true,
+                        isDouble: true,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              double.tryParse(value) == null) {
+                            return 'Please enter a valid salary';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10.h),
+                      TextFormWidget(
+                        labelText: "Interest Rate *",
+                        hintText: "5 %",
+                        controller: controller.interestRateController,
+                        focusNode: controller.interestRateFocusNode,
+                        nextFocusNode: FocusNode(),
+                        icon: Icons.percent,
+                        isNumeric: true,
+                        isDouble: false,
+                        validator: validateInterestRate,
+                      ),
+                      SizedBox(height: 10.h),
+                      Obx(
+                            () => SliderContainerWidget(
+                          sliderValue: controller.sliderValue.value,
+                          onValueChanged: controller.updateSliderValue,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => ResultWidget(
-                  financeAmount: controller.unitPrice.value,
-                  name: 'Unit Price',
+                SizedBox(height: 10.h),
+                Obx(
+                      () => ResultWidget(
+                    financeAmount: controller.unitPrice.value,
+                    name: 'Unit Price',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => ResultWidget(
-                  financeAmount: controller.downPayment.value,
-                  name: 'Down Payment',
+                SizedBox(height: 10.h),
+                Obx(
+                      () => ResultWidget(
+                    financeAmount: controller.downPayment.value,
+                    name: 'Down Payment',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => ResultWidget(
-                  financeAmount: controller.amountFinance.value,
-                  name: 'Amount Finance',
+                SizedBox(height: 10.h),
+                Obx(
+                      () => ResultWidget(
+                    financeAmount: controller.amountFinance.value,
+                    name: 'Amount Finance',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => ResultWidget(
-                  financeAmount: controller.monthlyInstallment.value,
-                  name: 'Monthly Installment',
+                SizedBox(height: 10.h),
+                Obx(
+                      () => ResultWidget(
+                    financeAmount: controller.monthlyInstallment.value,
+                    name: 'Monthly Installment',
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(
-                () => ResultWidget(
-                  financeAmount: controller.grossReceivable.value,
-                  name: 'Gross Receivable',
+                SizedBox(height: 10.h),
+                Obx(
+                      () => ResultWidget(
+                    financeAmount: controller.grossReceivable.value,
+                    name: 'Gross Receivable',
+                  ),
                 ),
-              ),
-              SizedBox(height: 20.h),
-              CustomResultButton(
-                buttonText: 'Print & Save as PDF ',
-                buttonColor: const Color(0xFFd32f2e),
-                onPressed: () async {
-                  final pdfService = MortgageBySalaryPdfService(
-                    duration: controller.sliderValue.value,
-                    unitPrice: controller.unitPrice.value,
-                    downPayment: controller.downPayment.value,
-                    amountFinance: controller.amountFinance.value,
-                    monthlyInstallment: controller.monthlyInstallment.value,
-                    grossReceivable: controller.grossReceivable.value,
-                    salary: double.tryParse(controller.salaryController.text) ??
-                        0.0,
-                    interestRate: controller.interestRateController.text,
-                  );
-                  await pdfService.generateAndSharePdf();
-                },
-              ),
-            ],
+                SizedBox(height: 20.h),
+                CustomResultButton(
+                  buttonText: 'Print & Save as PDF',
+                  buttonColor: const Color(0xFFd32f2e),
+                  onPressed: () async {
+                    if (controller.formKey.currentState?.validate() ?? false) {
+                      // If the form is valid, proceed to generate the PDF
+                      final pdfService = MortgageBySalaryPdfService(
+                        duration: controller.sliderValue.value,
+                        unitPrice: controller.unitPrice.value,
+                        downPayment: controller.downPayment.value,
+                        amountFinance: controller.amountFinance.value,
+                        monthlyInstallment: controller.monthlyInstallment.value,
+                        grossReceivable: controller.grossReceivable.value,
+                        salary: double.tryParse(controller.salaryController.text) ?? 0.0,
+                        interestRate: controller.interestRateController.text,
+                      );
+                      await pdfService.generateAndSharePdf();
+                    } else {
+                      Get.dialog(
+                        const PopUpAlertDialog(
+                          title: ("Error"),
+                          content: 'Please Enter Valid Input',
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
