@@ -1,10 +1,9 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://amortization.runasp.net/api/';
+  static const String baseUrl = 'http://amortization.qatarcentral.cloudapp.azure.com/api/';
   static final AuthEndpoints authEndpoints = AuthEndpoints();
   static final Calculator calculator = Calculator();
   static final DashboardEndpoints dashboardEndpoints = DashboardEndpoints();
 }
-
 class AuthEndpoints {
   final String register = 'Auth/register';
   final String login = 'Auth/login';
