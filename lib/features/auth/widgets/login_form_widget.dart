@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
 import '../controllers/login_controller.dart';
@@ -28,8 +29,9 @@ class LoginFormWidget extends StatelessWidget {
             validator: (value) => validateName(value),
             isDouble: false,
           ),
+          SizedBox(height: 5.h,),
           Obx(
-            () => TextFormField(
+                () => TextFormField(
               focusNode: _loginController.passwordFocusNode,
               obscureText: _loginController.obscurePassText.value,
               textInputAction: TextInputAction.done,
@@ -47,17 +49,20 @@ class LoginFormWidget extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
                 labelText: "Password",
               ),
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black,
+                fontSize: 16.sp,
               ),
             ),
           ),
-          const SizedBox(height: 50.0),
+          SizedBox(height: 50.h),
           Obx(
-            () => Column(
+                () => Column(
               children: [
                 ElevatedButton(
                   onPressed: _loginController.isLoading.value
@@ -67,27 +72,33 @@ class LoginFormWidget extends StatelessWidget {
                     backgroundColor: _loginController.isLoading.value
                         ? Colors.grey
                         : const Color(0xFFe0516f),
-                    minimumSize: const Size(double.infinity, 50),
+                    minimumSize: Size(double.infinity, 50.h),
                   ),
                   child: Text(
                     _loginController.isLoading.value
                         ? 'Logging in...'
                         : 'Login',
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12.0),
+                SizedBox(height: 12.h),
                 ElevatedButton(
                   onPressed: () {
                     Get.to(() => RegisterScreen());
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFe1e2e2),
-                    minimumSize: const Size(double.infinity, 50),
+                    minimumSize: Size(double.infinity, 50.h),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Create Account',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                    ),
                   ),
                 ),
               ],

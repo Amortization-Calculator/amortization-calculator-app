@@ -12,8 +12,8 @@ class LoadingOverlayWidget extends StatelessWidget {
       if (isLoading.value) {
         return  Container(
           color: Colors.black54,
-          width: double.infinity, // Full screen width
-          height: double.infinity, // Full screen height
+          width: double.infinity,
+          height: double.infinity,
           child: const Center(
             child: CircularProgressIndicator(),
           ),

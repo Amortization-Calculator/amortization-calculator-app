@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:amortization_calculator/widgets/custom_appBar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../widgets/custom_appBar_widget.dart';
 import '../../../widgets/custom_divider_widget.dart';
 import '../controllers/result_controller.dart';
 import '../../../widgets/build_rich_text_widget.dart';
@@ -34,7 +35,6 @@ class ResultScreen extends StatelessWidget {
     final Rx<File?> pdfFile = Rx<File?>(null);
     final Rx<File?> excelFileToShare = Rx<File?>(null);
 
-
     Future<void> fetchAndOpenPdfFile() async {
       pdfFile.value ??= await controller.fetchPdfFile(excelFile.replaceAll('.xlsx', '.pdf'));
       if (pdfFile.value != null) {
@@ -48,64 +48,65 @@ class ResultScreen extends StatelessWidget {
         );
       }
     }
+
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar:  const CustomAppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           children: [
-            const SizedBox(height: 10.0),
+            SizedBox(height: 10.h),
             const RichTextWidget(
               firstText: 'Calculation ',
               secondFontSize: 20,
               firstFontSize: 20,
               secondText: "Result",
             ),
-            const CustomDividerWidget(),
-            const SizedBox(height: 20.0),
+            CustomDividerWidget(),
+            SizedBox(height: 20.h),
             Container(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.w),
               width: double.infinity,
-              constraints: const BoxConstraints(maxWidth: 600),
+              constraints: BoxConstraints(maxWidth: 600.w),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(12.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 1,
-                    offset: const Offset(0, 1),
+                    offset: Offset(0, 1.h),
                   ),
                 ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: 16.h),
                   Text(
                     'Rental Value Per Month',
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey[800],
                     ),
                   ),
-                  const SizedBox(height: 8.0),
+                  SizedBox(height: 8.h),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
                           text: formattedRentalValue.toString(),
-                          style: const TextStyle(
-                            fontSize: 32.0,
+                          style: TextStyle(
+                            fontSize: 32.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
                           ),
                         ),
-                        const TextSpan(
+                        TextSpan(
                           text: ' EGP',
                           style: TextStyle(
-                            fontSize: 32.0,
+                            fontSize: 32.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -140,14 +141,14 @@ class ResultScreen extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             CustomResultButton(
               buttonText: 'Open PDF File',
               imagePath: 'lib/assets/pdf.png',
               buttonColor: Colors.teal,
               onPressed: fetchAndOpenPdfFile,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             CustomResultButton(
               buttonText: 'Share',
               iconData: Icons.share,
@@ -174,7 +175,7 @@ class ResultScreen extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
           ],
         ),
       ),

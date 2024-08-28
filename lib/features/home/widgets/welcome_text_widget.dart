@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../services/home_service.dart';
@@ -13,16 +14,16 @@ class WelcomeTextWidget extends StatelessWidget {
       return RichText(
         text: TextSpan(
           text: 'Welcome ',
-          style: const TextStyle(
-            fontSize: 22,
-            color: Color(0xFF970032),
+          style: TextStyle(
+            fontSize: 22.sp,
+            color: const Color(0xFF970032),
             fontWeight: FontWeight.bold,
           ),
           children: <TextSpan>[
             TextSpan(
               text: homeService.userName.value,
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: 20.sp,
                 color: Colors.black,
               ),
             ),

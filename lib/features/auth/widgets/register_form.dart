@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
 import '../../../widgets/generic_radio_tile_widget.dart';
@@ -31,6 +32,7 @@ class RegisterForm extends StatelessWidget {
               isDouble: false,
               validator: (value) => validateName(value),
             ),
+            SizedBox(height: 5.h),
             TextFormWidget(
               labelText: 'Email',
               hintText: 'Enter your email',
@@ -42,6 +44,7 @@ class RegisterForm extends StatelessWidget {
               isDouble: false,
               validator: (value) => validateEmail(value),
             ),
+            SizedBox(height: 5.h),
             TextFormWidget(
               labelText: 'Phone Number',
               hintText: 'Enter your phone number',
@@ -53,36 +56,34 @@ class RegisterForm extends StatelessWidget {
               isDouble: false,
               validator: (value) => validatePhoneNumber(value),
             ),
-            const SizedBox(height: 10),
-            const Text(
+            SizedBox(height: 5.h),
+            Text(
               'Account Type',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 5.h),
             Obx(
-              () => Row(
+                  () => Row(
                 children: [
                   Expanded(
                     child: GenericRadioTileWidget<IndividualCompanyEnum>(
                       value: IndividualCompanyEnum.Individual,
                       title: 'Individual',
-                      groupValue:
-                          registerController.individualCompanyEnum.value,
+                      groupValue: registerController.individualCompanyEnum.value,
                       onChanged: (IndividualCompanyEnum? value) {
                         registerController.individualCompanyEnum.value = value!;
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Expanded(
                     child: GenericRadioTileWidget<IndividualCompanyEnum>(
                       value: IndividualCompanyEnum.Company,
                       title: 'Company',
-                      groupValue:
-                          registerController.individualCompanyEnum.value,
+                      groupValue: registerController.individualCompanyEnum.value,
                       onChanged: (IndividualCompanyEnum? value) {
                         registerController.individualCompanyEnum.value = value!;
                       },
@@ -91,17 +92,17 @@ class RegisterForm extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            const Text(
+            SizedBox(height: 5.h),
+            Text(
               'Gender',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 5.h),
             Obx(
-              () => Row(
+                  () => Row(
                 children: [
                   Expanded(
                     child: GenericRadioTileWidget<GenderEnum>(
@@ -113,7 +114,7 @@ class RegisterForm extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Expanded(
                     child: GenericRadioTileWidget<GenderEnum>(
                       value: GenderEnum.Female,
@@ -127,9 +128,9 @@ class RegisterForm extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 10.h),
             Obx(
-              () => TextFormField(
+                  () => TextFormField(
                 focusNode: registerController.passwordFocusNode,
                 obscureText: registerController.obscurePassText.value,
                 textInputAction: TextInputAction.done,
@@ -149,17 +150,20 @@ class RegisterForm extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
                   labelText: "Password",
                 ),
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
+                  fontSize: 16.sp, // Responsive font size
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 15.h),
             Obx(
-              () => TextFormField(
+                  () => TextFormField(
                 obscureText: registerController.obscureConfirmPassText.value,
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.visiblePassword,
@@ -179,15 +183,18 @@ class RegisterForm extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
                   labelText: "Confirm Password",
                 ),
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Center(
               child: ElevatedButton(
                 onPressed: registerController.isLoading.value
@@ -197,11 +204,14 @@ class RegisterForm extends StatelessWidget {
                   backgroundColor: registerController.isLoading.value
                       ? Colors.grey
                       : const Color(0xFFe0516f),
-                  minimumSize: const Size(double.infinity, 50),
+                  minimumSize: Size(double.infinity, 50.h),
                 ),
-                child: const Text(
+                child: Text(
                   'Register',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

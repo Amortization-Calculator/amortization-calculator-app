@@ -1,6 +1,7 @@
 import 'package:amortization_calculator/widgets/custom_appBar_widget.dart';
 import 'package:amortization_calculator/widgets/custom_divider_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../widgets/title_widget.dart';
 import '../models/team_member_model.dart';
 import '../widgets/team_card_widget.dart';
@@ -14,15 +15,17 @@ class TeamScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0.w),
           child: Column(
             children: [
-              const TitleWidget(
+              TitleWidget(
                 firstText: 'Meet Our ',
                 secondText: 'Team',
-                fontSize: 24,
+                fontSize: 20.sp,
               ),
-              const CustomDividerWidget(),
+              SizedBox(height: 20.h),
+              CustomDividerWidget(),
+              SizedBox(height: 20.h),
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Mostafa Siam',
@@ -30,9 +33,10 @@ class TeamScreen extends StatelessWidget {
                   image: 'lib/assets/mostafa.png',
                   title: 'Product Owner',
                   email: 'siam_mostafa@hotmail.com',
-                  linkedinProfileUrl: 'https://www.linkedin.com/in/mostafa-siam-184b53109?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BpFtbbhFLQ6muy%2FncFg9FRw%3D%3D'
+                  linkedinProfileUrl: 'https://www.linkedin.com/in/mostafa-siam-184b53109?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BpFtbbhFLQ6muy%2FncFg9FRw%3D%3D',
                 ),
               ),
+              SizedBox(height: 20.h),
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Omar Kenawi',
@@ -44,6 +48,7 @@ class TeamScreen extends StatelessWidget {
                   linkedinProfileUrl: 'https://www.linkedin.com/in/omar-kenawi/',
                 ),
               ),
+              SizedBox(height: 20.h),
               TeamCardWidget(
                 teamMember: TeamMember(
                   name: 'Abdallah Mohamed',

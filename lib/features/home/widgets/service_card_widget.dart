@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ServiceCardWidget extends StatelessWidget {
@@ -19,29 +20,38 @@ class ServiceCardWidget extends StatelessWidget {
       onTap: () {
         Get.toNamed(page);
       },
-      borderRadius: BorderRadius.circular(15.0),
+      borderRadius: BorderRadius.circular(15.r),
       child: SizedBox(
         width: double.infinity,
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(15.r),
           ),
           color: Colors.white,
           elevation: 1,
           child: Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: EdgeInsets.all(16.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  iconPath,
-                  height: 80,
+                SizedBox(
+                  height: 80.h,
+                  width: 80.w,
+                  child: Image.asset(
+                    iconPath,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: 40.sp,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: TextStyle(
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

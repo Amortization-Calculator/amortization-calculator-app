@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleWidget extends StatelessWidget {
   final String firstText;
@@ -18,7 +19,7 @@ class TitleWidget extends StatelessWidget {
       text: TextSpan(
         text: firstText,
         style: TextStyle(
-          fontSize: fontSize,
+          fontSize: fontSize.sp,
           color: const Color(0xFF970032),
           fontWeight: FontWeight.bold,
         ),
@@ -26,7 +27,7 @@ class TitleWidget extends StatelessWidget {
           TextSpan(
             text: secondText,
             style: TextStyle(
-              fontSize: fontSize,
+              fontSize: fontSize.sp,
               color: Colors.black,
               fontWeight: FontWeight.normal,
             ),

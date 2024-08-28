@@ -20,8 +20,8 @@ class DropdownWidget extends StatelessWidget {
       value: value,
       items: items
           .map((e) => DropdownMenuItem(
-        child: Text(e),
         value: e,
+        child: Text(e),
       ))
           .toList(),
       onChanged: onChanged,
@@ -32,7 +32,7 @@ class DropdownWidget extends StatelessWidget {
       dropdownColor: Colors.white,
       decoration: InputDecoration(
         labelText: labelText,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }

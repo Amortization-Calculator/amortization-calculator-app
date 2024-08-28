@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../widgets/slider_widget.dart';
 
 class SliderContainerWidget extends StatelessWidget {
@@ -14,16 +15,16 @@ class SliderContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: const Offset(0, 0),
+            spreadRadius: 1.w,
+            blurRadius: 1.w,
+            offset: Offset(0.w, 0.h),
           ),
         ],
       ),
@@ -32,24 +33,24 @@ class SliderContainerWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
+              Text(
                 'Duration',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               Text(
                 '${sliderValue.round()} years',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           SliderWidget(
             onValueChanged: onValueChanged,
           ),

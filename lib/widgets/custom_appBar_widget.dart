@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../features/auth/services/logout_service.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,6 +16,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize ScreenUtil
+    ScreenUtil.init(context, designSize: Size(360, 800), minTextAdapt: true);
+
     return AppBar(
       scrolledUnderElevation: 0.0,
       backgroundColor: Colors.white,
@@ -23,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Image.asset(
         'lib/assets/logo-transparent-png.png',
-        height: 60.0,
+        height: 60.0.sp, // Responsive height
       ),
       bottom: showTabs && tabController != null
           ? TabBar(
@@ -36,19 +40,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Tab(text: 'By Unit Price'),
           Tab(text: 'By Salary'),
         ],
-        labelStyle: const TextStyle(
-          fontSize: 18,
+        labelStyle: TextStyle(
+          fontSize: 18.sp, // Responsive font size
           fontWeight: FontWeight.bold,
         ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 16,
+        unselectedLabelStyle: TextStyle(
+          fontSize: 16.sp, // Responsive font size
         ),
       )
           : null,
       actions: showLogout
           ? [
         Padding(
-          padding: const EdgeInsets.only(right: 16.0),
+          padding: EdgeInsets.only(
+            right: 16.0.w, // Responsive padding
+          ),
           child: IconButton(
             icon: const Icon(Icons.logout, color: Colors.black),
             onPressed: () async {

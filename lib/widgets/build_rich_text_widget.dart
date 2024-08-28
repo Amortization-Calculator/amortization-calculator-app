@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RichTextWidget extends StatelessWidget {
   final String firstText;
@@ -20,7 +21,7 @@ class RichTextWidget extends StatelessWidget {
       text: TextSpan(
         text: firstText,
         style: TextStyle(
-          fontSize: firstFontSize,
+          fontSize: firstFontSize.sp,
           color: const Color(0xFF970032), // Primary color
           fontWeight: FontWeight.bold,
         ),
@@ -28,7 +29,7 @@ class RichTextWidget extends StatelessWidget {
           TextSpan(
             text: secondText,
             style: TextStyle(
-              fontSize: secondFontSize,
+              fontSize: secondFontSize.sp,
               color: const Color(0xFF5e0210), // Secondary color
             ),
           ),

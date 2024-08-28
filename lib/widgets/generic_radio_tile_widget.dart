@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GenericRadioTileWidget<T> extends StatelessWidget {
   final T value;
@@ -15,7 +16,6 @@ class GenericRadioTileWidget<T> extends StatelessWidget {
     required this.groupValue,
     required this.title,
     required this.onChanged,
-    //                   color: Color(0xFF970032),
     this.tileColor = const Color(0xFFe0516f),
     this.activeColor = Colors.white,
     this.borderRadius = 8.0,
@@ -29,13 +29,13 @@ class GenericRadioTileWidget<T> extends StatelessWidget {
       activeColor: activeColor,
       dense: true,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius.sp),
       ),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.white,
-          fontSize: 15
+          fontSize: 13.sp,
         ),
       ),
       groupValue: groupValue,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../widgets/loading_overlay_widget.dart';
 import '../controllers/login_controller.dart';
@@ -17,13 +18,15 @@ class LoginScreen extends StatelessWidget {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 9.0, vertical: 40.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 40.h,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const HeaderWidget(),
-                  const SizedBox(height: 24.0),
+                  SizedBox(height: 24.h),
                   LoginFormWidget(),
                 ],
               ),

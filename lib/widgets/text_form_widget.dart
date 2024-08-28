@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextFormWidget extends StatelessWidget {
   final String labelText;
@@ -10,7 +11,7 @@ class TextFormWidget extends StatelessWidget {
   final IconData icon;
   final String? Function(String?) validator;
   final bool isDouble;
-  final bool isNumeric; // Add this line
+  final bool isNumeric;
 
   const TextFormWidget({
     super.key,
@@ -22,17 +23,17 @@ class TextFormWidget extends StatelessWidget {
     required this.icon,
     required this.validator,
     required this.isDouble,
-    required this.isNumeric, // Add this line
+    required this.isNumeric,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.only(bottom: 10.0.h),
       child: TextFormField(
         controller: controller,
         focusNode: focusNode,
-        keyboardType: isNumeric ? TextInputType.number : TextInputType.text, // Modify this line
+        keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
         inputFormatters: isNumeric
             ? (isDouble
             ? [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))]
@@ -40,11 +41,14 @@ class TextFormWidget extends StatelessWidget {
             : [],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon),
+          prefixIcon: Icon(icon, size: 24.0.sp),
           hintText: hintText,
-          contentPadding: EdgeInsets.all(20),
-          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.all(20.0.w),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0.r),
+          ),
           labelText: labelText,
+          labelStyle: TextStyle(fontSize: 16.0.sp),
         ),
         validator: validator,
         onFieldSubmitted: (_) {

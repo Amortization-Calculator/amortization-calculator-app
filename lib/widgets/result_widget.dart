@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResultWidget extends StatelessWidget {
   final int value;
@@ -15,14 +15,14 @@ class ResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedValue = (value).toString();
+    final formattedValue = value.toString();
     return Container(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.0.w),
       width: double.infinity,
-      constraints: const BoxConstraints(maxWidth: double.infinity),
+      constraints: BoxConstraints(maxWidth: 400.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(12.0.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -34,31 +34,30 @@ class ResultWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-
           Text(
             title,
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize: 20.0.sp,
               fontWeight: FontWeight.w600,
               color: Colors.grey[800],
             ),
           ),
-          const SizedBox(height: 8.0),
+          SizedBox(height: 8.0.h),
           RichText(
             text: TextSpan(
               children: [
                 TextSpan(
                   text: formattedValue,
-                  style: const TextStyle(
-                    fontSize: 32.0,
+                  style: TextStyle(
+                    fontSize: 32.0.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
                   ),
                 ),
                 TextSpan(
                   text: ' $suffix',
-                  style: const TextStyle(
-                    fontSize: 32.0,
+                  style: TextStyle(
+                    fontSize: 32.0.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),

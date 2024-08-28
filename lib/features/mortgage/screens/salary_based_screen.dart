@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../validators.dart';
 import '../../../widgets/custom_result_button.dart';
 import '../../../widgets/text_form_widget.dart';
@@ -18,21 +19,21 @@ class SalaryBasedScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(8.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.06),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: const Offset(0, 0),
+                      spreadRadius: 1.w,
+                      blurRadius: 1.w,
+                      offset: Offset(0.w, 1.h),
                     ),
                   ],
                 ),
@@ -57,6 +58,7 @@ class SalaryBasedScreen extends StatelessWidget {
                         return null;
                       },
                     ),
+                    SizedBox(height: 10.h),
                     TextFormWidget(
                       labelText: "Interest Rate *",
                       hintText: "5 %",
@@ -68,6 +70,7 @@ class SalaryBasedScreen extends StatelessWidget {
                       isDouble: false,
                       validator: validateInterestRate,
                     ),
+                    SizedBox(height: 10.h),
                     Obx(
                       () => SliderContainerWidget(
                         sliderValue: controller.sliderValue.value,
@@ -77,42 +80,42 @@ class SalaryBasedScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Obx(
                 () => ResultWidget(
-                  financeAmount: (controller.unitPrice.value),
+                  financeAmount: controller.unitPrice.value,
                   name: 'Unit Price',
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Obx(
                 () => ResultWidget(
-                  financeAmount: (controller.downPayment.value),
+                  financeAmount: controller.downPayment.value,
                   name: 'Down Payment',
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Obx(
                 () => ResultWidget(
-                  financeAmount: (controller.amountFinance.value),
+                  financeAmount: controller.amountFinance.value,
                   name: 'Amount Finance',
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Obx(
                 () => ResultWidget(
                   financeAmount: controller.monthlyInstallment.value,
                   name: 'Monthly Installment',
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Obx(
                 () => ResultWidget(
-                  financeAmount: (controller.grossReceivable.value),
+                  financeAmount: controller.grossReceivable.value,
                   name: 'Gross Receivable',
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CustomResultButton(
                 buttonText: 'Print & Save as PDF ',
                 buttonColor: const Color(0xFFd32f2e),

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../controllers/team_member_controller.dart';
 import '../models/team_member_model.dart';
-
-
 
 class TeamCardWidget extends StatelessWidget {
   final TeamMember teamMember;
@@ -21,46 +20,52 @@ class TeamCardWidget extends StatelessWidget {
       width: double.infinity,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(15.r),
         ),
         color: Colors.white,
         elevation: 1,
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 60,
+                radius: 60.r,
                 backgroundImage: AssetImage(teamMember.image),
-                backgroundColor: Colors.transparent, // Optional: Add a background color
+                backgroundColor: Colors.transparent,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Text(
                 teamMember.name,
-                style: const TextStyle(
-                  fontSize: 24,
+                style: TextStyle(
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 teamMember.title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF970032),
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  color: const Color(0xFF970032),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.phone),
+                    icon: Icon(
+                      Icons.phone,
+                      size: 24.sp,
+                    ),
                     onPressed: () {
                       controller.makePhoneCall(teamMember.phone);
                     },
                   ),
                   IconButton(
-                    icon: const Icon(Icons.email_outlined),
+                    icon: Icon(
+                      Icons.email_outlined,
+                      size: 24.sp,
+                    ),
                     onPressed: () {
                       controller.copyEmailToClipboard(teamMember.email);
                     },
@@ -68,7 +73,10 @@ class TeamCardWidget extends StatelessWidget {
                   if (teamMember.linkedinProfileUrl != null &&
                       teamMember.linkedinProfileUrl!.isNotEmpty)
                     IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.linkedin),
+                      icon: FaIcon(
+                        FontAwesomeIcons.linkedin,
+                        size: 24.sp,
+                      ),
                       onPressed: () {
                         controller.launchUrlInApp(teamMember.linkedinProfileUrl!);
                       },
@@ -76,7 +84,10 @@ class TeamCardWidget extends StatelessWidget {
                   if (teamMember.githubProfileUrl != null &&
                       teamMember.githubProfileUrl!.isNotEmpty)
                     IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.github),
+                      icon: FaIcon(
+                        FontAwesomeIcons.github,
+                        size: 24.sp,
+                      ),
                       onPressed: () {
                         controller.launchUrlInApp(teamMember.githubProfileUrl!);
                       },

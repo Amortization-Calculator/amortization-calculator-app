@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomResultButton extends StatelessWidget {
   final Future<void> Function() onPressed;
@@ -24,10 +25,10 @@ class CustomResultButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-        minimumSize: const Size(double.infinity, 50.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+        minimumSize: Size(double.infinity, 50.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.r),
         ),
       ),
       child: Row(
@@ -36,22 +37,22 @@ class CustomResultButton extends StatelessWidget {
           if (imagePath != null)
             Image.asset(
               imagePath!,
-              height: 24.0,
-              width: 24.0,
+              height: 24.h,
+              width: 24.w,
             ),
           if (iconData != null)
             Icon(
               iconData,
-              size: 24.0,
-              color: textColor,  // Ensure icon color matches text color
+              size: 24.sp,
+              color: textColor,
             ),
           if (imagePath != null || iconData != null) // Add spacing only when an image or icon is present
-            const SizedBox(width: 10.0),
+            SizedBox(width: 10.w),
           Text(
             buttonText,
             style: TextStyle(
               color: textColor,  // Use the user-specified or default text color
-              fontSize: 16,
+              fontSize: 16.sp,
             ),
           ),
         ],

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDividerWidget extends StatelessWidget {
   final double height;
   final double index;
 
-  const CustomDividerWidget({super.key, this.height = 20, this.index=140.0});
+   CustomDividerWidget({
+    super.key,
+    double? height,
+    double? index,
+  })  : height = height ?? 20.h,
+        index = index ?? 140.w;
 
   @override
   Widget build(BuildContext context) {

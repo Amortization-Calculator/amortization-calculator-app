@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../validators.dart';
 import '../../../constants/enums.dart';
@@ -30,7 +31,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: true,
             validator: validateAmountFinanced,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
             labelText: "Asset Cost",
             hintText: "EGP",
@@ -42,7 +43,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: true,
             validator: (value) => validateAssetCost(value, controller.amountFinancedController),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
             labelText: "Number Of Years *",
             hintText: "3",
@@ -54,7 +55,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateNumberOfRentals,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
             labelText: "Interest Rate *",
             hintText: "5 %",
@@ -66,7 +67,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateInterestRate,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
             labelText: "Grace Period *",
             hintText: "No G.P",
@@ -78,7 +79,7 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateGracePeriod,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
             labelText: "Residual Amount *",
             hintText: "EGP",
@@ -90,14 +91,14 @@ class LeasingForm extends StatelessWidget {
             isDouble: false,
             validator: validateResidualAmount,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           DropdownWidget(
             value: controller.valueChoose,
             items: controller.listItem,
             labelText: 'Rental Per Year',
             onChanged: (val) => controller.valueChoose = val,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), // Responsive height
           Obx(() {
             return Row(
               children: [
@@ -111,7 +112,7 @@ class LeasingForm extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10.w),
                 Expanded(
                   child: GenericRadioTileWidget<AdvanceArrearsEnum>(
                     value: AdvanceArrearsEnum.arrears,
@@ -125,12 +126,15 @@ class LeasingForm extends StatelessWidget {
               ],
             );
           }),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Center(
             child: ElevatedButton.icon(
               icon: const Icon(Icons.calculate, color: Colors.white),
               onPressed: controller.isLoading.value ? null : controller.onCalculateButtonPressed,
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF970032),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF970032),
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w), // Responsive padding
+              ),
               label: const Text(
                 'Calculate',
                 style: TextStyle(color: Colors.white),

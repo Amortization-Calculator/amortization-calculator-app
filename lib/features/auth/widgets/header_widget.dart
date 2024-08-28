@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});
@@ -10,23 +11,23 @@ class HeaderWidget extends StatelessWidget {
       children: [
         Image.asset(
           'lib/assets/logo-transparent-png.png',
-          height: 150.0,
+          height: 150.h,
         ),
-        const SizedBox(height: 24.0),
-        const Text(
+        SizedBox(height: 24.h),
+        Text(
           'Welcome back,',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 8.0),
-        const Text(
+        SizedBox(height: 8.h),
+        Text(
           'Understand Your Repayment Plan.',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF94364a),
+            color: const Color(0xFF94364a),
           ),
         ),
       ],

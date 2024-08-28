@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../widgets/title_widget.dart';
 import '../controllers/leasing_controller.dart';
@@ -20,19 +21,21 @@ class LeasingScreen extends StatelessWidget {
             Column(
               children: [
                 const CustomAppBar(),
-                const SizedBox(height: 20),
-                const Center(
+                SizedBox(height: 20.h),
+                 Center(
                   child: TitleWidget(
                     firstText: 'Leasing ',
                     secondText: 'Calculator',
+                    fontSize: 20.sp,
                   ),
                 ),
-                const SizedBox(height: 20),
-                const CustomDividerWidget(),
+                SizedBox(height: 20.h),
+                CustomDividerWidget(),
+                SizedBox(height: 20.h),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 9,vertical: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                       child: LeasingForm(controller: controller),
                     ),
                   ),

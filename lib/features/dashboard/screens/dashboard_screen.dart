@@ -24,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             const WelcomeTextWidget(),
             const SizedBox(height: 20),
-            const CustomDividerWidget(),
+             CustomDividerWidget(),
             const SizedBox(height: 20),
             Center(
               child: Obx(() {
