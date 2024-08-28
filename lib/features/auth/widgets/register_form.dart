@@ -196,7 +196,7 @@ class RegisterForm extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: registerController.isLoading.value
                       ? Colors.grey
-                      : const Color(0xFF148C79),
+                      : const Color(0xFFe0516f),
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text(

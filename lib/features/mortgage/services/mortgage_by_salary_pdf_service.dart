@@ -4,7 +4,7 @@ import 'package:printing/printing.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 
-class PdfService {
+class MortgageBySalaryPdfService {
   final double unitPrice;
   final double downPayment;
   final double duration;
@@ -14,7 +14,7 @@ class PdfService {
   final double salary;
   final String interestRate;
 
-  PdfService( {
+  MortgageBySalaryPdfService( {
     required this.duration,
     required this.unitPrice,
     required this.downPayment,

@@ -5,8 +5,10 @@ import '../services/mortgage_service.dart';
 
 class MortgageBasedSalaryController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  final TextEditingController salaryController = TextEditingController(text: '0');
-  final TextEditingController interestRateController = TextEditingController(text: '0');
+  final TextEditingController salaryController =
+      TextEditingController(text: '0');
+  final TextEditingController interestRateController =
+      TextEditingController(text: '0');
   final FocusNode salaryFocusNode = FocusNode();
   final FocusNode interestRateFocusNode = FocusNode();
   var sliderValue = 1.0.obs;
@@ -38,16 +40,15 @@ class MortgageBasedSalaryController extends GetxController {
   void _updateValues() {
     double salary = double.tryParse(salaryController.text) ?? 0;
     double interestRate = double.tryParse(interestRateController.text) ?? 0;
-    amountFinance.value = _mortgageService.calculateAmountFinanceBySalary(sliderValue.value,salary);
-    downPayment.value = _mortgageService.calculateDownPayment(amountFinance.value);
-    unitPrice.value = _mortgageService.calculateUnitPrice(downPayment.value, amountFinance.value);
+    amountFinance.value = _mortgageService.calculateAmountFinanceBySalary(
+        sliderValue.value, salary);
+    downPayment.value =
+        _mortgageService.calculateDownPayment(amountFinance.value);
+    unitPrice.value = _mortgageService.calculateUnitPrice(
+        downPayment.value, amountFinance.value);
     monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
-        amountFinance.value,
-        interestRate,
-        sliderValue.value.round()
-    );
-    grossReceivable.value=monthlyInstallment.value*sliderValue.value;
-
+        amountFinance.value, interestRate, sliderValue.value.round());
+    grossReceivable.value = monthlyInstallment.value * sliderValue.value;
   }
 
   void updateSliderValue(double value) {

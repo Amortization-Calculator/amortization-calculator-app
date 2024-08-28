@@ -4,7 +4,7 @@ import '../../../validators.dart';
 import '../../../widgets/custom_result_button.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../controllers/salary_based_controller.dart';
-import '../services/pdf_service.dart';
+import '../services/mortgage_by_salary_pdf_service.dart';
 import '../widgets/slider_container_widget.dart';
 import '../widgets/result_widget.dart';
 
@@ -117,7 +117,7 @@ class SalaryBasedScreen extends StatelessWidget {
                 buttonText: 'Print & Save as PDF ',
                 buttonColor: const Color(0xFFd32f2e),
                 onPressed: () async {
-                  final pdfService = PdfService(
+                  final pdfService = MortgageBySalaryPdfService(
                     duration: controller.sliderValue.value,
                     unitPrice: controller.unitPrice.value,
                     downPayment: controller.downPayment.value,

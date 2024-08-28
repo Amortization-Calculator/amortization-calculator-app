@@ -56,41 +56,43 @@ class LoginFormWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 50.0),
-          Obx(() => Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: _loginController.isLoading.value
-                        ? null
-                        : _loginController.login,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _loginController.isLoading.value
-                          ? Colors.grey
-                          : const Color(0xFF148C79),
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                    child: Text(
-                      _loginController.isLoading.value
-                          ? 'Logging in...'
-                          : 'Login',
-                      style: const TextStyle(color: Colors.white),
-                    ),
+          Obx(
+            () => Column(
+              children: [
+                ElevatedButton(
+                  onPressed: _loginController.isLoading.value
+                      ? null
+                      : _loginController.login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _loginController.isLoading.value
+                        ? Colors.grey
+                        : const Color(0xFFe0516f),
+                    minimumSize: const Size(double.infinity, 50),
                   ),
-                  const SizedBox(height: 12.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.to(() =>  RegisterScreen());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFe1e2e2),
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                    child: const Text(
-                      'Create Account',
-                      style: TextStyle(color: Colors.black),
-                    ),
+                  child: Text(
+                    _loginController.isLoading.value
+                        ? 'Logging in...'
+                        : 'Login',
+                    style: const TextStyle(color: Colors.white),
                   ),
-                ],
-              )),
+                ),
+                const SizedBox(height: 12.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => RegisterScreen());
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFe1e2e2),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: const Text(
+                    'Create Account',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
