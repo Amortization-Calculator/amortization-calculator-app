@@ -150,10 +150,13 @@ class RegisterForm extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
+                  prefixIcon: const Icon(Icons.lock),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                   labelText: "Password",
+                  contentPadding: EdgeInsets.symmetric(vertical: 22.h),
+
                 ),
                 style: TextStyle(
                   color: Colors.black,
@@ -164,35 +167,38 @@ class RegisterForm extends StatelessWidget {
             SizedBox(height: 15.h),
             Obx(
                   () => TextFormField(
-                obscureText: registerController.obscureConfirmPassText.value,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.visiblePassword,
-                controller: registerController.confirmPasswordTextController,
-                validator: (value) => validateConfirmPassword(
-                    value, registerController.passwordTextController.text),
-                decoration: InputDecoration(
-                  hintText: "Confirm Your Password",
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      registerController.obscureConfirmPassText.value ^= true;
-                    },
-                    child: Icon(
-                      registerController.obscureConfirmPassText.value
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: Colors.black,
+                    obscureText: registerController.obscureConfirmPassText.value,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: registerController.confirmPasswordTextController,
+                    validator: (value) => validateConfirmPassword(
+                        value, registerController.passwordTextController.text),
+                    decoration: InputDecoration(
+                      hintText: "Confirm Your Password",
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          registerController.obscureConfirmPassText.value ^= true;
+                        },
+                        child: Icon(
+                          registerController.obscureConfirmPassText.value
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black,
+                        ),
+                      ),
+                      prefixIcon: const Icon(Icons.lock),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      labelText: "Confirm Password",
+                      contentPadding: EdgeInsets.symmetric(vertical: 22.h),
                     ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  labelText: "Confirm Password",
-                ),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                ),
-              ),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                    ),
+                  )
+
             ),
             SizedBox(height: 20.h),
             Center(

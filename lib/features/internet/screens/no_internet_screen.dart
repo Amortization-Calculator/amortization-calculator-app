@@ -11,8 +11,9 @@ class NoInternetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final NetworkController networkController = Get.find<NetworkController>();
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
+
       child: Scaffold(
         body: Center(
           child: Padding(

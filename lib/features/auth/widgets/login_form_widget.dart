@@ -50,9 +50,12 @@ class LoginFormWidget extends StatelessWidget {
                   ),
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
+                prefixIcon: const Icon(Icons.lock),
+
                 labelText: "Password",
+                contentPadding: EdgeInsets.symmetric(vertical: 22.h),
               ),
               style: TextStyle(
                 color: Colors.black,
