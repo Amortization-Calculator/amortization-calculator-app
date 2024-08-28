@@ -4,7 +4,7 @@ import 'package:printing/printing.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 
-class MortgageBySalaryPdfService {
+class MortgageByUnitPricePdfService {
   final double unitPrice;
   final double downPayment;
   final double duration;
@@ -14,7 +14,7 @@ class MortgageBySalaryPdfService {
   final double salary;
   final String interestRate;
 
-  MortgageBySalaryPdfService( {
+  MortgageByUnitPricePdfService( {
     required this.duration,
     required this.unitPrice,
     required this.downPayment,
@@ -39,7 +39,7 @@ class MortgageBySalaryPdfService {
                 pw.Image(imageProvider, width: 100, height: 50),
                 pw.SizedBox(width: 20),
                 pw.Text(
-                  'Mortgage Calculator by Salary',
+                  'Mortgage Calculator by Unit Price',
                   style: pw.TextStyle(
                     fontSize: 24,
                     fontWeight: pw.FontWeight.bold,
@@ -65,8 +65,14 @@ class MortgageBySalaryPdfService {
               children: [
                 pw.TableRow(
                   children: [
-                    _buildTableCell('Salary', bold: true),
-                    _buildTableCell('${_formatNumber(salary)} EGP'),
+                    _buildTableCell('Unit Price', bold: true),
+                    _buildTableCell('${_formatNumber((unitPrice ))} EGP'),
+                  ],
+                ),
+                pw.TableRow(
+                  children: [
+                    _buildTableCell('Down Payment For Unit Price', bold: true),
+                    _buildTableCell('${_formatNumber(downPayment)} EGP'),
                   ],
                 ),
                 pw.TableRow(
@@ -100,18 +106,6 @@ class MortgageBySalaryPdfService {
               children: [
                 pw.TableRow(
                   children: [
-                    _buildTableCell('Unit Price', bold: true),
-                    _buildTableCell('${_formatNumber(unitPrice)} EGP'),
-                  ],
-                ),
-                pw.TableRow(
-                  children: [
-                    _buildTableCell('Down Payment', bold: true),
-                    _buildTableCell('${_formatNumber(downPayment)} EGP'),
-                  ],
-                ),
-                pw.TableRow(
-                  children: [
                     _buildTableCell('Amount Finance', bold: true),
                     _buildTableCell('${_formatNumber(amountFinance)} EGP'),
                   ],
@@ -120,6 +114,12 @@ class MortgageBySalaryPdfService {
                   children: [
                     _buildTableCell('Monthly Installment', bold: true),
                     _buildTableCell('${_formatNumber(monthlyInstallment)} EGP'),
+                  ],
+                ),
+                pw.TableRow(
+                  children: [
+                    _buildTableCell('Expected Salary', bold: true),
+                    _buildTableCell('${_formatNumber(salary)} EGP'),
                   ],
                 ),
                 pw.TableRow(

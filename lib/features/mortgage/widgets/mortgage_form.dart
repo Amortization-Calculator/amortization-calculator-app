@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../validators.dart';
+import '../../../widgets/custom_result_button.dart';
 import '../../../widgets/text_form_widget.dart';
 import '../controllers/mortgage_controller.dart';
+import '../services/mortgage_by_unit_price_pdf_service.dart';
 import '../widgets/result_widget.dart';
 import '../widgets/slider_container_widget.dart';
 
@@ -116,6 +118,28 @@ class MortgageForm extends StatelessWidget {
               financeAmount: (controller.grossReceivable.value),
               name: 'Gross Receivable',
             ),
+          ),
+          SizedBox(height: 20.h),
+          CustomResultButton(
+            buttonText: 'Print & Save as PDF ',
+            buttonColor: const Color(0xFFd32f2e),
+            onPressed: () async {
+              final double unitPrice = double.tryParse(controller.unitPriceController.text) ?? 0.0;
+              final double downPayment = double.tryParse(controller.downPaymentForTheUnitController.text) ?? 0.0;
+
+              final pdfService = MortgageByUnitPricePdfService(
+                salary: controller.monthlyInstallment.round() * 100 / 50,
+                duration: controller.sliderValue.value,
+                amountFinance: controller.financeAmount.value,
+                grossReceivable: controller.grossReceivable.value,
+                interestRate: controller.interestRateController.text,
+                monthlyInstallment: controller.monthlyInstallment.value,
+                unitPrice: unitPrice,
+                downPayment: downPayment,
+              );
+              await pdfService.generateAndSharePdf();
+            },
+
           ),
         ],
       ),
