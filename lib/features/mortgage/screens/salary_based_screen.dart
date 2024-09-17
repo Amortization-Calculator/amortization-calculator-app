@@ -52,14 +52,7 @@ class SalaryBasedScreen extends StatelessWidget {
                         icon: Icons.monetization_on_outlined,
                         isNumeric: true,
                         isDouble: true,
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              double.tryParse(value) == null) {
-                            return 'Please enter a valid salary';
-                          }
-                          return null;
-                        },
+                        validator: validateSalary,
                       ),
                       SizedBox(height: 10.h),
                       TextFormWidget(
@@ -75,7 +68,7 @@ class SalaryBasedScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Obx(
-                            () => SliderContainerWidget(
+                        () => SliderContainerWidget(
                           sliderValue: controller.sliderValue.value,
                           onValueChanged: controller.updateSliderValue,
                         ),
@@ -85,36 +78,46 @@ class SalaryBasedScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 Obx(
-                      () => ResultWidget(
-                    financeAmount: controller.unitPrice.value,
+                  () => ResultWidget(
+                    value: controller.isValid.value
+                        ? controller.unitPrice.value
+                        : 0,
                     name: 'Unit Price',
                   ),
                 ),
                 SizedBox(height: 10.h),
                 Obx(
-                      () => ResultWidget(
-                    financeAmount: controller.downPayment.value,
+                  () => ResultWidget(
+                    value: controller.isValid.value
+                        ? controller.downPayment.value
+                        : 0,
                     name: 'Down Payment',
                   ),
                 ),
                 SizedBox(height: 10.h),
                 Obx(
-                      () => ResultWidget(
-                    financeAmount: controller.amountFinance.value,
+                  () => ResultWidget(
+                    value: controller.isValid.value
+                        ? controller.amountFinance.value
+                        : 0,
                     name: 'Amount Finance',
                   ),
                 ),
                 SizedBox(height: 10.h),
                 Obx(
-                      () => ResultWidget(
-                    financeAmount: controller.monthlyInstallment.value,
+                  () => ResultWidget(
+                    value: controller.isValid.value
+                        ? controller.monthlyInstallment.value
+                        : 0,
                     name: 'Monthly Installment',
                   ),
                 ),
                 SizedBox(height: 10.h),
                 Obx(
-                      () => ResultWidget(
-                    financeAmount: controller.grossReceivable.value,
+                  () => ResultWidget(
+                    value: controller.isValid.value
+                        ? controller.grossReceivable.value
+                        : 0,
                     name: 'Gross Receivable',
                   ),
                 ),
@@ -124,7 +127,6 @@ class SalaryBasedScreen extends StatelessWidget {
                   buttonColor: const Color(0xFFd32f2e),
                   onPressed: () async {
                     if (controller.formKey.currentState?.validate() ?? false) {
-                      // If the form is valid, proceed to generate the PDF
                       final pdfService = MortgageBySalaryPdfService(
                         duration: controller.sliderValue.value,
                         unitPrice: controller.unitPrice.value,
@@ -132,7 +134,9 @@ class SalaryBasedScreen extends StatelessWidget {
                         amountFinance: controller.amountFinance.value,
                         monthlyInstallment: controller.monthlyInstallment.value,
                         grossReceivable: controller.grossReceivable.value,
-                        salary: double.tryParse(controller.salaryController.text) ?? 0.0,
+                        salary:
+                            double.tryParse(controller.salaryController.text) ??
+                                0.0,
                         interestRate: controller.interestRateController.text,
                       );
                       await pdfService.generateAndSharePdf();

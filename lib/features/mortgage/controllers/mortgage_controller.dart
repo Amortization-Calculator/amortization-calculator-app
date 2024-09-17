@@ -23,6 +23,7 @@ class MortgageController extends GetxController {
   var financeAmount = 0.0.obs;
   var monthlyInstallment = 0.0.obs;
   var grossReceivable = 0.0.obs;
+  RxBool isValid= false.obs;
   final NumberFormat currencyFormatter = NumberFormat('#,##0', 'en_US');
 
   final MortgageService _mortgageService = MortgageService();
@@ -45,17 +46,30 @@ class MortgageController extends GetxController {
     interestRateController.dispose();
     super.onClose();
   }
+  void _checkValidity() {
+    final unitValid = double.tryParse(unitPriceController.text) != null&&unitPriceController.text.length<9;
+    final interestRateValid =
+        double.tryParse(interestRateController.text) != null &&
+            double.tryParse(interestRateController.text)! <= 100.0;
 
+    isValid.value = unitValid && interestRateValid;
+  }
   void _updateValues() {
-    double unitPrice = double.tryParse(unitPriceController.text) ?? 0;
-    double downPayment =
-        double.tryParse(downPaymentForTheUnitController.text) ?? 0;
+    _checkValidity();
+    double unitPrice = double.tryParse(unitPriceController.text)?? 0 ;
+    double downPayment = double.tryParse(downPaymentForTheUnitController.text)?? 0;
     double interestRate = double.tryParse(interestRateController.text) ?? 0;
-    financeAmount.value =
-        _mortgageService.calculateAmountFinanceByUnit(unitPrice, downPayment);
+    financeAmount.value = _mortgageService.calculateAmountFinanceByUnit(unitPrice, downPayment);
     monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
-        financeAmount.value, interestRate, sliderValue.value.round());
-    grossReceivable.value = monthlyInstallment.value * 12;
+      financeAmount: financeAmount.value,
+      interestRate: interestRate,
+      years: sliderValue.value.round(),
+    );
+
+    grossReceivable.value = _mortgageService.grossReceivable(
+      duration: sliderValue.value,
+      monthlyInstallment: monthlyInstallment.value,
+    );
   }
 
   void updateSliderValue(double value) {

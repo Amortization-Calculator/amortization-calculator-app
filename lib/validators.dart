@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+//--------------------------------------------------------------
 //                          leasing form validators
-String? validateAssetCost(String? value, TextEditingController amountFinancedController) {
+//--------------------------------------------------------------
+
+String? validateAssetCost(
+    String? value, TextEditingController amountFinancedController) {
   if (value == null || value.isEmpty) {
     return null;
   }
@@ -13,7 +17,7 @@ String? validateAssetCost(String? value, TextEditingController amountFinancedCon
   if (amountFinanced != null && assetCost < amountFinanced) {
     return 'Asset Cost must be at least as Amount Financed';
   }
-  if(amountFinanced != null&& (amountFinanced/assetCost)*100>90) {
+  if (amountFinanced != null && (amountFinanced / assetCost) * 100 > 90) {
     return 'Financing Ratio cno not be more than 90 %';
   }
   return null;
@@ -35,7 +39,10 @@ String? validateNumberOfRentals(String? value) {
 
 String? validateInterestRate(String? value) {
   if (value == null || value.isEmpty || double.tryParse(value) == null) {
-    return 'Please enter margin interest rate';
+    return 'Please enter the interest rate';
+  }
+  if (double.tryParse(value)! > 100.0) {
+    return 'interest rate can not be more than 100';
   }
   return null;
 }
@@ -53,6 +60,7 @@ String? validateResidualAmount(String? value) {
   }
   return null;
 }
+
 //--------------------------------------------------------------
 //                       register form validators
 //--------------------------------------------------------------
@@ -111,19 +119,34 @@ String? unitPrice(String? value) {
   if (value == null || value.isEmpty || double.tryParse(value) == null) {
     return 'Please enter the unit Price';
   }
+  if (value.toString().length >= 9) {
+    return 'unitPrice must be less than 9 numbers';
+  }
   return null;
 }
-String? downPaymentForTheUnit(String? value,TextEditingController unitPrice) {
+
+String? downPaymentForTheUnit(String? value, TextEditingController unitPrice) {
   double? unitPriceValue = double.tryParse(unitPrice.text);
 
   if (value == null || value.isEmpty || double.tryParse(value) == null) {
     return 'Please enter the down Payment For The Unit';
   }
-  if(unitPriceValue!=null&&(double.tryParse(value)!/unitPriceValue)*100<20){
+  if (unitPriceValue != null &&
+      (double.tryParse(value)! / unitPriceValue) * 100 < 20) {
     return 'down Payment For The Unit must be at least 20%';
   }
-  if(unitPriceValue!=null&&(double.tryParse(value)!>unitPriceValue)){
+  if (unitPriceValue != null && (double.tryParse(value)! > unitPriceValue)) {
     return 'Down Payment Can not be more than the Unit Price';
+  }
+  return null;
+}
+
+String? validateSalary(value) {
+  if (value == null || value.isEmpty || double.tryParse(value) == null) {
+    return 'Please enter a valid salary';
+  }
+  if (value.toString().length >= 9) {
+    return 'salary must be less than 9 numbers';
   }
   return null;
 }

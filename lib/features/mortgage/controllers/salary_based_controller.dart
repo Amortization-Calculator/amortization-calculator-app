@@ -17,6 +17,7 @@ class MortgageBasedSalaryController extends GetxController {
   var amountFinance = 0.0.obs;
   var monthlyInstallment = 0.0.obs;
   var grossReceivable = 0.0.obs;
+  var isValid = false.obs;
 
   final NumberFormat currencyFormatter = NumberFormat('#,##0', 'en_US');
   final MortgageService _mortgageService = MortgageService();
@@ -37,18 +38,41 @@ class MortgageBasedSalaryController extends GetxController {
     super.onClose();
   }
 
+  void _checkValidity() {
+    final salaryValid = double.tryParse(salaryController.text) != null&&salaryController.text.length<9;
+    final interestRateValid =
+        double.tryParse(interestRateController.text) != null &&
+            double.tryParse(interestRateController.text)! <= 100.0;
+
+    isValid.value = salaryValid && interestRateValid;
+  }
+
   void _updateValues() {
+    _checkValidity();
     double salary = double.tryParse(salaryController.text) ?? 0;
     double interestRate = double.tryParse(interestRateController.text) ?? 0;
-    amountFinance.value = _mortgageService.calculateAmountFinanceBySalary(
-        sliderValue.value, salary);
-    downPayment.value =
-        _mortgageService.calculateDownPayment(amountFinance.value);
+    monthlyInstallment.value =
+        _mortgageService.calculateMonthlyInstallmentSalaryBased(salary: salary);
+    amountFinance.value = _mortgageService
+        .calculateAmountFinanceBySalary(
+          years: sliderValue.value,
+          salary: salary,
+          rate: interestRate,
+          monthlyInstallment: monthlyInstallment.value,
+        )
+        .toDouble();
+
+    downPayment.value = _mortgageService.calculateDownPayment(
+      amountFinance: amountFinance.value,
+    );
     unitPrice.value = _mortgageService.calculateUnitPrice(
-        downPayment.value, amountFinance.value);
-    monthlyInstallment.value = _mortgageService.calculateMonthlyInstallment(
-        amountFinance.value, interestRate, sliderValue.value.round());
-    grossReceivable.value = monthlyInstallment.value * sliderValue.value;
+      amountFinance: amountFinance.value,
+      downPayment: downPayment.value,
+    );
+    grossReceivable.value = _mortgageService.grossReceivable(
+      monthlyInstallment: monthlyInstallment.value,
+      duration: sliderValue.value,
+    );
   }
 
   void updateSliderValue(double value) {
