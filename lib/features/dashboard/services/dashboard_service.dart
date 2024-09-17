@@ -59,7 +59,6 @@ class DashboardService {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       } else {
         throw Exception('Failed to deactivate users');

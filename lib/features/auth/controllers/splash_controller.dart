@@ -24,9 +24,6 @@ class SplashController extends GetxController {
     String? name = await splashService.getUserName();
     if (token != null && expireDateStr != null) {
       DateTime expireDate = DateTime.parse(expireDateStr);
-      print(expireDate);
-      print('--------------------');
-      print(DateTime.now());
       if (DateTime.now().isAfter(expireDate)) {
         await splashService.removeToken();
         Get.offAll(() => LoginScreen());
