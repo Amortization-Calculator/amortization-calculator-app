@@ -40,7 +40,7 @@ class SliderContainerWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 '${sliderValue.round()} years',
                 style: TextStyle(
