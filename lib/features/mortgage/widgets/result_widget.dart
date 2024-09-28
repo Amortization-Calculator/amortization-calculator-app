@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResultWidget extends StatelessWidget {
-  final double financeAmount;
+  final double value;
   final String name;
 
   const ResultWidget({
     super.key,
-    required this.financeAmount,
+    required this.value,
     required this.name,
   });
 
@@ -49,9 +49,9 @@ class ResultWidget extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: currencyFormatter.format(max(0, financeAmount).round()),
+                  text: currencyFormatter.format(max(0, value).round()),
                   style: TextStyle(
-                    fontSize: 32.sp,
+                    fontSize: 30.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
                   ),
@@ -59,7 +59,7 @@ class ResultWidget extends StatelessWidget {
                 TextSpan(
                   text: ' EGP',
                   style: TextStyle(
-                    fontSize: 32.sp,
+                    fontSize: 30.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),

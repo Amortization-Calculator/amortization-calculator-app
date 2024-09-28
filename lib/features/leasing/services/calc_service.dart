@@ -51,7 +51,7 @@ class CalcService {
         headers: headers,
         body: body,
       ).timeout(
-        const Duration(seconds: 10),
+        const Duration(seconds: 100),
         onTimeout: () {
           throw TimeoutException('Request timed out');
         },

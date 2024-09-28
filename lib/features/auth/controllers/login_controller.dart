@@ -40,7 +40,7 @@ class LoginController extends GetxController {
             textConfirm: 'Login Successfully',
             onConfirm: () {
               if(userModel.userName=='admin'){
-                Get.offAll(() =>  DashboardScreen());
+                Get.offAll(() =>  const DashboardScreen());
               }else{
                 Get.offAll(() => const HomeScreen());
               }

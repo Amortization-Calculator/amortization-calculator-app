@@ -10,7 +10,6 @@ class LeasingController extends GetxController {
   bool? checkBox = false;
   String? valueChoose = "4 - Quarterly";
 
-  // Display strings and corresponding numeric values
   final Map<String, int> displayToValueMap = {
     "1 - Yearly": 1,
     "2 - Semi Annually": 2,
@@ -42,7 +41,6 @@ class LeasingController extends GetxController {
   final FocusNode residualAmountFocusNode = FocusNode();
   final FocusNode submitFocusNode = FocusNode();
 
-  // Get numeric value based on the display string
   int get rentalIntervalValue => displayToValueMap[valueChoose!] ?? 1;
 
   Future<void> calculate() async {
@@ -56,7 +54,7 @@ class LeasingController extends GetxController {
         gracePeriod: double.parse(gracePeriodController.text),
         effectiveRate: double.parse(marginInterestRateController.text),
         noOfRental: int.parse(numberOfRentalsController.text)*12,
-        rentalInterval: rentalIntervalValue, // Use the numeric value
+        rentalInterval: rentalIntervalValue,
         beginning: advanceArrearsEnum.value == AdvanceArrearsEnum.advance,
         residualValue: double.parse(residualAmountController.text),
         startFromFirstMonth: false,

@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812), // Define your design size here
+      designSize: const Size(375, 812),
       builder: (context, child) {
         return GetMaterialApp(
           title: 'Amortization Calculator',

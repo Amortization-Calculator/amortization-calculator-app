@@ -25,7 +25,7 @@ class NetworkController extends GetxController {
       }
     } else {
       if (Get.currentRoute == '/NoInternetScreen') {
-        Get.back(); // Go back to the previous screen
+        Get.back();
       }
     }
   }

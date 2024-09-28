@@ -43,7 +43,7 @@ class DashboardController extends GetxController {
             actions: [
               TextButton(
                 onPressed: () {
-                  Get.back(); // Close the dialog
+                  Get.back();
                 },
                 child: const Text('OK'),
               ),
@@ -59,7 +59,7 @@ class DashboardController extends GetxController {
             actions: [
               TextButton(
                 onPressed: () {
-                  Get.back(); // Close the dialog
+                  Get.back();
                 },
                 child: const Text('OK'),
               ),
@@ -76,7 +76,7 @@ class DashboardController extends GetxController {
           actions: [
             TextButton(
               onPressed: () {
-                Get.back(); // Close the dialog
+                Get.back();
               },
               child: const Text('OK'),
             ),

@@ -48,14 +48,7 @@ class MortgageForm extends StatelessWidget {
                   icon: Icons.home,
                   isNumeric: true,
                   isDouble: true,
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        double.tryParse(value) == null) {
-                      return 'Please enter a valid unit price';
-                    }
-                    return null;
-                  },
+                  validator: unitPrice
                 ),
                 SizedBox(height: 10.h),
                 TextFormWidget(
@@ -85,7 +78,7 @@ class MortgageForm extends StatelessWidget {
                 SizedBox(height: 10.h),
                 Obx(
                   () => SliderContainerWidget(
-                    sliderValue: controller.sliderValue.value,
+                    sliderValue:controller.isValid.value? controller.sliderValue.value:0,
                     onValueChanged: controller.updateSliderValue,
                   ),
                 ),
@@ -95,28 +88,28 @@ class MortgageForm extends StatelessWidget {
           SizedBox(height: 10.h),
           Obx(
             () => ResultWidget(
-              financeAmount: controller.financeAmount.value,
+              value:controller.isValid.value? controller.financeAmount.value:0,
               name: 'Financing Amount',
             ),
           ),
           SizedBox(height: 10.h),
           Obx(
             () => ResultWidget(
-              financeAmount: controller.monthlyInstallment.value,
+              value:controller.isValid.value? controller.monthlyInstallment.value:0,
               name: 'Monthly Installment',
             ),
           ),
           SizedBox(height: 10.h),
           Obx(
             () => ResultWidget(
-              financeAmount: (controller.monthlyInstallment.round() * 100 / 50),
+              value: controller.isValid.value?(controller.monthlyInstallment.round() * 100 / 50):0,
               name: 'Expected Salary',
             ),
           ),
           SizedBox(height: 10.h),
           Obx(
             () => ResultWidget(
-              financeAmount: (controller.grossReceivable.value),
+              value: controller.isValid.value?(controller.grossReceivable.value):0,
               name: 'Gross Receivable',
             ),
           ),

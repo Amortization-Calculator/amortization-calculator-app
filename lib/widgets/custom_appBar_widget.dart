@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     // Initialize ScreenUtil
-    ScreenUtil.init(context, designSize: Size(360, 800), minTextAdapt: true);
+    ScreenUtil.init(context, designSize: const Size(360, 800), minTextAdapt: true);
 
     return AppBar(
       scrolledUnderElevation: 0.0,

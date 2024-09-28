@@ -134,7 +134,7 @@ class MortgageBySalaryPdfService {
             pw.Align(
               alignment: pw.Alignment.bottomCenter,
               child: pw.Text(
-                '© 2024 Amortization calculator. All rights reserved.',
+                '© ${DateTime.now().year} Amortization calculator. All rights reserved.',
                 style: pw.TextStyle(
                   fontSize: 12,
                   color: PdfColors.black,
