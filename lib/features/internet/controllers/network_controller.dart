@@ -12,6 +12,8 @@ class NetworkController extends GetxController {
     super.onInit();
     tryConnect();
     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
+
   }
 
   void _updateConnectionStatus(ConnectivityResult result) {
