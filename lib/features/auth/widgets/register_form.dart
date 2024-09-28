@@ -200,7 +200,7 @@ class RegisterForm extends StatelessWidget {
                   )
 
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 10.h),
             Center(
               child: ElevatedButton(
                 onPressed: registerController.isLoading.value

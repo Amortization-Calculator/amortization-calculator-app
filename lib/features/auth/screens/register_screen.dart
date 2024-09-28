@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
                 children: [
                   const CustomAppBar(showLogout: false),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -34,9 +34,9 @@ class RegisterScreen extends StatelessWidget {
                             fontSize: 22.sp,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        // SizedBox(height: 5.h),
                         CustomDividerWidget(),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 5.h),
                         const RegisterForm(),
                       ],
                     ),

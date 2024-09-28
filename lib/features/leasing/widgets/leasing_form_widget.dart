@@ -53,7 +53,18 @@ class LeasingForm extends StatelessWidget {
             icon: Icons.format_list_numbered,
             isNumeric: true,
             isDouble: false,
-            validator: validateNumberOfRentals,
+            validator: (value){
+              if (value == null || value.isEmpty || int.tryParse(value) == null) {
+                return 'Please enter Number Of Years';
+              }
+              if(int.parse(value)>10){
+                return 'Number of years must be at least 2 years';
+              }
+              if(int.parse(value)>10) {
+                return 'Number of years can not be more than 10 years';
+              }
+              return null;
+            },
           ),
           SizedBox(height: 10.h), // Responsive height
           TextFormWidget(
